@@ -69,7 +69,7 @@ export default function SiteGrid() {
         onDragEnd={handleDragEnd}
       >
         <SortableContext items={filteredSites.map(s => s.id)} strategy={rectSortingStrategy}>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-x-4 gap-y-6 justify-items-center">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(70px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-8 justify-items-center">
             {filteredSites.map(site => (
               <SiteCard key={site.id} site={site} />
             ))}

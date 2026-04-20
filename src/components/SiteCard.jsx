@@ -52,20 +52,20 @@ export default function SiteCard({ site }) {
     >
       <div
         onClick={handleClick}
-        className="bg-card border border-border rounded-2xl p-0 cursor-pointer card-hover flex items-center justify-center w-20 h-20 mb-2 overflow-hidden"
+        className="bg-card border border-border rounded-2xl p-0 cursor-pointer card-hover flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mb-2 overflow-hidden mx-auto"
       >
         {/* Favicon Container */}
         <div className="w-full h-full flex items-center justify-center bg-card">
           <img 
             src={getFaviconUrl(site.url)} 
             alt={site.name}
-            className="w-14 h-14 object-contain"
+            className="w-10 h-10 sm:w-14 sm:h-14 object-contain transition-all"
             onError={(e) => {
               e.target.style.display = 'none'
               e.target.nextSibling.style.display = 'flex'
             }}
           />
-          <span className="hidden w-14 h-14 items-center justify-center text-xl font-bold bg-accent text-[#1a1a1a] rounded-xl">
+          <span className="hidden w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-lg sm:text-xl font-bold bg-accent text-[#1a1a1a] rounded-xl transition-all">
             {site.name[0].toUpperCase()}
           </span>
         </div>
