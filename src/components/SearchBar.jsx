@@ -3,7 +3,7 @@ import { Search } from 'lucide-react'
 import useStore, { searchProviders } from '../store/useStore'
 
 export default function SearchBar() {
-  const { searchProvider, searchQuery, setSearchQuery, cycleSearchProvider } = useStore()
+  const { searchProvider, searchQuery, setSearchQuery, cycleSearchProvider, openChat, setInitialChatMessage } = useStore()
   const [localQuery, setLocalQuery] = useState('')
   const inputRef = useRef(null)
   const debounceRef = useRef(null)
@@ -33,7 +33,14 @@ export default function SearchBar() {
       e.preventDefault()
       cycleSearchProvider()
     } else if (e.key === 'Enter' && localQuery.trim()) {
-      window.open(provider.url + encodeURIComponent(localQuery.trim()), '_blank')
+      if (provider.type === 'ai') {
+        setInitialChatMessage(localQuery.trim())
+        setLocalQuery('')
+        setSearchQuery('')
+        openChat()
+      } else {
+        window.open(provider.url + encodeURIComponent(localQuery.trim()), '_blank')
+      }
     }
   }
 
@@ -78,7 +85,7 @@ export default function SearchBar() {
 
       <p className="text-center text-muted text-sm mt-2">
         <kbd className="px-1.5 py-0.5 bg-border rounded text-xs">Tab</kbd> ou clique no provedor para trocar ·
-        <kbd className="px-1.5 py-0.5 bg-border rounded text-xs ml-1">Enter</kbd> para pesquisar
+        <kbd className="px-1.5 py-0.5 bg-border rounded text-xs ml-1">Enter</kbd> {provider.type === 'ai' ? 'para abrir o chat' : 'para pesquisar'}
       </p>
     </div>
   )

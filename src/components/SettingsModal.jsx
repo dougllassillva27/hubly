@@ -1,17 +1,18 @@
 import { useState, useRef } from 'react'
 import { 
   X, Palette, Search, Newspaper, FolderOpen, Database, 
-  Plus, Trash2, Download, Upload, Check, AlertCircle 
+  Plus, Trash2, Download, Upload, Check, AlertCircle, MessageSquare
 } from 'lucide-react'
 import useStore, { searchProviders } from '../store/useStore'
 import { themeList } from '../themes/themes'
 
 const tabs = [
-  { id: 'appearance', label: 'Aparência', icon: Palette },
-  { id: 'search', label: 'Pesquisa', icon: Search },
-  { id: 'news', label: 'Notícias', icon: Newspaper },
-  { id: 'categories', label: 'Categorias', icon: FolderOpen },
-  { id: 'data', label: 'Dados', icon: Database },
+  { id: 'appearance', label: 'Theme', icon: Palette },
+  { id: 'search', label: 'Search', icon: Search },
+  { id: 'ai', label: 'AI Chat', icon: MessageSquare },
+  { id: 'news', label: 'News', icon: Newspaper },
+  { id: 'categories', label: 'Categories', icon: FolderOpen },
+  { id: 'data', label: 'Data', icon: Database },
 ]
 
 const newsProviders = [
@@ -33,6 +34,7 @@ export default function SettingsModal() {
     settingsOpen, closeSettings, 
     theme, setTheme,
     searchProvider, setSearchProvider,
+    deepseekApiKey, setDeepseekApiKey,
     newsProvider, setNewsProvider, newsApiKey, setNewsApiKey, newsTopics, setNewsTopics,
     categories, addCategory, removeCategory,
     exportData, importData
@@ -157,27 +159,68 @@ export default function SettingsModal() {
               <div>
                 <h3 className="text-sm font-medium text-muted mb-3">Provedor Padrão</h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {searchProviders.map((provider, index) => (
-                    <button
-                      key={provider.name}
-                      onClick={() => setSearchProvider(index)}
-                      className={`p-3 rounded-xl border transition-all flex items-center gap-3 ${
-                        searchProvider === index
-                          ? 'border-accent bg-accent/10'
-                          : 'border-border hover:border-accent/50'
-                      }`}
-                    >
-                      <span 
-                        className="w-6 h-6 flex items-center justify-center rounded text-xs font-bold"
-                        style={{ backgroundColor: provider.color, color: '#fff' }}
+                  {searchProviders.filter(p => p.type === 'search').map((provider, index) => {
+                    const actualIndex = searchProviders.findIndex(p => p.name === provider.name)
+                    return (
+                      <button
+                        key={provider.name}
+                        onClick={() => setSearchProvider(actualIndex)}
+                        className={`p-3 rounded-xl border transition-all flex items-center gap-3 ${
+                          searchProvider === actualIndex
+                            ? 'border-accent bg-accent/10'
+                            : 'border-border hover:border-accent/50'
+                        }`}
                       >
-                        {provider.icon}
-                      </span>
-                      <span className="text-sm font-medium text-text">{provider.name}</span>
-                    </button>
-                  ))}
+                        <span 
+                          className="w-6 h-6 flex items-center justify-center rounded text-xs font-bold"
+                          style={{ backgroundColor: provider.color, color: '#fff' }}
+                        >
+                          {provider.icon}
+                        </span>
+                        <span className="text-sm font-medium text-text">{provider.name}</span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
+            </div>
+          )}
+          
+          {/* AI Chat Tab */}
+          {activeTab === 'ai' && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-sm font-medium text-muted mb-3">DeepSeek API Key</h3>
+                <input
+                  type="password"
+                  value={deepseekApiKey}
+                  onChange={e => setDeepseekApiKey(e.target.value)}
+                  placeholder="sk-..."
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+                />
+                <p className="text-xs text-muted mt-2">
+                  Obtenha uma chave em <a href="https://platform.deepseek.com" target="_blank" rel="noopener" className="text-accent hover:underline">platform.deepseek.com</a>
+                </p>
+                <p className="text-xs text-muted mt-1">
+                  Sua chave fica salva apenas no navegador (localStorage).
+                </p>
+              </div>
+              
+              <div className="p-4 bg-bg rounded-lg border border-border">
+                <h4 className="text-sm font-medium text-text mb-2">Como usar</h4>
+                <ul className="text-xs text-muted space-y-1">
+                  <li>1. Pressione <kbd className="px-1 py-0.5 bg-border rounded">Tab</kbd> até chegar em "AI Chat"</li>
+                  <li>2. Pressione <kbd className="px-1 py-0.5 bg-border rounded">Enter</kbd> para abrir o chat</li>
+                  <li>3. Digite sua pergunta e pressione Enter</li>
+                </ul>
+              </div>
+              
+              {deepseekApiKey && (
+                <div className="flex items-center gap-2 text-green-500 text-sm">
+                  <Check size={16} />
+                  <span>API key configurada</span>
+                </div>
+              )}
             </div>
           )}
           

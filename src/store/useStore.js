@@ -3,12 +3,13 @@ import { storage, defaultSites, defaultCategories, defaultNewsTopics } from '../
 import { applyTheme } from '../themes/themes'
 
 const searchProviders = [
-  { name: 'Google', url: 'https://google.com/search?q=', color: '#4285F4', icon: 'G' },
-  { name: 'Bing', url: 'https://bing.com/search?q=', color: '#00B4F0', icon: 'B' },
-  { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=', color: '#DE5833', icon: 'D' },
-  { name: 'YouTube', url: 'https://youtube.com/results?search_query=', color: '#FF0000', icon: 'Y' },
-  { name: 'Brave', url: 'https://search.brave.com/search?q=', color: '#FB542B', icon: 'Br' },
-  { name: 'Ecosia', url: 'https://ecosia.org/search?q=', color: '#4A9C5D', icon: 'E' },
+  { name: 'Google', url: 'https://google.com/search?q=', color: '#4285F4', icon: 'G', type: 'search' },
+  // { name: 'Bing', url: 'https://bing.com/search?q=', color: '#00B4F0', icon: 'B', type: 'search' },
+  { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=', color: '#DE5833', icon: 'D', type: 'search' },
+  { name: 'YouTube', url: 'https://youtube.com/results?search_query=', color: '#FF0000', icon: 'Y', type: 'search' },
+  { name: 'Brave', url: 'https://search.brave.com/search?q=', color: '#FB542B', icon: 'Br', type: 'search' },
+  { name: 'Ecosia', url: 'https://ecosia.org/search?q=', color: '#4A9C5D', icon: 'E', type: 'search' },
+  { name: 'AI Chat', url: '', color: '#00D4AA', icon: 'AI', type: 'ai' },
 ]
 
 const useStore = create((set, get) => ({
@@ -32,6 +33,13 @@ const useStore = create((set, get) => ({
   newsTopics: storage.get('news_topics') || defaultNewsTopics,
   newsItems: [],
   newsLoading: false,
+  
+  // AI Chat
+  deepseekApiKey: storage.get('deepseek_apikey') || '',
+  chatOpen: false,
+  chatMessages: [],
+  chatLoading: false,
+  initialChatMessage: null,
   
   // UI State
   settingsOpen: false,
@@ -177,6 +185,37 @@ const useStore = create((set, get) => ({
     set({ newsLoading: loading })
   },
   
+  // AI Chat Actions
+  setDeepseekApiKey: (key) => {
+    storage.set('deepseek_apikey', key)
+    set({ deepseekApiKey: key })
+  },
+  
+  openChat: () => set({ chatOpen: true }),
+  closeChat: () => set({ chatOpen: false }),
+  
+  setInitialChatMessage: (message) => {
+    set({ initialChatMessage: message })
+  },
+  
+  clearInitialChatMessage: () => {
+    set({ initialChatMessage: null })
+  },
+  
+  addChatMessage: (message) => {
+    const messages = [...get().chatMessages, message]
+    set({ chatMessages: messages })
+    return messages
+  },
+  
+  setChatLoading: (loading) => {
+    set({ chatLoading: loading })
+  },
+  
+  clearChat: () => {
+    set({ chatMessages: [] })
+  },
+  
   openSettings: () => set({ settingsOpen: true }),
   closeSettings: () => set({ settingsOpen: false }),
   
@@ -205,6 +244,7 @@ const useStore = create((set, get) => ({
         newsApiKey: storage.get('news_apikey') || '',
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         activeCategory: storage.get('active_category') || 'all',
+        deepseekApiKey: storage.get('deepseek_apikey') || '',
       })
       applyTheme(get().theme)
     }
