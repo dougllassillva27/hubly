@@ -13,7 +13,16 @@ import {
   Check,
   AlertCircle,
   MessageSquare,
+  GripVertical,
 } from 'lucide-react';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import useStore, { searchProviders } from '../store/useStore';
 import { themeList } from '../themes/themes';
 
@@ -40,6 +49,41 @@ const availableTopics = [
   { id: 'sports', label: 'Esportes' },
 ];
 
+function SortableCategoryItem({ cat, onRemove }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: cat });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 1 : 0,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center gap-2 px-3 py-2 bg-bg border border-border rounded-lg relative"
+    >
+      <button
+        type="button"
+        className="text-muted hover:text-text cursor-grab active:cursor-grabbing touch-none"
+        {...attributes}
+        {...listeners}
+      >
+        <GripVertical size={16} />
+      </button>
+      <span className="text-sm text-text flex-1">{cat}</span>
+      <button
+        onClick={() => onRemove(cat)}
+        className="text-muted hover:text-red-500 transition-colors"
+        title="Remover categoria"
+      >
+        <Trash2 size={14} />
+      </button>
+    </div>
+  );
+}
+
 export default function SettingsModal() {
   const {
     settingsOpen,
@@ -57,8 +101,11 @@ export default function SettingsModal() {
     newsTopics,
     setNewsTopics,
     categories,
+    defaultCategory,
+    setDefaultCategory,
     addCategory,
     removeCategory,
+    reorderCategories,
     exportData,
     importData,
   } = useStore();
@@ -67,6 +114,23 @@ export default function SettingsModal() {
   const [newCategory, setNewCategory] = useState('');
   const [importStatus, setImportStatus] = useState(null);
   const fileInputRef = useRef(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = categories.indexOf(active.id);
+      const newIndex = categories.indexOf(over.id);
+      const newArray = [...categories];
+      newArray.splice(oldIndex, 1);
+      newArray.splice(newIndex, 0, active.id);
+      reorderCategories(newArray);
+    }
+  };
 
   const handleAddCategory = () => {
     if (newCategory.trim()) {
@@ -322,20 +386,35 @@ export default function SettingsModal() {
           {activeTab === 'categories' && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium text-muted mb-3">Categorias Existentes</h3>
-                <div className="flex flex-wrap gap-2">
+                <h3 className="text-sm font-medium text-muted mb-3">Categoria Padrão ao Abrir</h3>
+                <select
+                  value={defaultCategory}
+                  onChange={(e) => setDefaultCategory(e.target.value)}
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text focus:border-accent transition-colors"
+                >
+                  <option value="all">Todos</option>
                   {categories.map((cat) => (
-                    <div key={cat} className="flex items-center gap-2 px-3 py-2 bg-bg border border-border rounded-lg">
-                      <span className="text-sm text-text">{cat}</span>
-                      <button
-                        onClick={() => removeCategory(cat)}
-                        className="text-muted hover:text-red-500 transition-colors"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
+                    <option key={cat} value={cat}>
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </option>
                   ))}
-                </div>
+                </select>
+                <p className="text-xs text-muted mt-2">
+                  Esta categoria será carregada automaticamente toda vez que você abrir o Sol Hub.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-muted mb-3">Reordenar e Gerenciar</h3>
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                  <SortableContext items={categories} strategy={verticalListSortingStrategy}>
+                    <div className="flex flex-col gap-2">
+                      {categories.map((cat) => (
+                        <SortableCategoryItem key={cat} cat={cat} onRemove={removeCategory} />
+                      ))}
+                    </div>
+                  </SortableContext>
+                </DndContext>
               </div>
 
               <div>
