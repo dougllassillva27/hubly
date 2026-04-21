@@ -31,13 +31,12 @@ export default function SiteCard({ site }) {
   const { confirmDeleteSite, openAddSite, setEditingSite } = useStore();
   const [showActions, setShowActions] = useState(false);
   const [faviconSrc, setFaviconSrc] = useState(() => getFaviconUrl(site.url));
-  const [errorStep, setErrorStep] = useState(0);
-  const [imgFailed, setImgFailed] = useState(false);
+  const [imgFailed, setImgFailed] = useState(() => !getFaviconUrl(site.url));
 
   useEffect(() => {
-    setFaviconSrc(getFaviconUrl(site.url));
-    setErrorStep(0);
-    setImgFailed(false);
+    const url = getFaviconUrl(site.url);
+    setFaviconSrc(url);
+    setImgFailed(!url);
   }, [site.url]);
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: site.id });
@@ -65,20 +64,7 @@ export default function SiteCard({ site }) {
   };
 
   const handleImageError = () => {
-    try {
-      const urlObj = new URL(site.url);
-      if (errorStep === 0) {
-        setFaviconSrc(`https://icons.duckduckgo.com/ip3/${urlObj.hostname}.ico`);
-        setErrorStep(1);
-      } else if (errorStep === 1) {
-        setFaviconSrc(`${urlObj.origin}/favicon.ico`);
-        setErrorStep(2);
-      } else {
-        setImgFailed(true);
-      }
-    } catch {
-      setImgFailed(true);
-    }
+    setImgFailed(true);
   };
 
   return (
