@@ -327,10 +327,17 @@ const useStore = create((set, get) => ({
     const token = get().syncToken;
     if (!token) throw new Error('Token ausente');
     const data = get().exportData();
+    // resolvedIcon é cache efêmero de cliente — não deve ser persistido na nuvem
+    const dadosSanitizados = { ...data };
+    if (Array.isArray(dadosSanitizados.sp_sites)) {
+      dadosSanitizados.sp_sites = dadosSanitizados.sp_sites.map(
+        ({ resolvedIcon, ...site }) => site
+      );
+    }
     const response = await fetch('/.netlify/functions/sync', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-sync-token': token },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ data: dadosSanitizados }),
     });
     if (!response.ok) throw new Error('Falha no sync');
     return true;
@@ -346,7 +353,15 @@ const useStore = create((set, get) => ({
     if (!response.ok) throw new Error('Falha no sync');
     const json = await response.json();
     if (json.data) {
-      get().importData(json.data);
+      // Sanitiza dados da nuvem: remove resolvedIcons DDG (backwards compat com dados já corrompidos)
+      const dadosRecebidos = { ...json.data };
+      if (Array.isArray(dadosRecebidos.sp_sites)) {
+        dadosRecebidos.sp_sites = dadosRecebidos.sp_sites.map((site) => ({
+          ...site,
+          resolvedIcon: site.resolvedIcon?.includes('duckduckgo') ? null : site.resolvedIcon,
+        }));
+      }
+      get().importData(dadosRecebidos);
       return true;
     }
     return false;
