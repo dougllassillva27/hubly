@@ -230,8 +230,23 @@ export default function SettingsModal() {
           </button>
         </div>
 
-        {/* Tabs */}
-        <div className="flex border-b border-border overflow-x-auto">
+        {/* Mobile Tabs (Dropdown) */}
+        <div className="block sm:hidden px-6 py-4 border-b border-border">
+          <select
+            value={activeTab}
+            onChange={(e) => setActiveTab(e.target.value)}
+            className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text focus:border-accent transition-colors"
+          >
+            {tabs.map((tab) => (
+              <option key={tab.id} value={tab.id}>
+                {tab.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Desktop Tabs */}
+        <div className="hidden sm:flex border-b border-border overflow-x-auto px-2">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             return (
