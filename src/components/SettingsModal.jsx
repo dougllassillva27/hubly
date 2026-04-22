@@ -97,8 +97,8 @@ export default function SettingsModal() {
     setTheme,
     searchProvider,
     setSearchProvider,
-    deepseekApiKey,
-    setDeepseekApiKey,
+    openAiApiKey,
+    setOpenAiApiKey,
     newsProvider,
     setNewsProvider,
     newsApiKey,
@@ -357,26 +357,34 @@ export default function SettingsModal() {
           {activeTab === 'ai' && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium text-muted mb-3">DeepSeek API Key</h3>
-                <input
-                  type="password"
-                  value={deepseekApiKey}
-                  onChange={(e) => setDeepseekApiKey(e.target.value)}
-                  placeholder="sk-..."
-                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
-                />
-                <p className="text-xs text-muted mt-2">
-                  Obtenha uma chave em{' '}
-                  <a
-                    href="https://platform.deepseek.com"
-                    target="_blank"
-                    rel="noopener"
-                    className="text-accent hover:underline"
-                  >
-                    platform.deepseek.com
-                  </a>
-                </p>
-                <p className="text-xs text-muted mt-1">Sua chave fica salva apenas no navegador (localStorage).</p>
+                <h3 className="text-sm font-medium text-muted mb-3">OpenAI API Key (ChatGPT)</h3>
+                {!syncToken ? (
+                  <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl text-yellow-500 text-sm">
+                    Configure sua <strong>Senha Mestra</strong> na aba "Dados" primeiro. Ela será usada para
+                    criptografar sua chave da OpenAI no navegador.
+                  </div>
+                ) : (
+                  <>
+                    <input
+                      type="password"
+                      value={openAiApiKey}
+                      onChange={(e) => setOpenAiApiKey(e.target.value)}
+                      placeholder="sk-proj-..."
+                      className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+                    />
+                    <p className="text-xs text-muted mt-2">
+                      Sua chave é criptografada localmente usando a Senha Mestra (AES-256). Obtenha em{' '}
+                      <a
+                        href="https://platform.openai.com"
+                        target="_blank"
+                        rel="noopener"
+                        className="text-accent hover:underline"
+                      >
+                        platform.openai.com
+                      </a>
+                    </p>
+                  </>
+                )}
               </div>
 
               <div className="p-4 bg-bg rounded-lg border border-border">
@@ -392,10 +400,10 @@ export default function SettingsModal() {
                 </ul>
               </div>
 
-              {deepseekApiKey && (
+              {openAiApiKey && syncToken && (
                 <div className="flex items-center gap-2 text-green-500 text-sm">
                   <Check size={16} />
-                  <span>API key configurada</span>
+                  <span>API key configurada e protegida</span>
                 </div>
               )}
             </div>

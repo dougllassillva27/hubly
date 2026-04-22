@@ -1,101 +1,105 @@
-import { useState, useRef, useEffect } from 'react'
-import { X, Send, Trash2, AlertCircle, Loader2 } from 'lucide-react'
-import ReactMarkdown from 'react-markdown'
-import useStore from '../store/useStore'
+import { useState, useRef, useEffect } from 'react';
+import { X, Send, Trash2, AlertCircle, Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import useStore from '../store/useStore';
 
 export default function AIChatModal() {
-  const { 
-    chatOpen, closeChat, 
-    deepseekApiKey, 
-    chatMessages, addChatMessage, 
-    chatLoading, setChatLoading,
+  const {
+    chatOpen,
+    closeChat,
+    openAiApiKey,
+    chatMessages,
+    addChatMessage,
+    chatLoading,
+    setChatLoading,
     clearChat,
-    initialChatMessage, clearInitialChatMessage
-  } = useStore()
-  
-  const [input, setInput] = useState('')
-  const [streamingMessage, setStreamingMessage] = useState('')
-  const messagesEndRef = useRef(null)
-  const inputRef = useRef(null)
-  
+    initialChatMessage,
+    clearInitialChatMessage,
+  } = useStore();
+
+  const [input, setInput] = useState('');
+  const [streamingMessage, setStreamingMessage] = useState('');
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [chatMessages, streamingMessage])
-  
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatMessages, streamingMessage]);
+
   useEffect(() => {
     if (chatOpen) {
-      inputRef.current?.focus()
+      inputRef.current?.focus();
       // Se há mensagem inicial, enviar automaticamente
       if (initialChatMessage) {
-        sendInitialMessage(initialChatMessage)
-        clearInitialChatMessage()
+        sendInitialMessage(initialChatMessage);
+        clearInitialChatMessage();
       }
     }
-  }, [chatOpen, initialChatMessage])
-  
+  }, [chatOpen, initialChatMessage]);
+
   const sendInitialMessage = async (message) => {
-    if (!message.trim() || chatLoading) return
-    
-    if (!deepseekApiKey) {
+    if (!message.trim() || chatLoading) return;
+
+    if (!openAiApiKey) {
       addChatMessage({
         role: 'assistant',
-        content: 'Configure sua API key do DeepSeek nas configurações para usar o chat.',
-        error: true
-      })
-      return
+        content: 'Configure sua API key da OpenAI nas configurações (com Senha Mestra) para usar o chat.',
+        error: true,
+      });
+      return;
     }
-    
-    const userMessage = { role: 'user', content: message.trim() }
-    addChatMessage(userMessage)
-    setChatLoading(true)
-    setStreamingMessage('')
-    
+
+    const userMessage = { role: 'user', content: message.trim() };
+    addChatMessage(userMessage);
+    setChatLoading(true);
+    setStreamingMessage('');
+
     try {
-      const messages = [userMessage].map(m => ({
+      const messages = [userMessage].map((m) => ({
         role: m.role,
-        content: m.content
-      }))
-      
-      const response = await fetch('https://api.deepseek.com/chat/completions', {
+        content: m.content,
+      }));
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${deepseekApiKey}`
+          Authorization: `Bearer ${openAiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: 'gpt-4o-mini',
           messages,
-          stream: true
-        })
-      })
-      
+          stream: true,
+        }),
+      });
+
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error?.message || 'Erro na API')
+        const error = await response.json();
+        throw new Error(error.error?.message || 'Erro na API');
       }
-      
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let fullContent = ''
-      
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullContent = '';
+
       while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        
-        const chunk = decoder.decode(value)
-        const lines = chunk.split('\n')
-        
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
         for (const line of lines) {
           if (line.startsWith('data: ')) {
-            const data = line.slice(6)
-            if (data === '[DONE]') continue
-            
+            const data = line.slice(6);
+            if (data === '[DONE]') continue;
+
             try {
-              const parsed = JSON.parse(data)
-              const content = parsed.choices[0]?.delta?.content || ''
+              const parsed = JSON.parse(data);
+              const content = parsed.choices[0]?.delta?.content || '';
               if (content) {
-                fullContent += content
-                setStreamingMessage(fullContent)
+                fullContent += content;
+                setStreamingMessage(fullContent);
               }
             } catch (e) {
               // Ignora erros de parse em chunks incompletos
@@ -103,89 +107,89 @@ export default function AIChatModal() {
           }
         }
       }
-      
+
       if (fullContent) {
         addChatMessage({
           role: 'assistant',
-          content: fullContent
-        })
+          content: fullContent,
+        });
       }
     } catch (error) {
       addChatMessage({
         role: 'assistant',
         content: `Erro: ${error.message}`,
-        error: true
-      })
+        error: true,
+      });
     } finally {
-      setChatLoading(false)
-      setStreamingMessage('')
+      setChatLoading(false);
+      setStreamingMessage('');
     }
-  }
-  
+  };
+
   const sendMessage = async () => {
-    if (!input.trim() || chatLoading) return
-    
-    if (!deepseekApiKey) {
+    if (!input.trim() || chatLoading) return;
+
+    if (!openAiApiKey) {
       addChatMessage({
         role: 'assistant',
-        content: 'Configure sua API key do DeepSeek nas configurações para usar o chat.',
-        error: true
-      })
-      return
+        content: 'Configure sua API key da OpenAI nas configurações (com Senha Mestra) para usar o chat.',
+        error: true,
+      });
+      return;
     }
-    
-    const userMessage = { role: 'user', content: input.trim() }
-    addChatMessage(userMessage)
-    setInput('')
-    setChatLoading(true)
-    setStreamingMessage('')
-    
+
+    const userMessage = { role: 'user', content: input.trim() };
+    addChatMessage(userMessage);
+    setInput('');
+    setChatLoading(true);
+    setStreamingMessage('');
+
     try {
-      const messages = [...chatMessages, userMessage].map(m => ({
+      const messages = [...chatMessages, userMessage].map((m) => ({
         role: m.role,
-        content: m.content
-      }))
-      
-      const response = await fetch('https://api.deepseek.com/chat/completions', {
+        content: m.content,
+      }));
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${deepseekApiKey}`
+          Authorization: `Bearer ${openAiApiKey}`,
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: 'gpt-4o-mini',
           messages,
-          stream: true
-        })
-      })
-      
+          stream: true,
+        }),
+      });
+
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error?.message || 'Erro na API')
+        const error = await response.json();
+        throw new Error(error.error?.message || 'Erro na API');
       }
-      
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let fullContent = ''
-      
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullContent = '';
+
       while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        
-        const chunk = decoder.decode(value)
-        const lines = chunk.split('\n')
-        
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
         for (const line of lines) {
           if (line.startsWith('data: ')) {
-            const data = line.slice(6)
-            if (data === '[DONE]') continue
-            
+            const data = line.slice(6);
+            if (data === '[DONE]') continue;
+
             try {
-              const parsed = JSON.parse(data)
-              const content = parsed.choices[0]?.delta?.content || ''
+              const parsed = JSON.parse(data);
+              const content = parsed.choices[0]?.delta?.content || '';
               if (content) {
-                fullContent += content
-                setStreamingMessage(fullContent)
+                fullContent += content;
+                setStreamingMessage(fullContent);
               }
             } catch (e) {
               // Ignora erros de parse em chunks incompletos
@@ -193,42 +197,39 @@ export default function AIChatModal() {
           }
         }
       }
-      
+
       if (fullContent) {
         addChatMessage({
           role: 'assistant',
-          content: fullContent
-        })
+          content: fullContent,
+        });
       }
     } catch (error) {
       addChatMessage({
         role: 'assistant',
         content: `Erro: ${error.message}`,
-        error: true
-      })
+        error: true,
+      });
     } finally {
-      setChatLoading(false)
-      setStreamingMessage('')
+      setChatLoading(false);
+      setStreamingMessage('');
     }
-  }
-  
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      sendMessage()
+      e.preventDefault();
+      sendMessage();
     }
-  }
-  
-  if (!chatOpen) return null
-  
+  };
+
+  if (!chatOpen) return null;
+
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center modal-backdrop"
-      onClick={closeChat}
-    >
-      <div 
+    <div className="fixed inset-0 z-50 flex items-center justify-center modal-backdrop" onClick={closeChat}>
+      <div
         className="bg-card border border-border rounded-2xl w-full max-w-2xl h-[80vh] flex flex-col shadow-2xl animate-slideIn m-4"
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-border">
@@ -236,9 +237,9 @@ export default function AIChatModal() {
             <span className="w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold bg-[#00D4AA] text-white">
               AI
             </span>
-            <span className="font-medium text-text">DeepSeek Chat</span>
+            <span className="font-medium text-text">ChatGPT</span>
           </div>
-          
+
           <div className="flex items-center gap-2">
             <button
               onClick={clearChat}
@@ -247,33 +248,27 @@ export default function AIChatModal() {
             >
               <Trash2 size={18} />
             </button>
-            <button
-              onClick={closeChat}
-              className="p-2 text-muted hover:text-text transition-colors"
-            >
+            <button onClick={closeChat} className="p-2 text-muted hover:text-text transition-colors">
               <X size={18} />
             </button>
           </div>
         </div>
-        
+
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {chatMessages.length === 0 && (
             <div className="text-center text-muted py-8">
-              <p className="text-sm">Converse com o DeepSeek AI</p>
+              <p className="text-sm">Converse com o ChatGPT</p>
               <p className="text-xs mt-1 opacity-60">Pressione Enter para enviar</p>
             </div>
           )}
-          
+
           {chatMessages.map((msg, i) => (
-            <div 
-              key={i} 
-              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div 
+            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div
                 className={`max-w-[80%] px-4 py-2 rounded-2xl ${
-                  msg.role === 'user' 
-                    ? 'bg-accent text-[#1a1a1a]' 
+                  msg.role === 'user'
+                    ? 'bg-accent text-[#1a1a1a]'
                     : msg.error
                       ? 'bg-red-500/20 text-red-400 border border-red-500/30'
                       : 'bg-bg text-text'
@@ -289,7 +284,7 @@ export default function AIChatModal() {
               </div>
             </div>
           ))}
-          
+
           {streamingMessage && (
             <div className="flex justify-start">
               <div className="max-w-[80%] px-4 py-2 rounded-2xl bg-bg text-text">
@@ -300,7 +295,7 @@ export default function AIChatModal() {
               </div>
             </div>
           )}
-          
+
           {chatLoading && !streamingMessage && (
             <div className="flex justify-start">
               <div className="bg-bg px-4 py-2 rounded-2xl">
@@ -308,25 +303,25 @@ export default function AIChatModal() {
               </div>
             </div>
           )}
-          
+
           <div ref={messagesEndRef} />
         </div>
-        
+
         {/* Input */}
         <div className="p-4 border-t border-border">
-          {!deepseekApiKey && (
+          {!openAiApiKey && (
             <div className="flex items-center gap-2 px-3 py-2 mb-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-yellow-500 text-xs">
               <AlertCircle size={14} />
               <span>Configure sua API key nas configurações</span>
             </div>
           )}
-          
+
           <div className="flex gap-2">
             <input
               ref={inputRef}
               type="text"
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Digite sua mensagem..."
               className="flex-1 px-4 py-2 bg-bg border border-border rounded-xl text-text placeholder-muted text-sm focus:border-accent transition-colors"
@@ -343,5 +338,5 @@ export default function AIChatModal() {
         </div>
       </div>
     </div>
-  )
+  );
 }

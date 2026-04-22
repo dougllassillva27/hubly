@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { storage, defaultSites, defaultCategories, defaultNewsTopics } from '../utils/storage';
 import { applyTheme } from '../themes/themes';
+import { encrypt, decrypt } from '../utils/crypto';
 
 const searchProviders = [
   { name: 'Google', url: 'https://google.com/search?q=', color: '#4285F4', icon: 'G', type: 'search' },
@@ -36,7 +37,7 @@ const useStore = create((set, get) => ({
   newsLoading: false,
 
   // AI Chat
-  deepseekApiKey: storage.get('deepseek_apikey') || '',
+  openAiApiKey: decrypt(storage.get('openai_apikey'), storage.get('sync_token') || '') || '',
   chatOpen: false,
   chatMessages: [],
   chatLoading: false,
@@ -212,9 +213,12 @@ const useStore = create((set, get) => ({
   },
 
   // AI Chat Actions
-  setDeepseekApiKey: (key) => {
-    storage.set('deepseek_apikey', key);
-    set({ deepseekApiKey: key });
+  setOpenAiApiKey: (key) => {
+    const token = get().syncToken;
+    if (token) {
+      storage.set('openai_apikey', encrypt(key, token));
+    }
+    set({ openAiApiKey: key });
   },
 
   openChat: () => set({ chatOpen: true }),
@@ -254,8 +258,14 @@ const useStore = create((set, get) => ({
   cancelDeleteSite: () => set({ deleteConfirmId: null }),
 
   setSyncToken: (token) => {
+    const currentKey = get().openAiApiKey;
     storage.set('sync_token', token);
     set({ syncToken: token });
+    if (currentKey && token) {
+      storage.set('openai_apikey', encrypt(currentKey, token));
+    } else if (!token) {
+      storage.remove('openai_apikey');
+    }
   },
 
   setAutoSync: (autoSync) => {
@@ -281,10 +291,10 @@ const useStore = create((set, get) => ({
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         defaultCategory: storage.get('default_category') || 'all',
         activeCategory: storage.get('default_category') || 'all',
-        deepseekApiKey: storage.get('deepseek_apikey') || '',
         syncToken: storage.get('sync_token') || '',
         autoSync: storage.get('auto_sync') || false,
       });
+      set({ openAiApiKey: decrypt(storage.get('openai_apikey'), get().syncToken) || '' });
       applyTheme(get().theme);
     }
     return success;
