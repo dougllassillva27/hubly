@@ -16,7 +16,7 @@ import StarCanvas from './components/StarCanvas';
 import ImportBookmarksModal from './components/ImportBookmarksModal';
 
 export default function App() {
-  const { theme, openSettings } = useStore();
+  const { theme, openSettings, settingsOpen, addSiteOpen, chatOpen, deleteConfirmId, importBookmarksOpen } = useStore();
 
   useEffect(() => {
     applyTheme(theme);
@@ -30,6 +30,14 @@ export default function App() {
     // Carrega favicons do banco em paralelo (independente do autoSync)
     carregarFaviconsDb();
   }, []);
+
+  useEffect(() => {
+    if (settingsOpen || addSiteOpen || chatOpen || importBookmarksOpen || deleteConfirmId) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [settingsOpen, addSiteOpen, chatOpen, importBookmarksOpen, deleteConfirmId]);
 
   return (
     <div className="min-h-screen relative">

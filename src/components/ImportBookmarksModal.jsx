@@ -59,7 +59,7 @@ export default function ImportBookmarksModal() {
       onClick={closeImportBookmarks}
     >
       <div
-        className="bg-card border border-border rounded-2xl w-full max-w-3xl h-[85vh] mx-4 flex flex-col animate-slideIn"
+        className="bg-card border border-border rounded-2xl w-full max-w-5xl h-[85vh] mx-4 flex flex-col animate-slideIn"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -76,7 +76,7 @@ export default function ImportBookmarksModal() {
         </div>
 
         {/* Content - Folders & Links */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-6 content-start">
           {Object.entries(groupedBookmarks).map(([folder, bookmarks]) => {
             const allSelected = bookmarks.every((b) => selectedUrls.has(b.url));
             const someSelected = bookmarks.some((b) => selectedUrls.has(b.url));
@@ -128,7 +128,7 @@ export default function ImportBookmarksModal() {
         </div>
 
         {/* Footer - Target Category & Actions */}
-        <div className="p-6 border-t border-border bg-bg/50 rounded-b-2xl">
+        <div className="p-6 border-t border-border bg-bg rounded-b-2xl">
           <div className="flex flex-col sm:flex-row gap-4 items-end sm:items-center justify-between">
             <div className="w-full sm:w-auto flex-1 max-w-md">
               <label className="block text-sm text-muted mb-2">Categoria de Destino</label>
@@ -136,7 +136,7 @@ export default function ImportBookmarksModal() {
                 <select
                   value={targetCategory}
                   onChange={(e) => setTargetCategory(e.target.value)}
-                  className="flex-1 px-3 py-2 bg-card border border-border rounded-lg text-text focus:border-accent transition-colors text-sm"
+                  className="flex-1 px-3 py-2 bg-bg border border-border rounded-lg text-text focus:border-accent transition-colors text-sm"
                 >
                   <option value="all">Todos (Sem categoria)</option>
                   {categories.map((c) => (
@@ -152,7 +152,7 @@ export default function ImportBookmarksModal() {
                     value={newCategoryName}
                     onChange={(e) => setNewCategoryName(e.target.value)}
                     placeholder="Nome da categoria"
-                    className="flex-1 px-3 py-2 bg-card border border-border rounded-lg text-text focus:border-accent transition-colors text-sm animate-fadeIn"
+                    className="flex-1 px-3 py-2 bg-bg border border-border rounded-lg text-text focus:border-accent transition-colors text-sm animate-fadeIn"
                     autoFocus
                   />
                 )}
