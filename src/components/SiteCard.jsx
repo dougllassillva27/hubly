@@ -112,6 +112,7 @@ export default function SiteCard({ site }) {
               className="w-10 h-10 sm:w-14 sm:h-14 object-contain transition-transform duration-300 group-hover/card:scale-110 drop-shadow-md"
               onError={handleImageError}
               onLoad={handleImageLoad}
+              referrerPolicy="no-referrer"
             />
           ) : (
             <span
