@@ -142,3 +142,31 @@ resumo_skills.json
 skills_completa.json
 docs/history/contas-a-pagar.7z
 master-skill-config.json
+
+# workflow pessoal / IA
+resumo-de-trabalho.md
+.cursorrules
+.geminiignore
+.aiexclude
+
+# dependências / build
+node_modules/
+dist/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ambiente
+.env
+.env.*
+!.env.example
+
+# sistema/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
