@@ -13,12 +13,31 @@ export const getFaviconUrls = (url) => {
       return [`${urlObj.origin}/favicon.ico`, `${urlObj.origin}/favicon.png`];
     }
 
-    return [
-      `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
-      `https://icons.duckduckgo.com/ip3/${domain}.ico`,
-      `https://icon.horse/icon/${domain}`,
-      `${urlObj.origin}/favicon.ico`,
-    ];
+    let rootDomain = domain;
+    const parts = domain.split('.');
+    if (parts.length > 2) {
+      if (parts[parts.length - 2].length <= 3 && parts[parts.length - 1].length <= 3) {
+        rootDomain = parts.slice(-3).join('.');
+      } else {
+        rootDomain = parts.slice(-2).join('.');
+      }
+    }
+
+    const urls = [`https://www.google.com/s2/favicons?domain=${domain}&sz=128`];
+
+    if (rootDomain !== domain) {
+      urls.push(`https://www.google.com/s2/favicons?domain=${rootDomain}&sz=128`);
+    }
+
+    urls.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`);
+
+    if (rootDomain !== domain) {
+      urls.push(`https://icons.duckduckgo.com/ip3/${rootDomain}.ico`);
+    }
+
+    urls.push(`https://icon.horse/icon/${domain}`, `${urlObj.origin}/favicon.ico`);
+
+    return urls;
   } catch {
     return [];
   }
