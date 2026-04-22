@@ -34,11 +34,14 @@ export default function AddSiteModal() {
     }
 
     if (editingSite) {
+      const hasIconChanged = editingSite.url !== finalUrl || (editingSite.customIcon || '') !== customIcon.trim();
+
       updateSite(editingSite.id, {
         name: name.trim(),
         url: finalUrl,
         customIcon: customIcon.trim(),
         category: category || categories[0] || 'all',
+        ...(hasIconChanged ? { resolvedIcon: null } : {}),
       });
     } else {
       addSite({
@@ -93,23 +96,23 @@ export default function AddSiteModal() {
           </div>
 
           <div>
-            <label className="block text-sm text-muted mb-1">Ícone Customizado (URL Opcional)</label>
-            <input
-              type="text"
-              value={customIcon}
-              onChange={(e) => setCustomIcon(e.target.value)}
-              placeholder="https://exemplo.com/icon.png"
-              className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
-            />
-          </div>
-
-          <div>
             <label className="block text-sm text-muted mb-1">URL</label>
             <input
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://github.com"
+              className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-muted mb-1">Ícone Customizado (URL Opcional)</label>
+            <input
+              type="text"
+              value={customIcon}
+              onChange={(e) => setCustomIcon(e.target.value)}
+              placeholder="https://exemplo.com/icon.png"
               className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
             />
           </div>

@@ -13,6 +13,20 @@ const searchProviders = [
   { name: 'AI Chat', url: '', color: '#00D4AA', icon: 'AI', type: 'ai' },
 ].filter(Boolean);
 
+const getSessionCategory = () => {
+  try {
+    return sessionStorage.getItem('sp_active_category');
+  } catch {
+    return null;
+  }
+};
+
+const setSessionCategory = (cat) => {
+  try {
+    sessionStorage.setItem('sp_active_category', cat);
+  } catch {}
+};
+
 const useStore = create((set, get) => ({
   // Sites
   sites: storage.get('sites') || defaultSites,
@@ -20,7 +34,7 @@ const useStore = create((set, get) => ({
   // Categories
   categories: storage.get('categories') || defaultCategories,
   defaultCategory: storage.get('default_category') || 'all',
-  activeCategory: storage.get('default_category') || 'all',
+  activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
 
   // Theme
   theme: storage.get('theme') || 'minimal-dark',
@@ -73,11 +87,11 @@ const useStore = create((set, get) => ({
     get().triggerAutoSync();
   },
 
-  updateSite: (id, updates) => {
+  updateSite: (id, updates, skipSync = false) => {
     const sites = get().sites.map((s) => (s.id === id ? { ...s, ...updates } : s));
     storage.set('sites', sites);
     set({ sites });
-    get().triggerAutoSync();
+    if (!skipSync) get().triggerAutoSync();
   },
 
   removeSite: (id) => {
@@ -163,6 +177,7 @@ const useStore = create((set, get) => ({
   },
 
   setActiveCategory: (category) => {
+    setSessionCategory(category);
     set({ activeCategory: category });
   },
 
@@ -290,7 +305,7 @@ const useStore = create((set, get) => ({
         newsApiKey: storage.get('news_apikey') || '',
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         defaultCategory: storage.get('default_category') || 'all',
-        activeCategory: storage.get('default_category') || 'all',
+        activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
         syncToken: storage.get('sync_token') || '',
         autoSync: storage.get('auto_sync') || false,
       });

@@ -28,20 +28,27 @@ const getAvatarColor = (name) => {
 };
 
 export default function SiteCard({ site }) {
-  const { confirmDeleteSite, openAddSite, setEditingSite } = useStore();
+  const { confirmDeleteSite, openAddSite, setEditingSite, updateSite } = useStore();
   const [showActions, setShowActions] = useState(false);
 
-  const initialUrls = site.customIcon ? [site.customIcon] : getFaviconUrls(site.url);
+  const baseUrls = site.customIcon ? [site.customIcon] : getFaviconUrls(site.url);
+  const initialUrls =
+    site.resolvedIcon && !site.customIcon ? Array.from(new Set([site.resolvedIcon, ...baseUrls])) : baseUrls;
+
   const [faviconUrls, setFaviconUrls] = useState(initialUrls);
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [imgFailed, setImgFailed] = useState(() => initialUrls.length === 0);
 
   useEffect(() => {
-    const urls = site.customIcon ? [site.customIcon] : getFaviconUrls(site.url);
+    const urls = site.customIcon
+      ? [site.customIcon]
+      : site.resolvedIcon
+        ? Array.from(new Set([site.resolvedIcon, ...getFaviconUrls(site.url)]))
+        : getFaviconUrls(site.url);
     setFaviconUrls(urls);
     setCurrentUrlIndex(0);
     setImgFailed(urls.length === 0);
-  }, [site.url, site.customIcon]);
+  }, [site.url, site.customIcon, site.resolvedIcon]);
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: site.id });
 
@@ -75,6 +82,13 @@ export default function SiteCard({ site }) {
     }
   };
 
+  const handleImageLoad = () => {
+    const currentUrl = faviconUrls[currentUrlIndex];
+    if (currentUrl && site.resolvedIcon !== currentUrl && !site.customIcon) {
+      updateSite(site.id, { resolvedIcon: currentUrl }, true);
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
@@ -85,7 +99,7 @@ export default function SiteCard({ site }) {
       {...attributes}
       {...listeners}
     >
-      <div onClick={handleClick} className="group/card relative cursor-pointer w-16 h-16 sm:w-20 sm:h-20 mb-3 mx-auto">
+      <div onClick={handleClick} className="group/card relative cursor-pointer w-16 h-16 sm:w-24 sm:h-24 mb-3 mx-auto">
         {/* Glow effect */}
         <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
 
@@ -95,12 +109,13 @@ export default function SiteCard({ site }) {
             <img
               src={faviconUrls[currentUrlIndex] || ''}
               alt={site.name}
-              className="w-10 h-10 sm:w-12 sm:h-12 object-contain transition-transform duration-300 group-hover/card:scale-110 drop-shadow-md"
+              className="w-10 h-10 sm:w-14 sm:h-14 object-contain transition-transform duration-300 group-hover/card:scale-110 drop-shadow-md"
               onError={handleImageError}
+              onLoad={handleImageLoad}
             />
           ) : (
             <span
-              className={`flex w-10 h-10 sm:w-12 sm:h-12 items-center justify-center text-xl sm:text-2xl font-bold bg-gradient-to-br ${getAvatarColor(site.name)} rounded-xl transition-transform duration-300 group-hover/card:scale-110 shadow-inner`}
+              className={`flex w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-xl sm:text-3xl font-bold bg-gradient-to-br ${getAvatarColor(site.name)} rounded-xl transition-transform duration-300 group-hover/card:scale-110 shadow-inner`}
             >
               {site.name?.[0]?.toUpperCase()}
             </span>
