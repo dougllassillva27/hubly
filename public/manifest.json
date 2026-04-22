@@ -1,0 +1,16 @@
+{
+  "name": "Hubly Search",
+  "short_name": "Hubly",
+  "start_url": "/?focus=true",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
+  "icons": [
+    {
+      "src": "/favicon.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

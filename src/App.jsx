@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useStore from './store/useStore';
 import { applyTheme } from './themes/themes';
 import Clock from './components/Clock';
@@ -17,6 +17,7 @@ import FloatingMenu from './components/FloatingMenu';
 
 export default function App() {
   const { theme, openSettings, settingsOpen, addSiteOpen, chatOpen, deleteConfirmId, importBookmarksOpen } = useStore();
+  const [isFocusMode, setIsFocusMode] = useState(false);
 
   useEffect(() => {
     applyTheme(theme);
@@ -29,6 +30,15 @@ export default function App() {
     }
     // Carrega favicons do banco em paralelo (independente do autoSync)
     carregarFaviconsDb();
+
+    // Detecta se foi aberto via PWA (tela inicial do celular) ou com parâmetro de foco
+    if (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone ||
+      new URLSearchParams(window.location.search).get('focus') === 'true'
+    ) {
+      setIsFocusMode(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -47,38 +57,53 @@ export default function App() {
       {/* Main content */}
       <div className="relative z-10">
         {/* Main layout */}
-        <div className="container mx-auto px-4 flex flex-col min-h-[85vh]">
-          <div className="flex-1 flex flex-col pt-8">
-            <div className="text-center animate-fadeIn px-4 mt-2 sm:mt-4">
-              <h1 className="text-xl md:text-2xl text-text mb-2 tracking-tight">
-                <strong className="font-bold">Hubly</strong>{' '}
-                <span className="opacity-80 font-normal">— sua página inicial pessoal, inteligente e organizada</span>
-              </h1>
-              <p className="text-sm md:text-base text-text opacity-60 max-w-2xl mx-auto">
-                Acesse seus sites, organize por categorias, busque mais rápido, acompanhe notícias e use IA em um só
-                lugar.
-              </p>
-            </div>
-            <Clock />
+        <div
+          className={`container mx-auto px-4 flex flex-col ${isFocusMode ? 'min-h-screen justify-center' : 'min-h-[85vh]'}`}
+        >
+          <div className={`flex-1 flex flex-col ${isFocusMode ? 'justify-center mb-20' : 'pt-8'}`}>
+            {!isFocusMode && (
+              <>
+                <div className="text-center animate-fadeIn px-4 mt-2 sm:mt-4">
+                  <h1 className="text-xl md:text-2xl text-text mb-2 tracking-tight">
+                    <strong className="font-bold">Hubly</strong>{' '}
+                    <span className="opacity-80 font-normal">
+                      — sua página inicial pessoal, inteligente e organizada
+                    </span>
+                  </h1>
+                  <p className="text-sm md:text-base text-text opacity-60 max-w-2xl mx-auto">
+                    Acesse seus sites, organize por categorias, busque mais rápido, acompanhe notícias e use IA em um só
+                    lugar.
+                  </p>
+                </div>
+                <Clock />
+              </>
+            )}
+
             <SearchBar />
-            <CategoryFilter />
-            <SiteGrid />
-            <Widgets />
+
+            {!isFocusMode && (
+              <>
+                <CategoryFilter />
+                <SiteGrid />
+                <Widgets />
+              </>
+            )}
           </div>
         </div>
 
-        {/* News Section (peeking from bottom) */}
-        <div className="container mx-auto px-4 pb-16 pt-8 border-t border-border">
-          <NewsFeed />
-        </div>
-
-        {/* Footer */}
-        <footer className="text-center py-6 text-muted text-sm">
-          <p>Hubly · Sua página inicial personalizada</p>
-        </footer>
+        {!isFocusMode && (
+          <>
+            <div className="container mx-auto px-4 pb-16 pt-8 border-t border-border">
+              <NewsFeed />
+            </div>
+            <footer className="text-center py-6 text-muted text-sm">
+              <p>Hubly · Sua página inicial personalizada</p>
+            </footer>
+          </>
+        )}
       </div>
 
-      <FloatingMenu />
+      {!isFocusMode && <FloatingMenu />}
 
       {/* Modals */}
       <SettingsModal />
