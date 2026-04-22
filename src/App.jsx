@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Settings } from 'lucide-react';
 import useStore from './store/useStore';
 import { applyTheme } from './themes/themes';
 import Clock from './components/Clock';
@@ -14,6 +13,7 @@ import ConfirmModal from './components/ConfirmModal';
 import AIChatModal from './components/AIChatModal';
 import StarCanvas from './components/StarCanvas';
 import ImportBookmarksModal from './components/ImportBookmarksModal';
+import FloatingMenu from './components/FloatingMenu';
 
 export default function App() {
   const { theme, openSettings, settingsOpen, addSiteOpen, chatOpen, deleteConfirmId, importBookmarksOpen } = useStore();
@@ -46,15 +46,6 @@ export default function App() {
 
       {/* Main content */}
       <div className="relative z-10">
-        {/* Settings button */}
-        <button
-          onClick={openSettings}
-          className="fixed top-4 right-4 p-3 bg-card border border-border rounded-xl text-muted hover:text-accent hover:border-accent transition-colors z-20"
-          title="Configurações"
-        >
-          <Settings size={20} />
-        </button>
-
         {/* Main layout */}
         <div className="container mx-auto px-4 flex flex-col min-h-[85vh]">
           <div className="flex-1 flex flex-col pt-8">
@@ -86,6 +77,8 @@ export default function App() {
           <p>Hubly · Sua página inicial personalizada</p>
         </footer>
       </div>
+
+      <FloatingMenu />
 
       {/* Modals */}
       <SettingsModal />

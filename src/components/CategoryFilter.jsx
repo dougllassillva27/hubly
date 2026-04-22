@@ -1,4 +1,4 @@
-import { Filter, Plus } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import useStore from '../store/useStore';
 
 const categoryLabels = {
@@ -10,7 +10,7 @@ const categoryLabels = {
 };
 
 export default function CategoryFilter() {
-  const { categories, activeCategory, setActiveCategory, openAddSite } = useStore();
+  const { categories, activeCategory, setActiveCategory } = useStore();
 
   const allCategories = ['all', ...categories];
 
@@ -39,14 +39,6 @@ export default function CategoryFilter() {
             );
           })}
         </div>
-
-        <button
-          onClick={openAddSite}
-          className="flex items-center gap-2 px-4 py-2 bg-accent rounded-lg text-[#1a1a1a] text-sm font-medium hover:opacity-90 transition-opacity flex-shrink-0"
-        >
-          <Plus size={18} />
-          <span className="hidden sm:inline">Adicionar Site</span>
-        </button>
       </div>
     </div>
   );
