@@ -76,6 +76,10 @@ const useStore = create((set, get) => ({
   notesContent: storage.get('notes_content') || '',
   weatherCity: storage.get('weather_city') || '',
 
+  // Bookmarks Import
+  importBookmarksOpen: false,
+  pendingBookmarks: [],
+
   // Actions
   setSites: (sites) => {
     storage.set('sites', sites);
@@ -137,6 +141,43 @@ const useStore = create((set, get) => ({
         set({ faviconsDb });
       }
     }
+    get().triggerAutoSync();
+  },
+
+  setPendingBookmarks: (bookmarks) => set({ pendingBookmarks: bookmarks }),
+  openImportBookmarks: () => set({ importBookmarksOpen: true }),
+  closeImportBookmarks: () => set({ importBookmarksOpen: false, pendingBookmarks: [] }),
+
+  importBookmarksBatch: (bookmarksToImport, targetCategory) => {
+    const state = get();
+    let finalCategory = targetCategory.trim();
+    if (!finalCategory) finalCategory = 'all';
+
+    let updatedCategories = [...state.categories];
+    if (finalCategory !== 'all' && !updatedCategories.includes(finalCategory)) {
+      updatedCategories.push(finalCategory);
+      storage.set('categories', updatedCategories);
+    }
+
+    const currentSitesLength = state.sites.length;
+    const newSites = bookmarksToImport.map((bm, index) => ({
+      id: Date.now().toString() + index,
+      name: bm.name,
+      url: bm.url,
+      customIcon: '',
+      category: finalCategory,
+      order: currentSitesLength + index,
+    }));
+
+    const updatedSites = [...state.sites, ...newSites];
+    storage.set('sites', updatedSites);
+
+    set({
+      categories: updatedCategories,
+      sites: updatedSites,
+      importBookmarksOpen: false,
+      pendingBookmarks: [],
+    });
     get().triggerAutoSync();
   },
 

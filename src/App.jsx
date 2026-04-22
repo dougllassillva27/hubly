@@ -13,6 +13,7 @@ import AddSiteModal from './components/AddSiteModal';
 import ConfirmModal from './components/ConfirmModal';
 import AIChatModal from './components/AIChatModal';
 import StarCanvas from './components/StarCanvas';
+import ImportBookmarksModal from './components/ImportBookmarksModal';
 
 export default function App() {
   const { theme, openSettings } = useStore();
@@ -83,6 +84,7 @@ export default function App() {
       <AddSiteModal />
       <ConfirmModal />
       <AIChatModal />
+      <ImportBookmarksModal />
     </div>
   );
 }

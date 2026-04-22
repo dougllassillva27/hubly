@@ -21,6 +21,7 @@ import {
   RefreshCw,
   LayoutGrid,
   ChevronDown,
+  Bookmark,
 } from 'lucide-react';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import {
@@ -159,6 +160,8 @@ export default function SettingsModal() {
     pullFromCloud,
     autoSync,
     setAutoSync,
+    setPendingBookmarks,
+    openImportBookmarks,
   } = useStore();
 
   const [activeTab, setActiveTab] = useState('appearance');
@@ -167,6 +170,7 @@ export default function SettingsModal() {
   const [importStatus, setImportStatus] = useState(null);
   const [syncStatus, setSyncStatus] = useState({ loading: false, type: null, text: null });
   const fileInputRef = useRef(null);
+  const htmlInputRef = useRef(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -218,6 +222,49 @@ export default function SettingsModal() {
         setImportStatus('error');
         setTimeout(() => setImportStatus(null), 3000);
       }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleImportHtml = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const html = event.target.result;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const results = [];
+
+      const walk = (dlNode, currentPath) => {
+        Array.from(dlNode.children).forEach((dt) => {
+          if (dt.tagName !== 'DT') return;
+          let h3, a, childDl;
+          Array.from(dt.children).forEach((child) => {
+            if (child.tagName === 'H3') h3 = child;
+            if (child.tagName === 'A') a = child;
+            if (child.tagName === 'DL') childDl = child;
+          });
+          let folderName = currentPath;
+          if (h3) folderName = h3.textContent.trim();
+          if (a && a.href && a.href.startsWith('http')) {
+            results.push({
+              name: a.textContent.trim() || new URL(a.href).hostname,
+              url: a.href,
+              folder: folderName || 'Favoritos',
+            });
+          }
+          if (childDl) walk(childDl, folderName);
+        });
+      };
+
+      const rootDl = doc.querySelector('dl');
+      if (rootDl) walk(rootDl, 'Favoritos');
+
+      setPendingBookmarks(results);
+      closeSettings();
+      openImportBookmarks();
     };
     reader.readAsText(file);
   };
@@ -684,14 +731,25 @@ export default function SettingsModal() {
                 <p className="text-sm text-muted mb-3">
                   Importe um arquivo de configuração para restaurar suas preferências.
                 </p>
-                <input ref={fileInputRef} type="file" accept=".json" onChange={handleImport} className="hidden" />
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center gap-2 px-4 py-3 bg-bg border border-border rounded-lg text-text font-medium hover:border-accent transition-colors"
-                >
-                  <Upload size={18} />
-                  Importar JSON
-                </button>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input ref={fileInputRef} type="file" accept=".json" onChange={handleImport} className="hidden" />
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="flex flex-1 items-center justify-center gap-2 px-4 py-3 bg-bg border border-border rounded-lg text-text font-medium hover:border-accent transition-colors"
+                  >
+                    <Upload size={18} />
+                    Importar JSON
+                  </button>
+                  <input ref={htmlInputRef} type="file" accept=".html" onChange={handleImportHtml} className="hidden" />
+                  <button
+                    onClick={() => htmlInputRef.current?.click()}
+                    className="flex flex-1 items-center justify-center gap-2 px-4 py-3 bg-bg border border-border rounded-lg text-text font-medium hover:border-accent transition-colors"
+                  >
+                    <Bookmark size={18} />
+                    Importar do Chrome
+                  </button>
+                </div>
 
                 {importStatus && (
                   <div
