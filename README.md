@@ -33,9 +33,11 @@ Sol Hub resolve isso colocando tudo que você precisa a um clique de distância.
 ### Para usuários:
 
 - **Organize seus sites** - Agrupe por categorias (Dev, Trabalho, Social, Entretenimento...) e encontre o que precisa instantaneamente
-- **Pesquise mais rápido** - 6 provedores de busca com um toque (Google, Bing, DuckDuckGo, YouTube, Brave, Ecosia)
+- **Pesquise mais rápido** - Vários provedores de busca com um toque (Google, DuckDuckGo, YouTube, Ecosia)
 - **Personalize o visual** - 7 temas únicos, do minimalista ao cyberpunk
 - **Feed de notícias** - Fique atualizado com tópicos que interessam a você
+- **Chat de IA Integrado** - Converse com ChatGPT nativamente, protegido por criptografia de ponta a ponta local
+- **Sincronização em Nuvem** - Faça backup e restaure seus dados em qualquer dispositivo usando uma Senha Mestra
 - **Sem cadastro** - Tudo salvo localmente, sem contas, sem rastreamento
 - **Leve suas configurações** - Exporte e importe seu setup em JSON
 
@@ -48,8 +50,9 @@ Este projeto demonstra competência em:
 - **UX/UI** - Interface intuitiva com micro-interações e animações suaves
 - **Performance** - Vite para build instantâneo, zero bibliotecas pesadas
 - **Responsividade** - Funciona perfeitamente em qualquer tela
-- **Persistência** - localStorage com sincronização automática
+- **Persistência e Cloud** - `localStorage` + Neon DB (PostgreSQL) via Netlify Functions (Serverless)
 - **Drag & Drop** - dnd-kit para reordenação fluida
+- **Segurança** - Criptografia AES-256 no client-side para proteção de API Keys (OpenAI)
 - **Temas dinâmicos** - CSS variables para troca de temas sem reload
 
 ---
@@ -81,9 +84,14 @@ Exibição em tempo real com formato localizado em português. Simples, elegante
 
 ### Feed de Notícias
 
-- RSS gratuito integrado (sem API key necessária)
+- RSS gratuito integrado em tempo real (via proxy serverless, sem limites de cache)
 - Suporte a GNews API para mais fontes
 - Escolha tópicos: tecnologia, ciência, negócios...
+
+### IA e Sincronização Segura
+
+- Traga sua própria chave da **OpenAI** e converse com o ChatGPT nativamente.
+- Sua chave é criptografada no seu navegador (AES-256) atrelada à sua **Senha Mestra**. Ninguém, nem mesmo o servidor, pode lê-la.
 
 ### 7 Temas Únicos
 

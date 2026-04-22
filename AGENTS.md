@@ -6,15 +6,16 @@ Sol Hub é uma **startpage/new-tab page** para navegador — SPA client-side em 
 
 ## Stack
 
-| Camada       | Tecnologia                                                   |
-| ------------ | ------------------------------------------------------------ |
-| UI           | React 18 (JSX, **sem TypeScript**)                           |
-| Build        | Vite 5                                                       |
-| Estado       | Zustand — store único plano em `src/store/useStore.js`       |
-| Estilo       | Tailwind CSS 3 + CSS custom properties (variáveis temáticas) |
-| Drag & Drop  | @dnd-kit (core + sortable + utilities)                       |
-| Ícones       | Lucide React                                                 |
-| Persistência | `localStorage` com prefixo `sp_` (`src/utils/storage.js`)    |
+| Camada       | Tecnologia                                                         |
+| ------------ | ------------------------------------------------------------------ |
+| UI           | React 18 (JSX, **sem TypeScript**)                                 |
+| Build        | Vite 5                                                             |
+| Estado       | Zustand — store único plano em `src/store/useStore.js`             |
+| Estilo       | Tailwind CSS 3 + CSS custom properties (variáveis temáticas)       |
+| Drag & Drop  | @dnd-kit (core + sortable + utilities)                             |
+| Ícones       | Lucide React                                                       |
+| Persistência | `localStorage` com prefixo `sp_` e sincronização nuvem via Neon DB |
+| Segurança    | `crypto-js` para criptografia AES-256 síncrona client-side         |
 
 ## Estrutura de Diretórios
 
@@ -42,7 +43,7 @@ src/
 
 - Store único e plano em `src/store/useStore.js`.
 - Toda mutação que precisa persistir chama `storage.set()` **sincronamente** dentro da ação.
-- Estado inclui: `sites`, `categories`, `activeCategory`, `theme`, `searchProvider`, `searchQuery`, `newsProvider`, `newsApiKey`, `newsTopics`, `newsItems`, `newsLoading`, `settingsOpen`, `addSiteOpen`, `editingSite`.
+- Estado inclui: `sites`, `categories`, `activeCategory`, `theme`, `searchProvider`, `searchQuery`, `newsProvider`, `newsApiKey`, `newsTopics`, `newsItems`, `newsLoading`, `settingsOpen`, `addSiteOpen`, `editingSite`, `openAiApiKey`, `syncToken`, `autoSync`.
 - Exporta também o array `searchProviders` (Google, Bing, DuckDuckGo, YouTube, Brave, Ecosia).
 
 ### Temas
@@ -60,7 +61,8 @@ src/
 - `CategoryFilter` — abas de filtro + botão "Adicionar Site".
 - `SiteGrid` — grid sortable com `DndContext > SortableContext`, usa `rectSortingStrategy`.
 - `SiteCard` — usa `useSortable`, ações de editar/deletar aparecem no hover.
-- `NewsFeed` — feed de notícias, busca via RSS (`rss2json`) ou GNews API, auto-refresh 5min.
+- `NewsFeed` — feed de notícias em tempo real via Netlify Function (`/.netlify/functions/rss`) bypassando CORS.
+- `AIChatModal` — interface de chat IA conectada ao OpenAI (`gpt-4o-mini`). API Key é criptografada localmente usando a Senha Mestra (syncToken).
 - `SettingsModal` — 5 abas (Geral, Sites, Categorias, Notícias, Dados).
 - `AddSiteModal` — modal para adicionar/editar site.
 
@@ -78,11 +80,12 @@ src/
 
 ## APIs Externas (client-side)
 
-| Serviço         | URL                                                        | Uso                                      |
-| --------------- | ---------------------------------------------------------- | ---------------------------------------- |
-| Google Favicons | `https://www.google.com/s2/favicons?domain=<domain>&sz=64` | Ícone de site (fallback: primeira letra) |
-| RSS2JSON        | `https://api.rss2json.com/v1/api.json?rss_url=<feed>`      | Notícias modo RSS                        |
-| GNews           | `https://gnews.io/api/v4/top-headlines`                    | Notícias modo GNews (requer API key)     |
+| Serviço         | URL                                                        | Uso                                         |
+| --------------- | ---------------------------------------------------------- | ------------------------------------------- |
+| Google Favicons | `https://www.google.com/s2/favicons?domain=<domain>&sz=64` | Ícone de site (fallback: primeira letra)    |
+| OpenAI API      | `https://api.openai.com/v1/chat/completions`               | Motor do Chat IA (requer API key do user)   |
+| GNews           | `https://gnews.io/api/v4/top-headlines`                    | Notícias modo GNews (requer API key)        |
+| Netlify Fns     | `/.netlify/functions/rss`, `/.netlify/functions/sync`      | Proxy de RSS (sem cache) e Sincronização DB |
 
 ## Comandos
 
