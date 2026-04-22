@@ -63,14 +63,29 @@ export default function ImportBookmarksModal() {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
+        <div className="flex items-start sm:items-center justify-between p-6 border-b border-border">
           <div>
             <h2 className="text-xl font-semibold text-text">Importar Favoritos</h2>
-            <p className="text-sm text-muted mt-1">
-              {pendingBookmarks.length} links encontrados. Selecione quais deseja importar.
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2">
+              <p className="text-sm text-muted">{pendingBookmarks.length} links encontrados.</p>
+              <div className="flex items-center gap-2 sm:border-l sm:border-border sm:pl-4">
+                <button
+                  onClick={() => setSelectedUrls(new Set(pendingBookmarks.map((b) => b.url)))}
+                  className="text-xs font-medium text-accent hover:underline"
+                >
+                  Marcar Todos
+                </button>
+                <span className="text-muted text-xs">•</span>
+                <button
+                  onClick={() => setSelectedUrls(new Set())}
+                  className="text-xs font-medium text-muted hover:text-text hover:underline"
+                >
+                  Desmarcar Todos
+                </button>
+              </div>
+            </div>
           </div>
-          <button onClick={closeImportBookmarks} className="text-muted hover:text-text transition-colors">
+          <button onClick={closeImportBookmarks} className="text-muted hover:text-text transition-colors -mt-1 sm:mt-0">
             <X size={20} />
           </button>
         </div>
