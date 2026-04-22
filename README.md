@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/img/Sol%20Hub%20-%20Banner.webp" alt="Sol Hub Banner" />
+</div>
+
 # Sol Hub
 
 **Sua página inicial, do seu jeito.**
@@ -12,10 +16,9 @@ Sol Hub é uma página inicial personalizada para seu navegador. Rápida, bonita
 
 ## Preview
 
-<!-- Adicione seu screenshot aqui -->
 <div align="center">
   
-!Sol Hub Preview
+  <img src="assets/img/preview.png" alt="Sol Hub Preview" />
 
 </div>
 
