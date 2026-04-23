@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -14,6 +14,11 @@ import SiteCard from './SiteCard';
 
 export default function SiteGrid() {
   const { sites, activeCategory, searchQuery, reorderSites } = useStore();
+  const [visibleCount, setVisibleCount] = useState(30);
+
+  useEffect(() => {
+    setVisibleCount(30);
+  }, [activeCategory, searchQuery]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -47,6 +52,10 @@ export default function SiteGrid() {
     return result;
   }, [sites, activeCategory, searchQuery]);
 
+  const isAllCategory = activeCategory === 'all' && !searchQuery.trim();
+  const displayedSites = isAllCategory ? filteredSites.slice(0, visibleCount) : filteredSites;
+  const hasMore = isAllCategory && visibleCount < filteredSites.length;
+
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -66,14 +75,25 @@ export default function SiteGrid() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 mb-12">
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={filteredSites.map((s) => s.id)} strategy={rectSortingStrategy}>
+        <SortableContext items={displayedSites.map((s) => s.id)} strategy={rectSortingStrategy}>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(70px,1fr))] sm:grid-cols-[repeat(auto-fill,minmax(96px,1fr))] gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-8 justify-items-center">
-            {filteredSites.map((site) => (
+            {displayedSites.map((site) => (
               <SiteCard key={site.id} site={site} />
             ))}
           </div>
         </SortableContext>
       </DndContext>
+
+      {hasMore && (
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={() => setVisibleCount((prev) => prev + 30)}
+            className="px-6 py-2.5 bg-card border border-border rounded-xl text-text hover:border-accent hover:text-accent shadow-sm transition-all text-sm font-medium"
+          >
+            Ver mais sites
+          </button>
+        </div>
+      )}
 
       {filteredSites.length === 0 && (
         <div className="text-center py-12 text-muted">
