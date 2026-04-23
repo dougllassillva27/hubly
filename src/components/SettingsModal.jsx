@@ -631,6 +631,10 @@ export default function SettingsModal() {
                         api-football.com
                       </a>
                     </p>
+                    <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl text-blue-400 text-xs leading-relaxed">
+                      <strong>Aviso:</strong> A API-Football gratuita permite apenas 100 requisições diárias. Para
+                      economizar sua cota, os jogos são cacheados localmente por 1 hora.
+                    </div>
                   </>
                 )}
               </div>

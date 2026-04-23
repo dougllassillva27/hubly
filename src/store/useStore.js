@@ -67,6 +67,8 @@ const useStore = create((set, get) => ({
 
   // Futebol (Hubly Futebol)
   futebolApiKey: decrypt(storage.get('futebol_apikey'), storage.get('sync_token') || '') || '',
+  futebolJogosCache: storage.get('futebol_jogos_cache') || [],
+  futebolJogosCacheTime: storage.get('futebol_jogos_cache_time') || 0,
 
   // UI State
   settingsOpen: false,
@@ -381,6 +383,12 @@ const useStore = create((set, get) => ({
 
   clearInitialChatMessage: () => {
     set({ initialChatMessage: null });
+  },
+
+  setFutebolJogosCache: (jogos) => {
+    storage.set('futebol_jogos_cache', jogos);
+    storage.set('futebol_jogos_cache_time', Date.now());
+    set({ futebolJogosCache: jogos, futebolJogosCacheTime: Date.now() });
   },
 
   setFutebolApiKey: (key) => {

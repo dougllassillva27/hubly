@@ -33,7 +33,7 @@ export default function FutebolTab() {
             Jogos de Hoje
           </h2>
           <button
-            onClick={fetchJogos}
+            onClick={() => fetchJogos(true)}
             disabled={loading.jogos}
             className="p-2 text-muted hover:text-accent transition-colors disabled:opacity-50"
             title="Buscar jogos"
