@@ -80,7 +80,6 @@ const futebolLigasOpcoes = [
   { id: 'world cup', label: 'Copa do Mundo' },
   { id: 'wc qualification south america', label: 'Eliminatórias América do Sul' },
   { id: 'champions league', label: 'Champions League' },
-  { id: 'campeonato espanhol', label: 'Campeonato Espanhol' },
   { id: 'premier league', label: 'Premier League' },
   { id: 'la liga', label: 'La Liga' },
 ];
