@@ -71,17 +71,19 @@ const availableTopics = [
 ];
 
 const futebolLigasOpcoes = [
-  { id: 'serie a', label: 'Brasileiro Série A' },
-  { id: 'serie b', label: 'Brasileiro Série B' },
-  { id: 'copa do brasil', label: 'Copa do Brasil' },
-  { id: 'gaucho', label: 'Campeonato Gaúcho' },
-  { id: 'libertadores', label: 'Libertadores' },
-  { id: 'sudamericana', label: 'Sul-Americana' },
-  { id: 'world cup', label: 'Copa do Mundo' },
-  { id: 'wc qualification south america', label: 'Eliminatórias América do Sul' },
-  { id: 'champions league', label: 'Champions League' },
-  { id: 'premier league', label: 'Premier League' },
-  { id: 'la liga', label: 'La Liga' },
+  { id: '71', label: 'Brasileirão Série A' },
+  { id: '72', label: 'Brasileirão Série B' },
+  { id: '73', label: 'Copa do Brasil' },
+  { id: '13', label: 'Libertadores' },
+  { id: '11', label: 'Sul-Americana' },
+  { id: '475', label: 'Paulistão' },
+  { id: '624', label: 'Cariocão' },
+  { id: '629', label: 'Mineiro' },
+  { id: '477', label: 'Gauchão' },
+  { id: '2', label: 'Champions League' },
+  { id: '39', label: 'Premier League' },
+  { id: '140', label: 'La Liga' },
+  { id: '135', label: 'Serie A Italiana' },
 ];
 
 function SortableCategoryItem({ cat, onRemove, onUpdate }) {
