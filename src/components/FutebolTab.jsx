@@ -48,7 +48,7 @@ export default function FutebolTab() {
         ) : jogos.length > 0 ? (
           <JogosHoje jogos={jogos} />
         ) : (
-          <EmptyState message="Clique no botão acima para carregar os jogos." />
+          <EmptyState message="Sem jogos nos campeonatos selecionados hoje." />
         )}
       </div>
 
