@@ -1,11 +1,21 @@
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configurações
-const diretorioBase = path.resolve(__dirname, '..'); // Raiz do projeto
-const diretoriosIgnorados = ['node_modules', '.git', 'versionamento'];
-const extensoesAlvo = ['.html', '.css', '.js', '.py', '.php'];
+const diretorioBase = path.resolve(__dirname, '../dist'); // Alvo: pasta de build do Vite
+const diretoriosIgnorados = ['node_modules', '.git'];
+const extensoesAlvo = ['.html', '.css', '.js', '.json', '.webmanifest'];
+
+// Barreira de segurança: impede erro se dist/ não existir
+if (!fs.existsSync(diretorioBase)) {
+  console.warn(`[AVISO] Pasta dist/ não encontrada em ${diretorioBase}. Abortando versionamento.`);
+  process.exit(0);
+}
 
 /**
  * Gera um hash MD5 baseado no conteúdo físico do arquivo.
