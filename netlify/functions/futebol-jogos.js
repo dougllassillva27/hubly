@@ -1,30 +1,22 @@
 export const handler = async (event) => {
-  const apiKey = event.headers['x-api-key'];
-  const ligasParam = event.queryStringParameters?.ligas;
-
-  if (!apiKey) {
-    return { statusCode: 401, body: JSON.stringify({ error: 'API Key ausente' }) };
+  let apiKey = event.headers['x-api-key'];
+  if (!apiKey || apiKey === 'null' || apiKey === 'undefined' || apiKey.trim() === '') {
+    apiKey = '3'; // Tier grátis/teste TheSportsDB
   }
+  const ligasParam = event.queryStringParameters?.ligas;
 
   const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }); // YYYY-MM-DD
 
   try {
-    const response = await fetch(
-      `https://v3.football.api-sports.io/fixtures?date=${today}&timezone=America/Sao_Paulo`,
-      {
-        headers: {
-          'x-apisports-key': apiKey,
-        },
-      }
-    );
+    const response = await fetch(`https://www.thesportsdb.com/api/v1/json/${apiKey}/eventsday.php?d=${today}&s=Soccer`);
 
     const data = await response.json();
 
-    if (data.errors && Object.keys(data.errors).length > 0) {
-      return { statusCode: 400, body: JSON.stringify({ error: Object.values(data.errors)[0] }) };
+    if (!data.events) {
+      return { statusCode: 200, body: JSON.stringify({ dataReferencia: today, jogos: [] }) };
     }
 
-    let jogosFiltrados = data.response || [];
+    let jogosFiltrados = data.events;
 
     if (ligasParam && ligasParam.trim() !== '') {
       const ligasDesejadas = ligasParam
@@ -34,8 +26,8 @@ export const handler = async (event) => {
         .filter(Boolean);
 
       jogosFiltrados = jogosFiltrados.filter((j) => {
-        const nameLower = j.league.name.toLowerCase();
-        const leagueId = String(j.league.id);
+        const nameLower = j.strLeague?.toLowerCase() || '';
+        const leagueId = String(j.idLeague);
         return ligasDesejadas.some((liga) => {
           if (/^\d+$/.test(liga)) {
             return leagueId === liga;
@@ -44,26 +36,54 @@ export const handler = async (event) => {
         });
       });
     } else {
+      // Padrão Brasil e ligas globais principais se não houver filtro
       jogosFiltrados = jogosFiltrados.filter((j) => {
-        return j.league.country === 'Brazil';
+        return (
+          ['4351', '4352', '4354', '4406', '4480', '4328'].includes(String(j.idLeague)) ||
+          (j.strLeague && j.strLeague.toLowerCase().includes('brazil'))
+        );
       });
     }
 
-    const jogos = jogosFiltrados.map((j) => ({
-      id: String(j.fixture.id),
-      campeonato: j.league.name,
-      rodada: j.league.round,
-      horario: new Date(j.fixture.date).toLocaleTimeString('pt-BR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'America/Sao_Paulo',
-      }),
-      status: j.fixture.status.short, // NS, LIVE, HT, FT...
-      minuto: j.fixture.status.elapsed,
-      mandante: { nome: j.teams.home.name, escudo: j.teams.home.logo },
-      visitante: { nome: j.teams.away.name, escudo: j.teams.away.logo },
-      placar: { mandante: j.goals.home, visitante: j.goals.away },
-    }));
+    const normalizeStatus = (status) => {
+      const s = (status || '').toUpperCase();
+      if (s === 'NOT STARTED') return 'NS';
+      if (s === 'MATCH FINISHED') return 'FT';
+      if (s === 'IN PROGRESS') return 'LIVE';
+      if (s === 'POSTPONED') return 'PST';
+      if (s === 'CANCELLED') return 'CANC';
+      if (s === 'HALFTIME') return 'HT';
+      return s || 'NS';
+    };
+
+    const jogos = jogosFiltrados.map((j) => {
+      let horarioFormatado = '';
+      try {
+        const d = new Date(`${j.dateEvent}T${j.strTime || '00:00:00'}`);
+        horarioFormatado = d.toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZone: 'America/Sao_Paulo',
+        });
+      } catch {
+        horarioFormatado = j.strTime ? j.strTime.substring(0, 5) : '00:00';
+      }
+
+      return {
+        id: String(j.idEvent),
+        campeonato: j.strLeague,
+        rodada: j.intRound || '',
+        horario: horarioFormatado,
+        status: normalizeStatus(j.strStatus),
+        minuto: j.strProgress || null,
+        mandante: { nome: j.strHomeTeam, escudo: j.strHomeTeamBadge || null },
+        visitante: { nome: j.strAwayTeam, escudo: j.strAwayTeamBadge || null },
+        placar: {
+          mandante: j.intHomeScore !== null ? parseInt(j.intHomeScore) : null,
+          visitante: j.intAwayScore !== null ? parseInt(j.intAwayScore) : null,
+        },
+      };
+    });
 
     // Ordenação: Ao vivo (1) > Agendado (2) > Encerrado (3)
     const getPesoStatus = (status) => {

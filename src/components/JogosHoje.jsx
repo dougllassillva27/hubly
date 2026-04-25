@@ -21,11 +21,17 @@ export default function JogosHoje({ jogos }) {
           <div className="flex items-center justify-between gap-2">
             {/* Mandante */}
             <div className="flex items-center gap-2 w-[40%]">
-              <img
-                src={jogo.mandante.escudo}
-                alt={jogo.mandante.nome}
-                className="w-5 h-5 object-contain flex-shrink-0"
-              />
+              {jogo.mandante.escudo ? (
+                <img
+                  src={jogo.mandante.escudo}
+                  alt={jogo.mandante.nome}
+                  className="w-5 h-5 object-contain flex-shrink-0"
+                />
+              ) : (
+                <div className="w-5 h-5 bg-border rounded-full flex items-center justify-center text-[10px] font-bold text-muted flex-shrink-0">
+                  {jogo.mandante.nome.substring(0, 2).toUpperCase()}
+                </div>
+              )}
               <span className="text-sm font-medium text-text truncate">{jogo.mandante.nome}</span>
             </div>
 
@@ -48,11 +54,17 @@ export default function JogosHoje({ jogos }) {
             {/* Visitante */}
             <div className="flex items-center gap-2 w-[40%] justify-end">
               <span className="text-sm font-medium text-text truncate text-right">{jogo.visitante.nome}</span>
-              <img
-                src={jogo.visitante.escudo}
-                alt={jogo.visitante.nome}
-                className="w-5 h-5 object-contain flex-shrink-0"
-              />
+              {jogo.visitante.escudo ? (
+                <img
+                  src={jogo.visitante.escudo}
+                  alt={jogo.visitante.nome}
+                  className="w-5 h-5 object-contain flex-shrink-0"
+                />
+              ) : (
+                <div className="w-5 h-5 bg-border rounded-full flex items-center justify-center text-[10px] font-bold text-muted flex-shrink-0">
+                  {jogo.visitante.nome.substring(0, 2).toUpperCase()}
+                </div>
+              )}
             </div>
           </div>
         </div>

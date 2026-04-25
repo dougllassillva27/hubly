@@ -71,21 +71,20 @@ const availableTopics = [
 ];
 
 const futebolLigasOpcoes = [
-  { id: '71', label: 'Brasileirão Série A' },
-  { id: '72', label: 'Brasileirão Série B' },
-  { id: '73', label: 'Copa do Brasil' },
-  { id: '13', label: 'Libertadores' },
-  { id: '11', label: 'Sul-Americana' },
-  { id: '475', label: 'Paulistão' },
-  { id: '624', label: 'Cariocão' },
-  { id: '629', label: 'Mineiro' },
-  { id: '477', label: 'Gauchão' },
-  { id: '2', label: 'Champions League' },
-  { id: '39', label: 'Premier League' },
-  { id: '140', label: 'La Liga' },
-  { id: '78', label: 'Bundesliga' },
-  { id: '61', label: 'Ligue 1' },
-  { id: '1', label: 'Copa do Mundo' },
+  { id: '4351', label: 'Brasileirão Série A' },
+  { id: '4352', label: 'Brasileirão Série B' },
+  { id: '4354', label: 'Copa do Brasil' },
+  { id: '4406', label: 'Libertadores' },
+  { id: '4408', label: 'Sul-Americana' },
+  { id: 'paulista', label: 'Paulistão' },
+  { id: 'carioca', label: 'Cariocão' },
+  { id: 'mineiro', label: 'Mineiro' },
+  { id: 'gaucho', label: 'Gauchão' },
+  { id: '4480', label: 'Champions League' },
+  { id: '4328', label: 'Premier League' },
+  { id: '4335', label: 'La Liga' },
+  { id: '4331', label: 'Bundesliga' },
+  { id: '4334', label: 'Ligue 1' },
 ];
 
 function SortableCategoryItem({ cat, onRemove, onUpdate }) {
@@ -633,7 +632,7 @@ export default function SettingsModal() {
           {activeTab === 'futebol' && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-sm font-medium text-muted mb-3">API Key do API-Football (Jogos Hoje)</h3>
+                <h3 className="text-sm font-medium text-muted mb-3">API Key do TheSportsDB (Jogos Hoje)</h3>
                 {!syncToken ? (
                   <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl text-yellow-500 text-sm">
                     Configure sua <strong>Senha Mestra</strong> na aba "Dados" primeiro. Ela será usada para
@@ -649,19 +648,21 @@ export default function SettingsModal() {
                       className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
                     />
                     <p className="text-xs text-muted mt-2">
-                      Sua chave é criptografada localmente. Obtenha uma chave gratuita em{' '}
+                      Sua chave é criptografada localmente. Opcional: se vazia, usa o tier público (key 3). Obtenha sua
+                      key em{' '}
                       <a
-                        href="https://api-football.com/"
+                        href="https://www.thesportsdb.com/"
                         target="_blank"
                         rel="noopener"
                         className="text-accent hover:underline"
                       >
-                        api-football.com
+                        thesportsdb.com
                       </a>
                     </p>
                     <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl text-blue-400 text-xs leading-relaxed">
-                      <strong>Aviso:</strong> A API-Football gratuita permite apenas 100 requisições diárias. Para
-                      economizar sua cota, os jogos são cacheados localmente por 30 minutos.
+                      <strong>Aviso:</strong> O TheSportsDB não entrega eventos ao vivo em tempo real para todas as
+                      ligas (o foco principal é agenda e histórico). O frontend faz cache de 30 minutos para evitar
+                      excesso.
                     </div>
                     <div className="mt-6">
                       <h3 className="text-sm font-medium text-muted mb-3">Filtro de Campeonatos</h3>
