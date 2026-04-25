@@ -70,23 +70,6 @@ const availableTopics = [
   { id: 'sports', label: 'Esportes' },
 ];
 
-const futebolLigasOpcoes = [
-  { id: '4351', label: 'Brasileirão Série A' },
-  { id: '4352', label: 'Brasileirão Série B' },
-  { id: '4354', label: 'Copa do Brasil' },
-  { id: '4406', label: 'Libertadores' },
-  { id: '4408', label: 'Sul-Americana' },
-  { id: 'paulista', label: 'Paulistão' },
-  { id: 'carioca', label: 'Cariocão' },
-  { id: 'mineiro', label: 'Mineiro' },
-  { id: 'gaucho', label: 'Gauchão' },
-  { id: '4480', label: 'Champions League' },
-  { id: '4328', label: 'Premier League' },
-  { id: '4335', label: 'La Liga' },
-  { id: '4331', label: 'Bundesliga' },
-  { id: '4334', label: 'Ligue 1' },
-];
-
 function SortableCategoryItem({ cat, onRemove, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(cat);
@@ -193,12 +176,12 @@ export default function SettingsModal() {
     setAutoSync,
     setPendingBookmarks,
     openImportBookmarks,
-    futebolApiKey,
-    setFutebolApiKey,
-    futebolLigasFiltro,
-    setFutebolLigasFiltro,
     futebolRssUrl,
     setFutebolRssUrl,
+    futebolRssProxJogos,
+    setFutebolRssProxJogos,
+    futebolRssResultados,
+    setFutebolRssResultados,
   } = useStore();
 
   const [activeTab, setActiveTab] = useState('appearance');
@@ -208,12 +191,6 @@ export default function SettingsModal() {
   const [syncStatus, setSyncStatus] = useState({ loading: false, type: null, text: null });
   const fileInputRef = useRef(null);
   const htmlInputRef = useRef(null);
-
-  const ligasSelecionadas = futebolLigasFiltro
-    .toLowerCase()
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean);
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
@@ -631,84 +608,42 @@ export default function SettingsModal() {
           {/* Futebol Tab */}
           {activeTab === 'futebol' && (
             <div className="space-y-6">
+              <div className="p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl text-blue-400 text-sm">
+                <strong>Nova Fonte de Dados:</strong> O sistema de jogos agora utiliza os feeds RSS públicos do{' '}
+                <strong>Ogol</strong> para maior estabilidade e cobertura global, sem a necessidade de chaves de API.
+              </div>
+
               <div>
-                <h3 className="text-sm font-medium text-muted mb-3">API Key do TheSportsDB (Jogos Hoje)</h3>
-                {!syncToken ? (
-                  <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl text-yellow-500 text-sm">
-                    Configure sua <strong>Senha Mestra</strong> na aba "Dados" primeiro. Ela será usada para
-                    criptografar sua chave no navegador.
-                  </div>
-                ) : (
-                  <>
-                    <input
-                      type="password"
-                      value={futebolApiKey}
-                      onChange={(e) => setFutebolApiKey(e.target.value)}
-                      placeholder="Insira sua API Key..."
-                      className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
-                    />
-                    <p className="text-xs text-muted mt-2">
-                      Sua chave é criptografada localmente. Opcional: se vazia, usa o tier público (key 3). Obtenha sua
-                      key em{' '}
-                      <a
-                        href="https://www.thesportsdb.com/"
-                        target="_blank"
-                        rel="noopener"
-                        className="text-accent hover:underline"
-                      >
-                        thesportsdb.com
-                      </a>
-                    </p>
-                    <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl text-blue-400 text-xs leading-relaxed">
-                      <strong>Aviso:</strong> O TheSportsDB não entrega eventos ao vivo em tempo real para todas as
-                      ligas (o foco principal é agenda e histórico). O frontend faz cache de 30 minutos para evitar
-                      excesso.
-                    </div>
-                    <div className="mt-6">
-                      <h3 className="text-sm font-medium text-muted mb-3">Filtro de Campeonatos</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {futebolLigasOpcoes.map((liga) => {
-                          const isChecked = ligasSelecionadas.includes(liga.id);
-                          return (
-                            <label
-                              key={liga.id}
-                              className={`flex items-center gap-3 p-3 bg-bg border rounded-lg cursor-pointer transition-colors ${isChecked ? 'border-accent' : 'border-border hover:border-accent/50'}`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={() => {
-                                  if (isChecked) {
-                                    setFutebolLigasFiltro(ligasSelecionadas.filter((l) => l !== liga.id).join(', '));
-                                  } else {
-                                    setFutebolLigasFiltro([...ligasSelecionadas, liga.id].join(', '));
-                                  }
-                                }}
-                                className="w-4 h-4 rounded border-border bg-card text-accent focus:ring-accent focus:ring-offset-bg transition-colors"
-                              />
-                              <span className="text-sm text-text">{liga.label}</span>
-                            </label>
-                          );
-                        })}
-                      </div>
-                      <p className="text-xs text-muted mt-2">
-                        Se nenhum campeonato for selecionado, o sistema exibirá todos os jogos do Brasil por padrão. Ao
-                        alterar, o cache será limpo.
-                      </p>
-                    </div>
-                    <div className="mt-6">
-                      <h3 className="text-sm font-medium text-muted mb-3">URL do RSS de Notícias</h3>
-                      <input
-                        type="text"
-                        value={futebolRssUrl}
-                        onChange={(e) => setFutebolRssUrl(e.target.value)}
-                        placeholder="https://www.ogol.com.br/rss/noticias.php"
-                        className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
-                      />
-                      <p className="text-xs text-muted mt-2">URL do feed RSS para exibir as notícias de futebol.</p>
-                    </div>
-                  </>
-                )}
+                <h3 className="text-sm font-medium text-muted mb-3">URL do RSS de Notícias</h3>
+                <input
+                  type="text"
+                  value={futebolRssUrl}
+                  onChange={(e) => setFutebolRssUrl(e.target.value)}
+                  placeholder="https://www.ogol.com.br/rss/noticias.php"
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+                />
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-muted mb-3">URL do RSS de Próximos Jogos</h3>
+                <input
+                  type="text"
+                  value={futebolRssProxJogos}
+                  onChange={(e) => setFutebolRssProxJogos(e.target.value)}
+                  placeholder="https://www.ogol.com.br/rss/proxjogos.php"
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+                />
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-muted mb-3">URL do RSS de Resultados</h3>
+                <input
+                  type="text"
+                  value={futebolRssResultados}
+                  onChange={(e) => setFutebolRssResultados(e.target.value)}
+                  placeholder="https://www.ogol.com.br/rss/resultados.php"
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+                />
               </div>
             </div>
           )}

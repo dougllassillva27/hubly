@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import useStore from '../store/useStore';
 
 export function useFutebol() {
-  const { futebolApiKey } = useStore();
   const [noticias, setNoticias] = useState([]);
   const [jogos, setJogos] = useState([]);
   const [loading, setLoading] = useState({ noticias: true, jogos: false });
@@ -31,16 +30,10 @@ export function useFutebol() {
 
   const fetchJogos = useCallback(async (force = false) => {
     const state = useStore.getState();
-    const apiKey = state.futebolApiKey;
     const cache = state.futebolJogosCache;
     const cacheTime = state.futebolJogosCacheTime;
-    const ligasFiltro = state.futebolLigasFiltro;
-
-    if (!apiKey) {
-      setError((prev) => ({ ...prev, jogos: 'API Key de Futebol não configurada.' }));
-      setLoading((prev) => ({ ...prev, jogos: false }));
-      return;
-    }
+    const urlProx = state.futebolRssProxJogos;
+    const urlRes = state.futebolRssResultados;
 
     const now = Date.now();
     const CACHE_DURATION = 30 * 60 * 1000;
@@ -53,10 +46,8 @@ export function useFutebol() {
     setLoading((prev) => ({ ...prev, jogos: true }));
     setError((prev) => ({ ...prev, jogos: null }));
     try {
-      const url = `/.netlify/functions/futebol-jogos${ligasFiltro ? `?ligas=${encodeURIComponent(ligasFiltro)}` : ''}`;
-      const response = await fetch(url, {
-        headers: { 'x-api-key': apiKey },
-      });
+      const url = `/.netlify/functions/futebol-jogos?urlProx=${encodeURIComponent(urlProx)}&urlRes=${encodeURIComponent(urlRes)}`;
+      const response = await fetch(url);
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Falha ao buscar jogos');
 

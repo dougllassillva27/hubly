@@ -66,11 +66,11 @@ const useStore = create((set, get) => ({
   initialChatMessage: null,
 
   // Futebol (Hubly Futebol)
-  futebolApiKey: decrypt(storage.get('futebol_apikey'), storage.get('sync_token') || '') || '',
   futebolJogosCache: storage.get('futebol_jogos_cache') || [],
   futebolJogosCacheTime: storage.get('futebol_jogos_cache_time') || 0,
-  futebolLigasFiltro: storage.get('futebol_ligas_filtro') || '',
   futebolRssUrl: storage.get('futebol_rss_url') || 'https://www.ogol.com.br/rss/noticias.php',
+  futebolRssProxJogos: storage.get('futebol_rss_prox_jogos') || 'https://www.ogol.com.br/rss/proxjogos.php',
+  futebolRssResultados: storage.get('futebol_rss_resultados') || 'https://www.ogol.com.br/rss/resultados.php',
 
   // UI State
   settingsOpen: false,
@@ -393,24 +393,19 @@ const useStore = create((set, get) => ({
     set({ futebolJogosCache: jogos, futebolJogosCacheTime: Date.now() });
   },
 
-  setFutebolLigasFiltro: (filtro) => {
-    storage.set('futebol_ligas_filtro', filtro);
-    storage.set('futebol_jogos_cache', []);
-    storage.set('futebol_jogos_cache_time', 0);
-    set({ futebolLigasFiltro: filtro, futebolJogosCache: [], futebolJogosCacheTime: 0 });
-  },
-
   setFutebolRssUrl: (url) => {
     storage.set('futebol_rss_url', url);
     set({ futebolRssUrl: url });
   },
 
-  setFutebolApiKey: (key) => {
-    const token = get().syncToken;
-    if (token) {
-      storage.set('futebol_apikey', encrypt(key, token));
-    }
-    set({ futebolApiKey: key });
+  setFutebolRssProxJogos: (url) => {
+    storage.set('futebol_rss_prox_jogos', url);
+    set({ futebolRssProxJogos: url });
+  },
+
+  setFutebolRssResultados: (url) => {
+    storage.set('futebol_rss_resultados', url);
+    set({ futebolRssResultados: url });
   },
 
   addChatMessage: (message) => {
@@ -440,18 +435,12 @@ const useStore = create((set, get) => ({
 
   setSyncToken: (token) => {
     const currentKey = get().openAiApiKey;
-    const currentFutebolKey = get().futebolApiKey;
     storage.set('sync_token', token);
     set({ syncToken: token });
     if (currentKey && token) {
       storage.set('openai_apikey', encrypt(currentKey, token));
     } else if (!token) {
       storage.remove('openai_apikey');
-    }
-    if (currentFutebolKey && token) {
-      storage.set('futebol_apikey', encrypt(currentFutebolKey, token));
-    } else if (!token) {
-      storage.remove('futebol_apikey');
     }
   },
 
@@ -489,8 +478,9 @@ const useStore = create((set, get) => ({
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         notesContent: storage.get('notes_content') || '',
         weatherCity: storage.get('weather_city') || '',
-        futebolLigasFiltro: storage.get('futebol_ligas_filtro') || '',
         futebolRssUrl: storage.get('futebol_rss_url') || 'https://www.ogol.com.br/rss/noticias.php',
+        futebolRssProxJogos: storage.get('futebol_rss_prox_jogos') || 'https://www.ogol.com.br/rss/proxjogos.php',
+        futebolRssResultados: storage.get('futebol_rss_resultados') || 'https://www.ogol.com.br/rss/resultados.php',
         homeSortMethod: storage.get('home_sort_method') || 'manual',
         defaultCategory: storage.get('default_category') || 'all',
         activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
@@ -498,7 +488,6 @@ const useStore = create((set, get) => ({
         autoSync: storage.get('auto_sync') || false,
       });
       set({ openAiApiKey: decrypt(storage.get('openai_apikey'), get().syncToken) || '' });
-      set({ futebolApiKey: decrypt(storage.get('futebol_apikey'), get().syncToken) || '' });
       applyTheme(get().theme);
     }
     return success;

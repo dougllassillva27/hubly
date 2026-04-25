@@ -1,108 +1,95 @@
-export const handler = async (event) => {
-  let apiKey = event.headers['x-api-key'];
-  if (!apiKey || apiKey === 'null' || apiKey === 'undefined' || apiKey.trim() === '') {
-    apiKey = '3'; // Tier grátis/teste TheSportsDB
-  }
-  const ligasParam = event.queryStringParameters?.ligas;
+import Parser from 'rss-parser';
 
-  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }); // YYYY-MM-DD
+const parser = new Parser();
+
+const fetchAndParse = async (url) => {
+  const response = await fetch(url);
+  const buffer = await response.arrayBuffer();
+  let xml = new TextDecoder('utf-8').decode(buffer);
+  if (xml.includes('encoding="ISO-8859-1"') || xml.includes('encoding="iso-8859-1"')) {
+    xml = new TextDecoder('iso-8859-1').decode(buffer);
+  }
+  return parser.parseString(xml);
+};
+
+export const handler = async (event) => {
+  const { urlProx, urlRes } = event.queryStringParameters || {};
+  const rssProx = urlProx || 'https://www.ogol.com.br/rss/proxjogos.php';
+  const rssRes = urlRes || 'https://www.ogol.com.br/rss/resultados.php';
 
   try {
-    const response = await fetch(`https://www.thesportsdb.com/api/v1/json/${apiKey}/eventsday.php?d=${today}&s=Soccer`);
+    const [feedProx, feedRes] = await Promise.all([
+      fetchAndParse(rssProx).catch(() => ({ items: [] })),
+      fetchAndParse(rssRes).catch(() => ({ items: [] })),
+    ]);
 
-    const data = await response.json();
+    const jogos = [];
 
-    if (!data.events) {
-      return { statusCode: 200, body: JSON.stringify({ dataReferencia: today, jogos: [] }) };
-    }
-
-    let jogosFiltrados = data.events;
-
-    if (ligasParam && ligasParam.trim() !== '') {
-      const ligasDesejadas = ligasParam
-        .toLowerCase()
-        .split(',')
-        .map((s) => s.trim())
-        .filter(Boolean);
-
-      jogosFiltrados = jogosFiltrados.filter((j) => {
-        const nameLower = j.strLeague?.toLowerCase() || '';
-        const leagueId = String(j.idLeague);
-        return ligasDesejadas.some((liga) => {
-          if (/^\d+$/.test(liga)) {
-            return leagueId === liga;
+    // Próximos Jogos (Agendados)
+    feedProx.items.forEach((item, index) => {
+      // Ex: [Brasileirão] Flamengo x Vasco
+      const match = item.title.match(/^\[(.*?)\]\s+(.*?)\s+(?:x|-|vs)\s+(.*)$/i);
+      if (match) {
+        let horarioFormatado = '';
+        try {
+          const d = new Date(item.pubDate || item.isoDate);
+          if (!isNaN(d.getTime())) {
+            horarioFormatado = d.toLocaleTimeString('pt-BR', {
+              hour: '2-digit',
+              minute: '2-digit',
+              timeZone: 'America/Sao_Paulo',
+            });
           }
-          return nameLower.includes(liga);
-        });
-      });
-    } else {
-      // Padrão Brasil e ligas globais principais se não houver filtro
-      jogosFiltrados = jogosFiltrados.filter((j) => {
-        return (
-          ['4351', '4352', '4354', '4406', '4480', '4328'].includes(String(j.idLeague)) ||
-          (j.strLeague && j.strLeague.toLowerCase().includes('brazil'))
-        );
-      });
-    }
+        } catch (e) {}
 
-    const normalizeStatus = (status) => {
-      const s = (status || '').toUpperCase();
-      if (s === 'NOT STARTED') return 'NS';
-      if (s === 'MATCH FINISHED') return 'FT';
-      if (s === 'IN PROGRESS') return 'LIVE';
-      if (s === 'POSTPONED') return 'PST';
-      if (s === 'CANCELLED') return 'CANC';
-      if (s === 'HALFTIME') return 'HT';
-      return s || 'NS';
-    };
-
-    const jogos = jogosFiltrados.map((j) => {
-      let horarioFormatado = '';
-      try {
-        const d = new Date(`${j.dateEvent}T${j.strTime || '00:00:00'}`);
-        horarioFormatado = d.toLocaleTimeString('pt-BR', {
-          hour: '2-digit',
-          minute: '2-digit',
-          timeZone: 'America/Sao_Paulo',
+        jogos.push({
+          id: `prox-${index}`,
+          campeonato: match[1].trim(),
+          rodada: '',
+          horario: horarioFormatado || '00:00',
+          status: 'NS',
+          minuto: null,
+          mandante: { nome: match[2].trim(), escudo: null },
+          visitante: { nome: match[3].trim(), escudo: null },
+          placar: { mandante: null, visitante: null },
         });
-      } catch {
-        horarioFormatado = j.strTime ? j.strTime.substring(0, 5) : '00:00';
       }
-
-      return {
-        id: String(j.idEvent),
-        campeonato: j.strLeague,
-        rodada: j.intRound || '',
-        horario: horarioFormatado,
-        status: normalizeStatus(j.strStatus),
-        minuto: j.strProgress || null,
-        mandante: { nome: j.strHomeTeam, escudo: j.strHomeTeamBadge || null },
-        visitante: { nome: j.strAwayTeam, escudo: j.strAwayTeamBadge || null },
-        placar: {
-          mandante: j.intHomeScore !== null ? parseInt(j.intHomeScore) : null,
-          visitante: j.intAwayScore !== null ? parseInt(j.intAwayScore) : null,
-        },
-      };
     });
 
-    // Ordenação: Ao vivo (1) > Agendado (2) > Encerrado (3)
-    const getPesoStatus = (status) => {
-      if (['1H', '2H', 'HT', 'ET', 'P', 'LIVE'].includes(status)) return 1;
-      if (['NS'].includes(status)) return 2;
-      return 3;
-    };
+    // Resultados (Encerrados)
+    feedRes.items.forEach((item, index) => {
+      // Ex: [Brasileirão] Flamengo 2-1 Vasco ou Flamengo 2 - 1 Vasco
+      const match = item.title.match(/^\[(.*?)\]\s+(.*?)\s+(\d+)\s*-\s*(\d+)\s+(.*)$/i);
+      if (match) {
+        jogos.push({
+          id: `res-${index}`,
+          campeonato: match[1].trim(),
+          rodada: '',
+          horario: 'Encerrado',
+          status: 'FT',
+          minuto: null,
+          mandante: { nome: match[2].trim(), escudo: null },
+          visitante: { nome: match[5].trim(), escudo: null },
+          placar: { mandante: parseInt(match[3], 10), visitante: parseInt(match[4], 10) },
+        });
+      }
+    });
 
     jogos.sort((a, b) => {
-      const pesoA = getPesoStatus(a.status);
-      const pesoB = getPesoStatus(b.status);
-      if (pesoA !== pesoB) return pesoA - pesoB;
-      return a.horario.localeCompare(b.horario);
+      if (a.status === 'NS' && b.status === 'FT') return -1;
+      if (a.status === 'FT' && b.status === 'NS') return 1;
+      return 0;
     });
+
+    // Limita para não estourar a interface
+    const limitados = jogos.slice(0, 15);
+
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
 
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ dataReferencia: today, jogos }),
+      body: JSON.stringify({ dataReferencia: today, jogos: limitados }),
     };
   } catch (error) {
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
