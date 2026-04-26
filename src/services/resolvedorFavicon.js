@@ -39,6 +39,14 @@ function processQueue() {
     });
 }
 
+export const getCachedFavicon = (domain) => {
+  const cached = storage.get(`${CACHE_PREFIX}${domain}`);
+  if (cached && cached.timestamp && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.url;
+  }
+  return null;
+};
+
 export const resolverFavicon = (url) => {
   return new Promise((resolve) => {
     const domain = getDomain(url);

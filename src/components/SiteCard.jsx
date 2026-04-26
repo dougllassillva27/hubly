@@ -5,7 +5,7 @@ import { Pencil, Trash2 } from 'lucide-react';
 import useStore from '../store/useStore';
 import { getFaviconUrls, getDomain } from '../utils/favicon';
 import { salvarFaviconDb } from '../utils/faviconDb';
-import { resolverFavicon } from '../services/resolvedorFavicon';
+import { resolverFavicon, getCachedFavicon } from '../services/resolvedorFavicon';
 
 const getAvatarColor = (name) => {
   const colors = [
@@ -36,14 +36,18 @@ export default function SiteCard({ site, disableDrag }) {
   const domain = getDomain(site.url);
   const dbUrl = faviconsDb[domain];
 
+  // Lê o cache local de forma síncrona para evitar delays de promises ao transitar categorias
+  const localCachedUrl = getCachedFavicon(domain);
+
   const [faviconUrls, setFaviconUrls] = useState(() => {
     if (site.customIcon) return [site.customIcon];
     if (dbUrl) return [dbUrl];
+    if (localCachedUrl) return [localCachedUrl];
     return [];
   });
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [imgFailed, setImgFailed] = useState(false);
-  const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl);
+  const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl);
 
   const timerRef = useRef(null);
   const isLongPressRef = useRef(false);
@@ -62,6 +66,15 @@ export default function SiteCard({ site, disableDrag }) {
 
     if (dbUrl) {
       setFaviconUrls([dbUrl]);
+      setCurrentUrlIndex(0);
+      setImgFailed(false);
+      setIsResolving(false);
+      return;
+    }
+
+    const cachedUrl = getCachedFavicon(domain);
+    if (cachedUrl) {
+      setFaviconUrls([cachedUrl]);
       setCurrentUrlIndex(0);
       setImgFailed(false);
       setIsResolving(false);
