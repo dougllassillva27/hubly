@@ -4,7 +4,7 @@ import { URL } from 'node:url';
 const TIMEOUT_MS = 8000;
 
 function isPrivateIP(ip) {
-  const ipv4Match = ip.match(/^(\d)\.(\d)\.(\d)\.(\d)$/);
+  const ipv4Match = ip.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/);
   if (ipv4Match) {
     const parts = ipv4Match.slice(1).map(Number);
     if (parts[0] === 10) return true; // 10.0.0.0/8
@@ -45,15 +45,21 @@ export const handler = async (event) => {
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        Accept: 'image/webp,image/apng,image/svgxml,image/*,*/*;q=0.8',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        Accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+        'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+        Referer: new URL(url).origin + '/',
+        'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"Windows"',
       },
     });
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      return { statusCode: response.status, body: 'Erro ao buscar imagem' };
+      return { statusCode: response.status, body: `Erro na origem: ${response.statusText}` };
     }
 
     const contentType = response.headers.get('content-type') || 'application/octet-stream';
