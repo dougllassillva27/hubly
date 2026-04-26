@@ -20,62 +20,32 @@ const EmptyState = ({ message }) => (
 );
 
 export default function FutebolTab() {
-  const { noticias, jogos, loading, error, fetchNoticias, fetchJogos } = useFutebol();
+  const { noticias, loading, error, fetchNoticias } = useFutebol();
 
   return (
-    <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fadeIn">
-      {/* Coluna de Jogos */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-text flex items-center gap-2">
-            <Trophy size={20} />
-            Jogos de Hoje
-          </h2>
-          <button
-            onClick={() => fetchJogos(true)}
-            disabled={loading.jogos}
-            className="p-2 text-muted hover:text-accent transition-colors disabled:opacity-50"
-            title="Buscar jogos"
-          >
-            <RefreshCw size={16} className={loading.jogos ? 'animate-spin' : ''} />
-          </button>
-        </div>
-        {loading.jogos ? (
-          <LoadingState />
-        ) : error.jogos ? (
-          <ErrorState message={error.jogos} />
-        ) : jogos.length > 0 ? (
-          <JogosHoje jogos={jogos} />
-        ) : (
-          <EmptyState message="Nenhum jogo encontrado no momento." />
-        )}
+    <div className="w-full max-w-3xl mx-auto animate-fadeIn">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-text flex items-center gap-2">
+          <Newspaper size={20} />
+          Notícias de Futebol
+        </h2>
+        <button
+          onClick={fetchNoticias}
+          disabled={loading.noticias}
+          className="p-2 text-muted hover:text-accent transition-colors disabled:opacity-50"
+        >
+          <RefreshCw size={16} className={loading.noticias ? 'animate-spin' : ''} />
+        </button>
       </div>
-
-      {/* Coluna de Notícias */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-text flex items-center gap-2">
-            <Newspaper size={20} />
-            Notícias de Futebol
-          </h2>
-          <button
-            onClick={fetchNoticias}
-            disabled={loading.noticias}
-            className="p-2 text-muted hover:text-accent transition-colors disabled:opacity-50"
-          >
-            <RefreshCw size={16} className={loading.noticias ? 'animate-spin' : ''} />
-          </button>
-        </div>
-        {loading.noticias ? (
-          <LoadingState />
-        ) : error.noticias ? (
-          <ErrorState message={error.noticias} />
-        ) : noticias.length > 0 ? (
-          <NoticiasFutebol noticias={noticias} />
-        ) : (
-          <EmptyState message="Nenhuma notícia encontrada." />
-        )}
-      </div>
+      {loading.noticias ? (
+        <LoadingState />
+      ) : error.noticias ? (
+        <ErrorState message={error.noticias} />
+      ) : noticias.length > 0 ? (
+        <NoticiasFutebol noticias={noticias} />
+      ) : (
+        <EmptyState message="Nenhuma notícia encontrada." />
+      )}
     </div>
   );
 }
