@@ -37,7 +37,7 @@ const useStore = create((set, get) => ({
   homeSortMethod: storage.get('home_sort_method') || 'manual',
 
   // Favicons do banco (domain -> favicon_url)
-  faviconsDb: {},
+  faviconsDb: storage.get('favicons_db') || {},
 
   // Categories
   categories: storage.get('categories') || defaultCategories,
@@ -124,6 +124,7 @@ const useStore = create((set, get) => ({
         // Remove domínio antigo do cache em memória para forar re-resolução
         const faviconsDb = { ...get().faviconsDb };
         delete faviconsDb[dominioAntigo];
+        storage.set('favicons_db', faviconsDb);
         set({ faviconsDb });
       }
     }
@@ -144,6 +145,7 @@ const useStore = create((set, get) => ({
         deletarFaviconDb(token, dominio).catch(() => {});
         const faviconsDb = { ...get().faviconsDb };
         delete faviconsDb[dominio];
+        storage.set('favicons_db', faviconsDb);
         set({ faviconsDb });
       }
     }
@@ -301,13 +303,18 @@ const useStore = create((set, get) => ({
 
   // Favicons do banco
   setFaviconDb: (domain, url) => {
-    set((state) => ({ faviconsDb: { ...state.faviconsDb, [domain]: url } }));
+    set((state) => {
+      const newDb = { ...state.faviconsDb, [domain]: url };
+      storage.set('favicons_db', newDb);
+      return { faviconsDb: newDb };
+    });
   },
 
   carregarFaviconsDb: async () => {
     const token = get().syncToken;
     if (!token) return;
     const favicons = await fetchFaviconsDb(token);
+    storage.set('favicons_db', favicons);
     set({ faviconsDb: favicons });
   },
 
@@ -464,6 +471,7 @@ const useStore = create((set, get) => ({
         activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
         syncToken: storage.get('sync_token') || '',
         autoSync: storage.get('auto_sync') || false,
+        faviconsDb: storage.get('favicons_db') || {},
       });
       set({ openAiApiKey: decrypt(storage.get('openai_apikey'), get().syncToken) || '' });
       applyTheme(get().theme);
