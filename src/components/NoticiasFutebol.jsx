@@ -13,40 +13,47 @@ const formatDate = (dateString) => {
 };
 
 export default function NoticiasFutebol({ noticias }) {
+  const half = Math.ceil(noticias.length / 2);
+  const col1 = noticias.slice(0, half);
+  const col2 = noticias.slice(half);
+
+  const renderItem = (item) => (
+    <a
+      key={item.id}
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block bg-card border border-border rounded-xl p-3 hover:border-accent transition-colors group"
+    >
+      <div className="flex items-center gap-4">
+        {item.imagem && (
+          <img
+            src={item.imagem}
+            alt=""
+            className="w-24 h-16 object-cover rounded-lg flex-shrink-0 bg-bg"
+            referrerPolicy="no-referrer"
+          />
+        )}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-medium text-text group-hover:text-accent transition-colors line-clamp-2 text-sm">
+            {item.titulo}
+          </h3>
+          <p className="text-xs text-muted mt-1">
+            {item.fonte} · {formatDate(item.dataPublicacao)}
+          </p>
+        </div>
+        <ExternalLink
+          size={14}
+          className="text-muted flex-shrink-0 self-start mt-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        />
+      </div>
+    </a>
+  );
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-      {noticias.map((item) => (
-        <a
-          key={item.id}
-          href={item.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block bg-card border border-border rounded-xl p-3 hover:border-accent transition-colors group"
-        >
-          <div className="flex items-center gap-4">
-            {item.imagem && (
-              <img
-                src={item.imagem}
-                alt=""
-                className="w-24 h-16 object-cover rounded-lg flex-shrink-0 bg-bg"
-                referrerPolicy="no-referrer"
-              />
-            )}
-            <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-text group-hover:text-accent transition-colors line-clamp-2 text-sm">
-                {item.titulo}
-              </h3>
-              <p className="text-xs text-muted mt-1">
-                {item.fonte} · {formatDate(item.dataPublicacao)}
-              </p>
-            </div>
-            <ExternalLink
-              size={14}
-              className="text-muted flex-shrink-0 self-start mt-1 opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-          </div>
-        </a>
-      ))}
+      <div className="flex flex-col gap-3 sm:gap-4">{col1.map(renderItem)}</div>
+      {col2.length > 0 && <div className="flex flex-col gap-3 sm:gap-4">{col2.map(renderItem)}</div>}
     </div>
   );
 }
