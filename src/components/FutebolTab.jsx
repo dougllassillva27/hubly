@@ -23,7 +23,7 @@ export default function FutebolTab() {
   const { noticias, loading, error, fetchNoticias } = useFutebol();
 
   return (
-    <div className="w-full max-w-3xl mx-auto animate-fadeIn">
+    <div className="w-full max-w-5xl mx-auto animate-fadeIn">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-text flex items-center gap-2">
           <Newspaper size={20} />

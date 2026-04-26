@@ -14,7 +14,7 @@ const formatDate = (dateString) => {
 
 export default function NoticiasFutebol({ noticias }) {
   return (
-    <div className="space-y-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
       {noticias.map((item) => (
         <a
           key={item.id}

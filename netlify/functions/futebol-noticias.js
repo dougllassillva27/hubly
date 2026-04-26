@@ -24,7 +24,7 @@ export const handler = async (event) => {
     const feed = await parser.parseString(xml);
     const items = [];
 
-    for (const item of feed.items.slice(0, 8)) {
+    for (const item of feed.items.slice(0, 16)) {
       let imagem = null;
 
       if (item.media && item.media.$ && item.media.$.url) {
