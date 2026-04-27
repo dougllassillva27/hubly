@@ -79,24 +79,28 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw] mt-6 mb-8">
-                  <div className="md:hidden flex flex-col items-center gap-4 px-4">
+                <div className="relative w-screen left-1/2 right-1/2 -mx-[50vw] mt-6 mb-10">
+                  <div className="md:hidden flex flex-col items-center gap-5 px-4">
                     <WeatherWidget />
                     <Clock />
                     <NotesWidget />
                   </div>
 
-                  <div className="hidden md:block relative h-[220px]">
-                    <div className="absolute left-1/4 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <WeatherWidget />
+                  <div className="hidden md:grid grid-cols-[1fr_420px_1fr] items-center min-h-[250px] px-10 xl:px-20">
+                    <div className="flex justify-center">
+                      <div className="shrink-0 origin-center scale-[1.12] xl:scale-[1.22] 2xl:scale-[1.28]">
+                        <WeatherWidget />
+                      </div>
                     </div>
 
-                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex justify-center">
                       <Clock />
                     </div>
 
-                    <div className="absolute left-3/4 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <NotesWidget />
+                    <div className="flex justify-center">
+                      <div className="shrink-0 origin-center scale-[1.12] xl:scale-[1.22] 2xl:scale-[1.28]">
+                        <NotesWidget />
+                      </div>
                     </div>
                   </div>
                 </div>
