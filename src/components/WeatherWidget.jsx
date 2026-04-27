@@ -79,10 +79,10 @@ export default function WeatherWidget() {
     return <Cloud className={`text-gray-400 ${className}`} />;
   };
 
-  if (!weatherCity.trim()) return <div className="hidden md:block w-full max-w-sm"></div>;
+  if (!weatherCity.trim()) return <div className="hidden md:block w-full max-w-md"></div>;
 
   return (
-    <div className="w-full max-w-sm bg-card/80 backdrop-blur-md border border-border rounded-2xl p-4 flex flex-col justify-between group hover:border-accent/50 transition-colors h-[10.5rem] animate-fadeIn">
+    <div className="w-full max-w-md bg-card/80 backdrop-blur-md border border-border rounded-2xl p-5 flex flex-col justify-between group hover:border-accent/50 transition-colors h-[16.5rem] animate-fadeIn">
       <div className="flex items-center justify-between mb-1">
         <h2 className="text-sm font-medium text-text flex items-center gap-2 truncate">
           <MapPin size={16} className="text-muted flex-shrink-0" />
@@ -108,6 +108,24 @@ export default function WeatherWidget() {
                 Sensação <span className="text-text font-medium">{weather.feelsLike}°C</span>
               </div>
             </div>
+          </div>
+
+          <div className="grid grid-cols-7 gap-1 mt-4 pt-4 border-t border-border/50">
+            {weather.forecast.map((day, i) => {
+              const dateObj = new Date(day.date + 'T12:00:00Z');
+              const dayName = dateObj.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+              return (
+                <div
+                  key={i}
+                  className="flex flex-col items-center justify-center gap-1"
+                  title={`${day.min}°C - ${day.max}°C`}
+                >
+                  <span className="text-[10px] text-muted uppercase font-medium">{dayName}</span>
+                  {getWeatherIcon(day.code, 'w-5 h-5')}
+                  <span className="text-xs font-medium text-text">{day.max}°</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       ) : (

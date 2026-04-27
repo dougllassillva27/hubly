@@ -21,7 +21,7 @@ export default function NotesWidget() {
   };
 
   return (
-    <div className="w-full max-w-sm bg-card/80 backdrop-blur-md border border-border rounded-2xl p-4 flex flex-col group hover:border-accent/50 transition-colors h-[10.5rem] animate-fadeIn">
+    <div className="w-full max-w-md bg-card/80 backdrop-blur-md border border-border rounded-2xl p-5 flex flex-col group hover:border-accent/50 transition-colors h-[16.5rem] animate-fadeIn">
       <textarea
         value={localNotes}
         onChange={handleNotesChange}

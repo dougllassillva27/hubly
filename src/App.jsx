@@ -77,8 +77,8 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="w-full max-w-6xl mx-auto px-4 mt-6 mb-8">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                <div className="w-full max-w-7xl mx-auto px-4 mt-6 mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center">
                     <div className="order-2 md:order-1 flex justify-center md:justify-start w-full">
                       <WeatherWidget />
                     </div>
