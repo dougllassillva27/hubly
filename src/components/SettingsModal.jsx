@@ -50,7 +50,6 @@ const tabs = [
   { id: 'search', label: 'Busca', icon: Search },
   { id: 'ai', label: 'Chat IA', icon: MessageSquare },
   { id: 'news', label: 'Notícias', icon: Newspaper },
-  { id: 'futebol', label: 'Futebol', icon: Trophy },
   { id: 'widgets', label: 'Widgets', icon: LayoutGrid },
   { id: 'categories', label: 'Categorias', icon: FolderOpen },
   { id: 'data', label: 'Dados', icon: Database },
@@ -176,8 +175,6 @@ export default function SettingsModal() {
     setAutoSync,
     setPendingBookmarks,
     openImportBookmarks,
-    futebolRssUrl,
-    setFutebolRssUrl,
   } = useStore();
 
   const [activeTab, setActiveTab] = useState('appearance');
@@ -598,22 +595,6 @@ export default function SettingsModal() {
                 </div>
               </div>
               */}
-            </div>
-          )}
-
-          {/* Futebol Tab */}
-          {activeTab === 'futebol' && (
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium text-muted mb-3">URL do RSS de Notícias</h3>
-                <input
-                  type="text"
-                  value={futebolRssUrl}
-                  onChange={(e) => setFutebolRssUrl(e.target.value)}
-                  placeholder="https://www.ogol.com.br/rss/noticias.php"
-                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
-                />
-              </div>
             </div>
           )}
 

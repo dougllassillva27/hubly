@@ -10,9 +10,9 @@
 
 **Homepage inteligente, modular e sincronizável para navegador.**
 
-Hubly é uma aplicação web construída com **React + Vite + Tailwind CSS**, pensada para funcionar como uma homepage moderna, rápida e personalizável.
+Hubly é uma aplicação web construída com **React 18 + Vite 5 + Tailwind CSS 3**, pensada para funcionar como uma startpage moderna, rápida e personalizável.
 
-O projeto combina experiência de uso simples com uma arquitetura modular, suporte a temas, gestão de sites favoritos, widgets, busca inteligente, notícias, futebol, favicons automáticos e sincronização opcional em nuvem usando **Netlify Functions + Neon DB/PostgreSQL**.
+O projeto combina experiência de uso simples com uma arquitetura modular, suporte a 8 temas dinâmicos, gestão de sites favoritos, widgets, busca multi-provider, notícias (RSS parser nativo), chat com IA (OpenAI), favicons via cache distribuído e sincronização em nuvem usando **Netlify Functions + Neon DB/PostgreSQL**.
 
 🔗 **Acesse:** https://gethubly.netlify.app/
 
@@ -34,63 +34,39 @@ Acesse a aplicação em produção:
 
 ---
 
-## 🧠 Visão geral técnica
+## ⚙️ Highlights Técnicos
 
-O Hubly é uma **SPA** com backend serverless opcional.
-
-A aplicação foi organizada para separar responsabilidades entre:
-
-- **Interface:** componentes React reutilizáveis.
-- **Estado global:** store central com Zustand.
-- **Regras auxiliares:** utilitários em `utils`.
-- **Integrações externas:** Netlify Functions.
-- **Persistência local:** navegador.
-- **Persistência remota opcional:** Neon DB/PostgreSQL.
-- **Automação de cache:** script de versionamento.
-
----
-
-## ⚙️ Highlights técnicos
-
-- Arquitetura modular com separação por responsabilidade
-- Estado global com baixo acoplamento (Zustand)
-- Backend serverless desacoplado
-- Estratégia local-first com sync opcional
-- Cache inteligente de recursos (favicons)
+- **Arquitetura Client-Side (SPA):** UI de altíssima performance gerenciada via Zustand para baixo acoplamento.
+- **Estratégia Local-First:** Todos os dados sobrevivem e fluem do `localStorage`. Sincronização em nuvem é estritamente _opt-in_ (sob demanda).
+- **Backend Serverless Oculto:** Rotas isoladas na Netlify para bypass de CORS (Notícias), Chat com OpenAI e interação direta com o PostgreSQL para gravar blobs de metadados.
+- **Favicon Cache Intelligence:** Pipeline tripla (Google S2 -> icon.horse -> Origin) com cache local no navegador e persistência assíncrona no NeonDB para eliminar layouts quebrados ou atrasos visuais provocados por proxies WAF.
+- **Bypass Anti-SSRF e WAF:** Proxy de imagens construído em Node.js com rotação de headers severa para burlar defesas da Cloudflare e injetar Headers de HTTP Cache (`max-age=31536000`) forçados na renderização.
+- **Criptografia Client-Side:** Chave da API da OpenAI protegida, cifrada (AES-256 via `crypto-js`) no navegador e encapsulada através de uma Senha Mestra antes de tocar o localStorage.
 
 ---
 
 ## 🏗️ Arquitetura
 
+O Hubly não possui um servidor contínuo, a engenharia foca na agilidade do Edge / Serverless.
+
 ```txt
-Navegador
+Navegador (React + Vite + Tailwind)
+   │
+   ├── Estado Global (Zustand)
+   ├── Persistência Local (LocalStorage + Crypto)
+   ├── UI Modular & Drag'n'Drop (@dnd-kit)
+   └── Temas Customizáveis (CSS Variables)
    │
    ▼
-React + Vite + Tailwind
+Netlify Functions (Node.js Serverless)
    │
-   ├── Estado global com Zustand
-   │
-   ├── Persistência local
-   │
-   ├── Temas e preferências
-   │
-   ├── Sites, categorias e widgets
-   │
-   └── UI modular
+   ├── Proxy RSS (Bypass CORS + Parser XML2JS)
+   ├── Proxy Imagens (Bypass Cache-Control/WAF via Redirect 302 / CDN fallback)
+   ├── Chat IA (Streamer OpenAI `text/event-stream`)
+   └── API Favicons & Sync (Transações seguras via @neondatabase/serverless)
    │
    ▼
-Netlify Functions
-   │
-   ├── Notícias / RSS
-   │
-   ├── Futebol
-   │
-   ├── Favicons
-   │
-   └── Sincronização
-   │
-   ▼
-Neon DB / PostgreSQL
+Neon DB / PostgreSQL (Armazenamento Remoto Opt-in)
 ```
 
 ---

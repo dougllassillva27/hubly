@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import { Newspaper, Trophy } from 'lucide-react';
 import NewsFeed from './NewsFeed';
-import FutebolTab from './FutebolTab';
 
-const tabs = [
-  { id: 'news', label: 'Notícias', icon: Newspaper },
-  { id: 'futebol', label: 'Futebol', icon: Trophy },
-];
+const tabs = [{ id: 'news', label: 'Notícias', icon: Newspaper }];
 
 export default function BottomSection() {
   const [activeTab, setActiveTab] = useState('news');
@@ -35,7 +31,6 @@ export default function BottomSection() {
 
       {/* Tab Content */}
       {activeTab === 'news' && <NewsFeed />}
-      {activeTab === 'futebol' && <FutebolTab />}
     </div>
   );
 }

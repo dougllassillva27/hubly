@@ -65,9 +65,6 @@ const useStore = create((set, get) => ({
   chatLoading: false,
   initialChatMessage: null,
 
-  // Futebol (Hubly Futebol)
-  futebolRssUrl: storage.get('futebol_rss_url') || 'https://www.ogol.com.br/rss/noticias.php',
-
   // UI State
   settingsOpen: false,
   addSiteOpen: false,
@@ -390,11 +387,6 @@ const useStore = create((set, get) => ({
     set({ initialChatMessage: null });
   },
 
-  setFutebolRssUrl: (url) => {
-    storage.set('futebol_rss_url', url);
-    set({ futebolRssUrl: url });
-  },
-
   addChatMessage: (message) => {
     const messages = [...get().chatMessages, message];
     set({ chatMessages: messages });
@@ -465,7 +457,6 @@ const useStore = create((set, get) => ({
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         notesContent: storage.get('notes_content') || '',
         weatherCity: storage.get('weather_city') || '',
-        futebolRssUrl: storage.get('futebol_rss_url') || 'https://www.ogol.com.br/rss/noticias.php',
         homeSortMethod: storage.get('home_sort_method') || 'manual',
         defaultCategory: storage.get('default_category') || 'all',
         activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
