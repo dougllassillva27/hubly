@@ -113,6 +113,12 @@ export default function App() {
               <>
                 <CategoryFilter />
                 <SiteGrid />
+
+                {/* WIDGETS MOBILE (RODAPÉ) */}
+                <div className="md:hidden flex flex-col items-center gap-5 w-full max-w-md mx-auto mb-8 px-4">
+                  <WeatherWidget />
+                  <NotesWidget />
+                </div>
               </>
             )}
           </div>
