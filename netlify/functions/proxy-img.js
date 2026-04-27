@@ -52,46 +52,46 @@ export const handler = async (event) => {
       Accept: 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
       'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
       Referer: urlObj.origin + '/',
-      'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
-      'Sec-Ch-Ua-Mobile': '?0',
-      'Sec-Ch-Ua-Platform': '"Windows"',
     };
 
-    const response = await fetch(url, {
+    // --- Tentativa 1: Direto na Origem ---
+    let response = await fetch(url, {
       signal: controller.signal,
       headers: fetchHeaders,
     }).catch(() => null); // Se a rede do Node falhar, capturamos como nulo
 
+    // --- Tentativa 2: Fallback via CDN de Cache ---
+    if (!response || !response.ok) {
+      const cdnProxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(url)}`;
+      response = await fetch(cdnProxyUrl, {
+        signal: controller.signal,
+        headers: { 'User-Agent': fetchHeaders['User-Agent'] },
+      }).catch(() => null);
+    }
+
     clearTimeout(timeoutId);
 
-    // Se a requisição foi bloqueada pelo Cloudflare/WAF (403/503) ou timeout,
-    // ativamos o fallback delegando o acesso diretamente ao navegador do usuário via 302.
-    if (!response || !response.ok) {
+    // --- Processamento da Resposta ---
+    if (response && response.ok) {
+      const contentType = response.headers.get('content-type') || 'application/octet-stream';
+      const arrayBuffer = await response.arrayBuffer();
+      const base64 = Buffer.from(arrayBuffer).toString('base64');
+
       return {
-        statusCode: 302,
-        headers: {
-          Location: url,
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-        },
-        body: '',
+        statusCode: 200,
+        headers: { 'Content-Type': contentType, 'Cache-Control': 'public, max-age=31536000, immutable' },
+        isBase64Encoded: true,
+        body: base64,
       };
     }
 
-    const contentType = response.headers.get('content-type') || 'application/octet-stream';
-    const arrayBuffer = await response.arrayBuffer();
-    const base64 = Buffer.from(arrayBuffer).toString('base64');
-
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': contentType, 'Cache-Control': 'public, max-age=31536000, immutable' },
-      isBase64Encoded: true,
-      body: base64,
-    };
+    // --- Fallback Final: Redirecionamento ---
+    return { statusCode: 302, headers: { Location: url, 'Cache-Control': 'no-cache' }, body: '' };
   } catch (error) {
     // Fallback de segurança para erros assíncronos não mapeados
     return {
       statusCode: 302,
-      headers: { Location: url },
+      headers: { Location: url, 'Cache-Control': 'no-cache' },
       body: '',
     };
   }
