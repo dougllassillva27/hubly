@@ -17,7 +17,14 @@ const searchProviders = [
 
 const getSavedCategory = () => {
   try {
-    return localStorage.getItem('sp_active_category');
+    let val = localStorage.getItem('sp_active_category');
+    if (!val || val === 'undefined' || val === 'null' || val === '[object Object]') {
+      return null;
+    }
+    if (val.startsWith('"') && val.endsWith('"')) {
+      val = val.slice(1, -1);
+    }
+    return val;
   } catch {
     return null;
   }
@@ -25,7 +32,11 @@ const getSavedCategory = () => {
 
 const setSavedCategory = (cat) => {
   try {
-    localStorage.setItem('sp_active_category', cat);
+    if (!cat || cat === 'undefined' || cat === 'null') {
+      localStorage.removeItem('sp_active_category');
+    } else {
+      localStorage.setItem('sp_active_category', String(cat));
+    }
   } catch {}
 };
 
