@@ -183,26 +183,40 @@ export default function SiteCard({ site, disableDrag }) {
   };
 
   const handleContextMenu = (e) => {
-    if (isTouchRef.current) {
+    if (isTouchRef.current || isLongPressRef.current) {
       e.preventDefault();
     }
   };
 
-  const handleClick = (e) => {
+  const handleInteraction = (e) => {
     if (isLongPressRef.current) {
       e.preventDefault();
       e.stopPropagation();
-      isLongPressRef.current = false;
-      return;
+      isLongPressRef.current = false; // Reset after use
+      return false; // Block navigation
     }
     if (showActions && isTouchRef.current) {
       e.preventDefault();
       e.stopPropagation();
       setShowActions(false);
-      return;
+      return false; // Block navigation
     }
-    registerSiteVisit(site.id);
-    window.open(site.url, linkTarget);
+    return true; // Allow navigation
+  };
+
+  const handleRegularClick = (e) => {
+    const shouldNavigate = handleInteraction(e);
+    if (shouldNavigate) {
+      registerSiteVisit(site.id);
+    }
+  };
+
+  const handleAuxClick = (e) => {
+    if (e.button !== 1) return; // Not a middle click
+    const shouldNavigate = handleInteraction(e);
+    if (shouldNavigate) {
+      registerSiteVisit(site.id);
+    }
   };
 
   const handleImageError = () => {
@@ -249,9 +263,16 @@ export default function SiteCard({ site, disableDrag }) {
         handleTouchMove();
         if (listeners?.onTouchMove) listeners.onTouchMove(e);
       }}
-      onContextMenu={handleContextMenu}
     >
-      <div onClick={handleClick} className="group/card relative cursor-pointer w-16 h-16 sm:w-24 sm:h-24 mb-3 mx-auto">
+      <a
+        href={site.url}
+        target={linkTarget}
+        rel="noopener noreferrer"
+        onClick={handleRegularClick}
+        onAuxClick={handleAuxClick}
+        onContextMenu={handleContextMenu}
+        className="group/card relative cursor-pointer w-16 h-16 sm:w-24 sm:h-24 mb-3 mx-auto"
+      >
         {/* Glow effect */}
         <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
 
@@ -268,13 +289,17 @@ export default function SiteCard({ site, disableDrag }) {
             />
           ) : (
             <span
-              className={`flex w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-xl sm:text-3xl font-bold bg-gradient-to-br ${getAvatarColor(site.name)} rounded-xl transition-transform duration-300 group-hover/card:scale-110 shadow-inner ${isResolving ? 'animate-pulse opacity-50' : ''}`}
+              className={`flex w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-xl sm:text-3xl font-bold bg-gradient-to-br ${getAvatarColor(
+                site.name
+              )} rounded-xl transition-transform duration-300 group-hover/card:scale-110 shadow-inner ${
+                isResolving ? 'animate-pulse opacity-50' : ''
+              }`}
             >
               {site.name?.[0]?.toUpperCase()}
             </span>
           )}
         </div>
-      </div>
+      </a>
 
       {/* Name below card */}
       <h3 className="text-xs sm:text-sm font-medium text-muted text-center line-clamp-1 w-full px-1 group-hover:text-text transition-colors drop-shadow-sm">
