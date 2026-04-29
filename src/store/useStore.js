@@ -15,17 +15,17 @@ const searchProviders = [
   { name: 'AI Chat', url: '', color: '#00D4AA', icon: 'AI', type: 'ai' },
 ].filter(Boolean);
 
-const getSessionCategory = () => {
+const getSavedCategory = () => {
   try {
-    return sessionStorage.getItem('sp_active_category');
+    return localStorage.getItem('sp_active_category');
   } catch {
     return null;
   }
 };
 
-const setSessionCategory = (cat) => {
+const setSavedCategory = (cat) => {
   try {
-    sessionStorage.setItem('sp_active_category', cat);
+    localStorage.setItem('sp_active_category', cat);
   } catch {}
 };
 
@@ -42,7 +42,7 @@ const useStore = create((set, get) => ({
   // Categories
   categories: storage.get('categories') || defaultCategories,
   defaultCategory: storage.get('default_category') || 'all',
-  activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
+  activeCategory: getSavedCategory() || storage.get('default_category') || 'all',
 
   // Theme
   theme: storage.get('theme') || 'minimal-dark',
@@ -260,7 +260,7 @@ const useStore = create((set, get) => ({
       updates.defaultCategory = newCategory;
     }
     if (get().activeCategory === oldCategory) {
-      setSessionCategory(newCategory);
+      setSavedCategory(newCategory);
       updates.activeCategory = newCategory;
     }
 
@@ -288,7 +288,7 @@ const useStore = create((set, get) => ({
   },
 
   setActiveCategory: (category) => {
-    setSessionCategory(category);
+    setSavedCategory(category);
     set({ activeCategory: category });
   },
 
@@ -459,7 +459,7 @@ const useStore = create((set, get) => ({
         weatherCity: storage.get('weather_city') || '',
         homeSortMethod: storage.get('home_sort_method') || 'manual',
         defaultCategory: storage.get('default_category') || 'all',
-        activeCategory: getSessionCategory() || storage.get('default_category') || 'all',
+        activeCategory: getSavedCategory() || storage.get('default_category') || 'all',
         syncToken: storage.get('sync_token') || '',
         autoSync: storage.get('auto_sync') || false,
         faviconsDb: storage.get('favicons_db') || {},
