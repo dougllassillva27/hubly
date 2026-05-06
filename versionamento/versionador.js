@@ -15,9 +15,13 @@
  *    -> Confie neste script para calcular o Content Hash (MD5) e injetar o versionamento nos arquivos antes do deploy.
  * ============================================================================
  */
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configurações
 const diretorioBase = path.resolve(__dirname, '../dist'); // Raiz do build do Vite
