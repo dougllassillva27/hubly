@@ -79,7 +79,14 @@ export default function WeatherWidget() {
     return <Cloud className={`text-gray-400 ${className}`} />;
   };
 
-  if (!weatherCity.trim()) return <div className="hidden md:block w-full max-w-md"></div>;
+  if (!weatherCity.trim()) {
+    return (
+      <div className="w-full max-w-md bg-card/80 backdrop-blur-md border border-border rounded-2xl p-5 flex flex-col justify-center items-center text-center text-muted h-[16.5rem] animate-fadeIn">
+        <AlertCircle size={24} className="mb-2" />
+        <p className="text-sm">Defina sua cidade nas configurações do sistema para visualizar a previsão do tempo.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-md bg-card/80 backdrop-blur-md border border-border rounded-2xl p-5 flex flex-col justify-between group hover:border-accent/50 transition-colors h-[16.5rem] animate-fadeIn">

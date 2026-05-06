@@ -93,6 +93,7 @@ const useStore = create((set, get) => ({
   // Futebol
   futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
 
+  onboardingShown: storage.get('onboarding_shown') || false,
   // UI State
   settingsOpen: false,
   addSiteOpen: false,
@@ -401,6 +402,12 @@ const useStore = create((set, get) => ({
     get().triggerAutoSync();
   },
 
+  setOnboardingShown: (shown) => {
+    storage.set('onboarding_shown', shown);
+    set({ onboardingShown: shown });
+    get().triggerAutoSync();
+  },
+
   // AI Chat Actions
   setOpenAiApiKey: (key) => {
     const token = get().syncToken;
@@ -498,6 +505,7 @@ const useStore = create((set, get) => ({
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
         notesContent: storage.get('notes_content') || '',
+        onboardingShown: storage.get('onboarding_shown') || false,
         weatherCity: storage.get('weather_city') || '',
         homeSortMethod: storage.get('home_sort_method') || 'manual',
         linkTarget: storage.get('link_target') || '_blank',

@@ -15,9 +15,11 @@ import AIChatModal from './components/AIChatModal';
 import StarCanvas from './components/StarCanvas';
 import ImportBookmarksModal from './components/ImportBookmarksModal';
 import FloatingMenu from './components/FloatingMenu';
+import OnboardingModal from './components/OnboardingModal';
 
 export default function App() {
-  const { theme, settingsOpen, addSiteOpen, chatOpen, deleteConfirmId, importBookmarksOpen } = useStore();
+  const { theme, settingsOpen, addSiteOpen, chatOpen, deleteConfirmId, importBookmarksOpen, onboardingShown } =
+    useStore();
 
   const [isFocusMode, setIsFocusMode] = useState(false);
 
@@ -157,6 +159,7 @@ export default function App() {
       <ConfirmModal />
       <AIChatModal />
       <ImportBookmarksModal />
+      {!onboardingShown && <OnboardingModal />}
     </div>
   );
 }
