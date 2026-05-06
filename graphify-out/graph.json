@@ -1,0 +1,1556 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "postcss.config.js",
+      "file_type": "code",
+      "source_file": "postcss.config.js",
+      "source_location": "L1",
+      "id": "postcss_config_js",
+      "community": 27,
+      "norm_label": "postcss.config.js"
+    },
+    {
+      "label": "tailwind.config.js",
+      "file_type": "code",
+      "source_file": "tailwind.config.js",
+      "source_location": "L1",
+      "id": "tailwind_config_js",
+      "community": 28,
+      "norm_label": "tailwind.config.js"
+    },
+    {
+      "label": "vite.config.js",
+      "file_type": "code",
+      "source_file": "vite.config.js",
+      "source_location": "L1",
+      "id": "vite_config_js",
+      "community": 29,
+      "norm_label": "vite.config.js"
+    },
+    {
+      "label": "chat.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/chat.js",
+      "source_location": "L1",
+      "id": "netlify_functions_chat_js",
+      "community": 7,
+      "norm_label": "chat.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/chat.js",
+      "source_location": "L1",
+      "id": "functions_chat_handler",
+      "community": 7,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "favicon.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/favicon.js",
+      "source_location": "L1",
+      "id": "netlify_functions_favicon_js",
+      "community": 8,
+      "norm_label": "favicon.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/favicon.js",
+      "source_location": "L3",
+      "id": "functions_favicon_handler",
+      "community": 8,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "proxy-img.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/proxy-img.js",
+      "source_location": "L1",
+      "id": "netlify_functions_proxy_img_js",
+      "community": 5,
+      "norm_label": "proxy-img.js"
+    },
+    {
+      "label": "isPrivateIP()",
+      "file_type": "code",
+      "source_file": "netlify/functions/proxy-img.js",
+      "source_location": "L6",
+      "id": "functions_proxy_img_isprivateip",
+      "community": 5,
+      "norm_label": "isprivateip()"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/proxy-img.js",
+      "source_location": "L25",
+      "id": "functions_proxy_img_handler",
+      "community": 5,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "resolver-favicon.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L1",
+      "id": "netlify_functions_resolver_favicon_js",
+      "community": 2,
+      "norm_label": "resolver-favicon.js"
+    },
+    {
+      "label": "isPrivateIP()",
+      "file_type": "code",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L7",
+      "id": "functions_resolver_favicon_isprivateip",
+      "community": 2,
+      "norm_label": "isprivateip()"
+    },
+    {
+      "label": "extractIcons()",
+      "file_type": "code",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L26",
+      "id": "functions_resolver_favicon_extracticons",
+      "community": 2,
+      "norm_label": "extracticons()"
+    },
+    {
+      "label": "getBestIcon()",
+      "file_type": "code",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L65",
+      "id": "functions_resolver_favicon_getbesticon",
+      "community": 2,
+      "norm_label": "getbesticon()"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L93",
+      "id": "functions_resolver_favicon_handler",
+      "community": 2,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "rss.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/rss.js",
+      "source_location": "L1",
+      "id": "netlify_functions_rss_js",
+      "community": 9,
+      "norm_label": "rss.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/rss.js",
+      "source_location": "L1",
+      "id": "functions_rss_handler",
+      "community": 9,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "sync.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/sync.js",
+      "source_location": "L1",
+      "id": "netlify_functions_sync_js",
+      "community": 10,
+      "norm_label": "sync.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/sync.js",
+      "source_location": "L4",
+      "id": "functions_sync_handler",
+      "community": 10,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L1",
+      "id": "src_app_jsx",
+      "community": 4,
+      "norm_label": "app.jsx"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "src/App.jsx",
+      "source_location": "L19",
+      "id": "src_app_app",
+      "community": 4,
+      "norm_label": "app()"
+    },
+    {
+      "label": "main.jsx",
+      "file_type": "code",
+      "source_file": "src/main.jsx",
+      "source_location": "L1",
+      "id": "src_main_jsx",
+      "community": 30,
+      "norm_label": "main.jsx"
+    },
+    {
+      "label": "AddSiteModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/AddSiteModal.jsx",
+      "source_location": "L1",
+      "id": "src_components_addsitemodal_jsx",
+      "community": 11,
+      "norm_label": "addsitemodal.jsx"
+    },
+    {
+      "label": "AddSiteModal()",
+      "file_type": "code",
+      "source_file": "src/components/AddSiteModal.jsx",
+      "source_location": "L5",
+      "id": "components_addsitemodal_addsitemodal",
+      "community": 11,
+      "norm_label": "addsitemodal()"
+    },
+    {
+      "label": "AIChatModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/AIChatModal.jsx",
+      "source_location": "L1",
+      "id": "src_components_aichatmodal_jsx",
+      "community": 12,
+      "norm_label": "aichatmodal.jsx"
+    },
+    {
+      "label": "AIChatModal()",
+      "file_type": "code",
+      "source_file": "src/components/AIChatModal.jsx",
+      "source_location": "L6",
+      "id": "components_aichatmodal_aichatmodal",
+      "community": 12,
+      "norm_label": "aichatmodal()"
+    },
+    {
+      "label": "BottomSection.jsx",
+      "file_type": "code",
+      "source_file": "src/components/BottomSection.jsx",
+      "source_location": "L1",
+      "id": "src_components_bottomsection_jsx",
+      "community": 13,
+      "norm_label": "bottomsection.jsx"
+    },
+    {
+      "label": "BottomSection()",
+      "file_type": "code",
+      "source_file": "src/components/BottomSection.jsx",
+      "source_location": "L7",
+      "id": "components_bottomsection_bottomsection",
+      "community": 13,
+      "norm_label": "bottomsection()"
+    },
+    {
+      "label": "CategoryFilter.jsx",
+      "file_type": "code",
+      "source_file": "src/components/CategoryFilter.jsx",
+      "source_location": "L1",
+      "id": "src_components_categoryfilter_jsx",
+      "community": 14,
+      "norm_label": "categoryfilter.jsx"
+    },
+    {
+      "label": "CategoryFilter()",
+      "file_type": "code",
+      "source_file": "src/components/CategoryFilter.jsx",
+      "source_location": "L12",
+      "id": "components_categoryfilter_categoryfilter",
+      "community": 14,
+      "norm_label": "categoryfilter()"
+    },
+    {
+      "label": "Clock.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Clock.jsx",
+      "source_location": "L1",
+      "id": "src_components_clock_jsx",
+      "community": 15,
+      "norm_label": "clock.jsx"
+    },
+    {
+      "label": "Clock()",
+      "file_type": "code",
+      "source_file": "src/components/Clock.jsx",
+      "source_location": "L19",
+      "id": "components_clock_clock",
+      "community": 15,
+      "norm_label": "clock()"
+    },
+    {
+      "label": "ConfirmModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/ConfirmModal.jsx",
+      "source_location": "L1",
+      "id": "src_components_confirmmodal_jsx",
+      "community": 16,
+      "norm_label": "confirmmodal.jsx"
+    },
+    {
+      "label": "ConfirmModal()",
+      "file_type": "code",
+      "source_file": "src/components/ConfirmModal.jsx",
+      "source_location": "L4",
+      "id": "components_confirmmodal_confirmmodal",
+      "community": 16,
+      "norm_label": "confirmmodal()"
+    },
+    {
+      "label": "FloatingMenu.jsx",
+      "file_type": "code",
+      "source_file": "src/components/FloatingMenu.jsx",
+      "source_location": "L1",
+      "id": "src_components_floatingmenu_jsx",
+      "community": 17,
+      "norm_label": "floatingmenu.jsx"
+    },
+    {
+      "label": "FloatingMenu()",
+      "file_type": "code",
+      "source_file": "src/components/FloatingMenu.jsx",
+      "source_location": "L5",
+      "id": "components_floatingmenu_floatingmenu",
+      "community": 17,
+      "norm_label": "floatingmenu()"
+    },
+    {
+      "label": "ImportBookmarksModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/ImportBookmarksModal.jsx",
+      "source_location": "L1",
+      "id": "src_components_importbookmarksmodal_jsx",
+      "community": 18,
+      "norm_label": "importbookmarksmodal.jsx"
+    },
+    {
+      "label": "ImportBookmarksModal()",
+      "file_type": "code",
+      "source_file": "src/components/ImportBookmarksModal.jsx",
+      "source_location": "L5",
+      "id": "components_importbookmarksmodal_importbookmarksmodal",
+      "community": 18,
+      "norm_label": "importbookmarksmodal()"
+    },
+    {
+      "label": "NewsFeed.jsx",
+      "file_type": "code",
+      "source_file": "src/components/NewsFeed.jsx",
+      "source_location": "L1",
+      "id": "src_components_newsfeed_jsx",
+      "community": 19,
+      "norm_label": "newsfeed.jsx"
+    },
+    {
+      "label": "NewsFeed()",
+      "file_type": "code",
+      "source_file": "src/components/NewsFeed.jsx",
+      "source_location": "L23",
+      "id": "components_newsfeed_newsfeed",
+      "community": 19,
+      "norm_label": "newsfeed()"
+    },
+    {
+      "label": "NotesWidget.jsx",
+      "file_type": "code",
+      "source_file": "src/components/NotesWidget.jsx",
+      "source_location": "L1",
+      "id": "src_components_noteswidget_jsx",
+      "community": 20,
+      "norm_label": "noteswidget.jsx"
+    },
+    {
+      "label": "NotesWidget()",
+      "file_type": "code",
+      "source_file": "src/components/NotesWidget.jsx",
+      "source_location": "L5",
+      "id": "components_noteswidget_noteswidget",
+      "community": 20,
+      "norm_label": "noteswidget()"
+    },
+    {
+      "label": "SearchBar.jsx",
+      "file_type": "code",
+      "source_file": "src/components/SearchBar.jsx",
+      "source_location": "L1",
+      "id": "src_components_searchbar_jsx",
+      "community": 21,
+      "norm_label": "searchbar.jsx"
+    },
+    {
+      "label": "SearchBar()",
+      "file_type": "code",
+      "source_file": "src/components/SearchBar.jsx",
+      "source_location": "L5",
+      "id": "components_searchbar_searchbar",
+      "community": 21,
+      "norm_label": "searchbar()"
+    },
+    {
+      "label": "SettingsModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/SettingsModal.jsx",
+      "source_location": "L1",
+      "id": "src_components_settingsmodal_jsx",
+      "community": 6,
+      "norm_label": "settingsmodal.jsx"
+    },
+    {
+      "label": "SortableCategoryItem()",
+      "file_type": "code",
+      "source_file": "src/components/SettingsModal.jsx",
+      "source_location": "L72",
+      "id": "components_settingsmodal_sortablecategoryitem",
+      "community": 6,
+      "norm_label": "sortablecategoryitem()"
+    },
+    {
+      "label": "SettingsModal()",
+      "file_type": "code",
+      "source_file": "src/components/SettingsModal.jsx",
+      "source_location": "L141",
+      "id": "components_settingsmodal_settingsmodal",
+      "community": 6,
+      "norm_label": "settingsmodal()"
+    },
+    {
+      "label": "SiteCard.jsx",
+      "file_type": "code",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L1",
+      "id": "src_components_sitecard_jsx",
+      "community": 0,
+      "norm_label": "sitecard.jsx"
+    },
+    {
+      "label": "getAvatarColor()",
+      "file_type": "code",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L10",
+      "id": "components_sitecard_getavatarcolor",
+      "community": 0,
+      "norm_label": "getavatarcolor()"
+    },
+    {
+      "label": "getProxiedUrl()",
+      "file_type": "code",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L31",
+      "id": "components_sitecard_getproxiedurl",
+      "community": 0,
+      "norm_label": "getproxiedurl()"
+    },
+    {
+      "label": "SiteCard()",
+      "file_type": "code",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L40",
+      "id": "components_sitecard_sitecard",
+      "community": 0,
+      "norm_label": "sitecard()"
+    },
+    {
+      "label": "SiteGrid.jsx",
+      "file_type": "code",
+      "source_file": "src/components/SiteGrid.jsx",
+      "source_location": "L1",
+      "id": "src_components_sitegrid_jsx",
+      "community": 22,
+      "norm_label": "sitegrid.jsx"
+    },
+    {
+      "label": "SiteGrid()",
+      "file_type": "code",
+      "source_file": "src/components/SiteGrid.jsx",
+      "source_location": "L15",
+      "id": "components_sitegrid_sitegrid",
+      "community": 22,
+      "norm_label": "sitegrid()"
+    },
+    {
+      "label": "StarCanvas.jsx",
+      "file_type": "code",
+      "source_file": "src/components/StarCanvas.jsx",
+      "source_location": "L1",
+      "id": "src_components_starcanvas_jsx",
+      "community": 23,
+      "norm_label": "starcanvas.jsx"
+    },
+    {
+      "label": "StarCanvas()",
+      "file_type": "code",
+      "source_file": "src/components/StarCanvas.jsx",
+      "source_location": "L4",
+      "id": "components_starcanvas_starcanvas",
+      "community": 23,
+      "norm_label": "starcanvas()"
+    },
+    {
+      "label": "WeatherWidget.jsx",
+      "file_type": "code",
+      "source_file": "src/components/WeatherWidget.jsx",
+      "source_location": "L1",
+      "id": "src_components_weatherwidget_jsx",
+      "community": 24,
+      "norm_label": "weatherwidget.jsx"
+    },
+    {
+      "label": "WeatherWidget()",
+      "file_type": "code",
+      "source_file": "src/components/WeatherWidget.jsx",
+      "source_location": "L5",
+      "id": "components_weatherwidget_weatherwidget",
+      "community": 24,
+      "norm_label": "weatherwidget()"
+    },
+    {
+      "label": "Widgets.jsx",
+      "file_type": "code",
+      "source_file": "src/components/Widgets.jsx",
+      "source_location": "L1",
+      "id": "src_components_widgets_jsx",
+      "community": 31,
+      "norm_label": "widgets.jsx"
+    },
+    {
+      "label": "useNews.js",
+      "file_type": "code",
+      "source_file": "src/hooks/useNews.js",
+      "source_location": "L1",
+      "id": "src_hooks_usenews_js",
+      "community": 25,
+      "norm_label": "usenews.js"
+    },
+    {
+      "label": "useNews()",
+      "file_type": "code",
+      "source_file": "src/hooks/useNews.js",
+      "source_location": "L12",
+      "id": "hooks_usenews_usenews",
+      "community": 25,
+      "norm_label": "usenews()"
+    },
+    {
+      "label": "useSearch.js",
+      "file_type": "code",
+      "source_file": "src/hooks/useSearch.js",
+      "source_location": "L1",
+      "id": "src_hooks_usesearch_js",
+      "community": 26,
+      "norm_label": "usesearch.js"
+    },
+    {
+      "label": "useSearch()",
+      "file_type": "code",
+      "source_file": "src/hooks/useSearch.js",
+      "source_location": "L3",
+      "id": "hooks_usesearch_usesearch",
+      "community": 26,
+      "norm_label": "usesearch()"
+    },
+    {
+      "label": "resolvedorFavicon.js",
+      "file_type": "code",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L1",
+      "id": "src_services_resolvedorfavicon_js",
+      "community": 0,
+      "norm_label": "resolvedorfavicon.js"
+    },
+    {
+      "label": "processQueue()",
+      "file_type": "code",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L12",
+      "id": "services_resolvedorfavicon_processqueue",
+      "community": 0,
+      "norm_label": "processqueue()"
+    },
+    {
+      "label": "getCachedFavicon()",
+      "file_type": "code",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L42",
+      "id": "services_resolvedorfavicon_getcachedfavicon",
+      "community": 0,
+      "norm_label": "getcachedfavicon()"
+    },
+    {
+      "label": "setCachedFavicon()",
+      "file_type": "code",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L50",
+      "id": "services_resolvedorfavicon_setcachedfavicon",
+      "community": 0,
+      "norm_label": "setcachedfavicon()"
+    },
+    {
+      "label": "resolverFavicon()",
+      "file_type": "code",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L57",
+      "id": "services_resolvedorfavicon_resolverfavicon",
+      "community": 0,
+      "norm_label": "resolverfavicon()"
+    },
+    {
+      "label": "useStore.js",
+      "file_type": "code",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L1",
+      "id": "src_store_usestore_js",
+      "community": 1,
+      "norm_label": "usestore.js"
+    },
+    {
+      "label": "getSavedCategory()",
+      "file_type": "code",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L18",
+      "id": "store_usestore_getsavedcategory",
+      "community": 1,
+      "norm_label": "getsavedcategory()"
+    },
+    {
+      "label": "setSavedCategory()",
+      "file_type": "code",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L33",
+      "id": "store_usestore_setsavedcategory",
+      "community": 1,
+      "norm_label": "setsavedcategory()"
+    },
+    {
+      "label": "themes.js",
+      "file_type": "code",
+      "source_file": "src/themes/themes.js",
+      "source_location": "L1",
+      "id": "src_themes_themes_js",
+      "community": 4,
+      "norm_label": "themes.js"
+    },
+    {
+      "label": "applyTheme()",
+      "file_type": "code",
+      "source_file": "src/themes/themes.js",
+      "source_location": "L92",
+      "id": "themes_themes_applytheme",
+      "community": 4,
+      "norm_label": "applytheme()"
+    },
+    {
+      "label": "crypto.js",
+      "file_type": "code",
+      "source_file": "src/utils/crypto.js",
+      "source_location": "L1",
+      "id": "src_utils_crypto_js",
+      "community": 1,
+      "norm_label": "crypto.js"
+    },
+    {
+      "label": "encrypt()",
+      "file_type": "code",
+      "source_file": "src/utils/crypto.js",
+      "source_location": "L3",
+      "id": "utils_crypto_encrypt",
+      "community": 1,
+      "norm_label": "encrypt()"
+    },
+    {
+      "label": "decrypt()",
+      "file_type": "code",
+      "source_file": "src/utils/crypto.js",
+      "source_location": "L8",
+      "id": "utils_crypto_decrypt",
+      "community": 1,
+      "norm_label": "decrypt()"
+    },
+    {
+      "label": "favicon.js",
+      "file_type": "code",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L1",
+      "id": "src_utils_favicon_js",
+      "community": 0,
+      "norm_label": "favicon.js"
+    },
+    {
+      "label": "getFaviconUrls()",
+      "file_type": "code",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L1",
+      "id": "utils_favicon_getfaviconurls",
+      "community": 0,
+      "norm_label": "getfaviconurls()"
+    },
+    {
+      "label": "getDomain()",
+      "file_type": "code",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L43",
+      "id": "utils_favicon_getdomain",
+      "community": 0,
+      "norm_label": "getdomain()"
+    },
+    {
+      "label": "faviconDb.js",
+      "file_type": "code",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L1",
+      "id": "src_utils_favicondb_js",
+      "community": 1,
+      "norm_label": "favicondb.js"
+    },
+    {
+      "label": "carregarFaviconsDb()",
+      "file_type": "code",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L7",
+      "id": "utils_favicondb_carregarfaviconsdb",
+      "community": 1,
+      "norm_label": "carregarfaviconsdb()"
+    },
+    {
+      "label": "salvarFaviconDb()",
+      "file_type": "code",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L24",
+      "id": "utils_favicondb_salvarfavicondb",
+      "community": 1,
+      "norm_label": "salvarfavicondb()"
+    },
+    {
+      "label": "deletarFaviconDb()",
+      "file_type": "code",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L43",
+      "id": "utils_favicondb_deletarfavicondb",
+      "community": 1,
+      "norm_label": "deletarfavicondb()"
+    },
+    {
+      "label": "storage.js",
+      "file_type": "code",
+      "source_file": "src/utils/storage.js",
+      "source_location": "L1",
+      "id": "src_utils_storage_js",
+      "community": 32,
+      "norm_label": "storage.js"
+    },
+    {
+      "label": "versionador.js",
+      "file_type": "code",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L1",
+      "id": "versionamento_versionador_js",
+      "community": 3,
+      "norm_label": "versionador.js"
+    },
+    {
+      "label": "gerarHash()",
+      "file_type": "code",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L30",
+      "id": "versionamento_versionador_gerarhash",
+      "community": 3,
+      "norm_label": "gerarhash()"
+    },
+    {
+      "label": "processarUrl()",
+      "file_type": "code",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L38",
+      "id": "versionamento_versionador_processarurl",
+      "community": 3,
+      "norm_label": "processarurl()"
+    },
+    {
+      "label": "processarConteudo()",
+      "file_type": "code",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L73",
+      "id": "versionamento_versionador_processarconteudo",
+      "community": 3,
+      "norm_label": "processarconteudo()"
+    },
+    {
+      "label": "varrerDiretorio()",
+      "file_type": "code",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L105",
+      "id": "versionamento_versionador_varrerdiretorio",
+      "community": 3,
+      "norm_label": "varrerdiretorio()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/chat.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "netlify_functions_chat_js",
+      "target": "functions_chat_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/favicon.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "netlify_functions_favicon_js",
+      "target": "functions_favicon_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/proxy-img.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "netlify_functions_proxy_img_js",
+      "target": "functions_proxy_img_isprivateip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/proxy-img.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "netlify_functions_proxy_img_js",
+      "target": "functions_proxy_img_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/proxy-img.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "functions_proxy_img_handler",
+      "target": "functions_proxy_img_isprivateip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "netlify_functions_resolver_favicon_js",
+      "target": "functions_resolver_favicon_isprivateip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "netlify_functions_resolver_favicon_js",
+      "target": "functions_resolver_favicon_extracticons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "netlify_functions_resolver_favicon_js",
+      "target": "functions_resolver_favicon_getbesticon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "netlify_functions_resolver_favicon_js",
+      "target": "functions_resolver_favicon_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "functions_resolver_favicon_handler",
+      "target": "functions_resolver_favicon_isprivateip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L162",
+      "weight": 1.0,
+      "source": "functions_resolver_favicon_handler",
+      "target": "functions_resolver_favicon_extracticons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/resolver-favicon.js",
+      "source_location": "L163",
+      "weight": 1.0,
+      "source": "functions_resolver_favicon_handler",
+      "target": "functions_resolver_favicon_getbesticon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/rss.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "netlify_functions_rss_js",
+      "target": "functions_rss_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/sync.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "netlify_functions_sync_js",
+      "target": "functions_sync_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_jsx",
+      "target": "themes_themes_applytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/App.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_app_jsx",
+      "target": "src_app_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/AddSiteModal.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_addsitemodal_jsx",
+      "target": "components_addsitemodal_addsitemodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/AIChatModal.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_components_aichatmodal_jsx",
+      "target": "components_aichatmodal_aichatmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/BottomSection.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_components_bottomsection_jsx",
+      "target": "components_bottomsection_bottomsection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/CategoryFilter.jsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_components_categoryfilter_jsx",
+      "target": "components_categoryfilter_categoryfilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Clock.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_components_clock_jsx",
+      "target": "components_clock_clock",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ConfirmModal.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_components_confirmmodal_jsx",
+      "target": "components_confirmmodal_confirmmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FloatingMenu.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_floatingmenu_jsx",
+      "target": "components_floatingmenu_floatingmenu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ImportBookmarksModal.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_importbookmarksmodal_jsx",
+      "target": "components_importbookmarksmodal_importbookmarksmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/NewsFeed.jsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "src_components_newsfeed_jsx",
+      "target": "components_newsfeed_newsfeed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/NotesWidget.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_noteswidget_jsx",
+      "target": "components_noteswidget_noteswidget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SearchBar.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_searchbar_jsx",
+      "target": "components_searchbar_searchbar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SettingsModal.jsx",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "src_components_settingsmodal_jsx",
+      "target": "components_settingsmodal_sortablecategoryitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SettingsModal.jsx",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "src_components_settingsmodal_jsx",
+      "target": "components_settingsmodal_settingsmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "utils_favicon_getfaviconurls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "utils_favicon_getdomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "utils_favicondb_salvarfavicondb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "services_resolvedorfavicon_resolverfavicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "services_resolvedorfavicon_getcachedfavicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "services_resolvedorfavicon_setcachedfavicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "components_sitecard_getavatarcolor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "components_sitecard_getproxiedurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "components_sitecard_sitecard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "components_sitecard_getavatarcolor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L283",
+      "weight": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "components_sitecard_getproxiedurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "utils_favicon_getdomain"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "services_resolvedorfavicon_getcachedfavicon"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteGrid.jsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "src_components_sitegrid_jsx",
+      "target": "components_sitegrid_sitegrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/StarCanvas.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_components_starcanvas_jsx",
+      "target": "components_starcanvas_starcanvas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/WeatherWidget.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_components_weatherwidget_jsx",
+      "target": "components_weatherwidget_weatherwidget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hooks/useNews.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_hooks_usenews_js",
+      "target": "hooks_usenews_usenews",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hooks/useSearch.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_hooks_usesearch_js",
+      "target": "hooks_usesearch_usesearch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_services_resolvedorfavicon_js",
+      "target": "utils_favicon_getdomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_services_resolvedorfavicon_js",
+      "target": "services_resolvedorfavicon_processqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "src_services_resolvedorfavicon_js",
+      "target": "services_resolvedorfavicon_getcachedfavicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "src_services_resolvedorfavicon_js",
+      "target": "services_resolvedorfavicon_setcachedfavicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "src_services_resolvedorfavicon_js",
+      "target": "services_resolvedorfavicon_resolverfavicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "themes_themes_applytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "utils_crypto_encrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "utils_crypto_decrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "utils_favicon_getdomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "utils_favicondb_carregarfaviconsdb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "utils_favicondb_deletarfavicondb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "store_usestore_getsavedcategory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/store/useStore.js",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "src_store_usestore_js",
+      "target": "store_usestore_setsavedcategory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/themes/themes.js",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "src_themes_themes_js",
+      "target": "themes_themes_applytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/crypto.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_utils_crypto_js",
+      "target": "utils_crypto_encrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/crypto.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_utils_crypto_js",
+      "target": "utils_crypto_decrypt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_utils_favicon_js",
+      "target": "utils_favicon_getfaviconurls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "src_utils_favicon_js",
+      "target": "utils_favicon_getdomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_utils_favicondb_js",
+      "target": "utils_favicondb_carregarfaviconsdb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_utils_favicondb_js",
+      "target": "utils_favicondb_salvarfavicondb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/faviconDb.js",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "src_utils_favicondb_js",
+      "target": "utils_favicondb_deletarfavicondb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "versionamento_versionador_js",
+      "target": "versionamento_versionador_gerarhash",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "versionamento_versionador_js",
+      "target": "versionamento_versionador_processarurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "versionamento_versionador_js",
+      "target": "versionamento_versionador_processarconteudo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "versionamento_versionador_js",
+      "target": "versionamento_versionador_varrerdiretorio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "versionamento/versionador.js",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "versionamento_versionador_processarurl",
+      "target": "versionamento_versionador_gerarhash",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "738d5c8584fb3d3dd206369447b114b6d3853002"
+}

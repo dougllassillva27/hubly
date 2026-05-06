@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { Newspaper, Trophy } from 'lucide-react';
+import { Newspaper, Trophy, Monitor } from 'lucide-react';
 import NewsFeed from './NewsFeed';
+import FutebolWidget from './futebol/FutebolWidget';
+import NoticiasWidget from './futebol/NoticiasWidget';
 
-const tabs = [{ id: 'news', label: 'Notícias', icon: Newspaper }];
+const tabs = [
+  { id: 'news', label: 'Tecnologia', icon: Monitor },
+  { id: 'futebol_noticias', label: 'Notícias', icon: Newspaper },
+  { id: 'futebol', label: 'Futebol', icon: Trophy },
+];
 
 export default function BottomSection() {
   const [activeTab, setActiveTab] = useState('news');
@@ -31,6 +37,8 @@ export default function BottomSection() {
 
       {/* Tab Content */}
       {activeTab === 'news' && <NewsFeed />}
+      {activeTab === 'futebol_noticias' && <NoticiasWidget />}
+      {activeTab === 'futebol' && <FutebolWidget />}
     </div>
   );
 }

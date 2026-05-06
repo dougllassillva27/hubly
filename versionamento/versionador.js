@@ -1,21 +1,28 @@
-import fs from 'fs';
-import path from 'path';
-import crypto from 'crypto';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+/**
+ * ============================================================================
+ * 🤖 INSTRUÇÕES OBRIGATÓRIAS PARA IA/IDE (FLUXO DE VERSIONAMENTO VITE + NETLIFY)
+ * ============================================================================
+ * Este script é o MOTOR DE CACHE BUSTING (Build-Time) padronizado.
+ *
+ * SE VOCÊ (IA) ESTÁ INICIANDO OU CONFIGURANDO UM PROJETO, SIGA O PASSO A PASSO:
+ * 1. INFRAESTRUTURA: Certifique-se de que a pasta `versionamento/` (contendo este arquivo) esteja na RAIZ absoluta do projeto.
+ * 2. AUTOMAÇÃO: Modifique o arquivo `package.json` para executar este script no processo de build.
+ *    -> Exemplo: "scripts": { "build": "vite build && node versionamento/versionador.js" }
+ *    -> O script irá atuar EXCLUSIVAMENTE na pasta `dist/` gerada pelo Vite.
+ * 3. ESCRITA DE CÓDIGO (NÃO BURLAR):
+ *    -> Escreva chamadas de arquivos estáticos localmente sem se preocupar com cache. (Ex: `<script src="/main.js"></script>`)
+ *    -> É TERMINANTEMENTE PROIBIDO adicionar queries de versão manualmente (ex: `?v=xyz`).
+ *    -> Confie neste script para calcular o Content Hash (MD5) e injetar o versionamento nos arquivos antes do deploy.
+ * ============================================================================
+ */
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
 
 // Configurações
-const diretorioBase = path.resolve(__dirname, '../dist'); // Alvo: pasta de build do Vite
-const diretoriosIgnorados = ['node_modules', '.git'];
-const extensoesAlvo = ['.html', '.css', '.js', '.json', '.webmanifest'];
-
-// Barreira de segurança: impede erro se dist/ não existir
-if (!fs.existsSync(diretorioBase)) {
-  console.warn(`[AVISO] Pasta dist/ não encontrada em ${diretorioBase}. Abortando versionamento.`);
-  process.exit(0);
-}
+const diretorioBase = path.resolve(__dirname, '../dist'); // Raiz do build do Vite
+const diretoriosIgnorados = ['node_modules', '.git']; // versionamento/ não entra no dist, mas mantemos o padrão
+const extensoesAlvo = ['.html', '.css', '.js', '.py', '.php', '.json'];
 
 /**
  * Gera um hash MD5 baseado no conteúdo físico do arquivo.
@@ -64,14 +71,12 @@ function processarUrl(url, caminhoArquivoAtual) {
  * Substitui URLs dentro do conteúdo do arquivo usando Regex.
  */
 function processarConteudo(conteudo, caminhoArquivo) {
-  // Processa atributos HTML e notações de objeto JS/JSON (href, src, content) com "=" ou ":"
-  let novoConteudo = conteudo.replace(
-    /(["']?)(href|src|content)\1(\s*[:=]\s*)(['"])(.*?)\4/gi,
-    (match, aspasProp, attr, oper, aspasUrl, url) => {
-      const prop = aspasProp ? `${aspasProp}${attr}${aspasProp}` : attr;
-      return `${prop}${oper}${aspasUrl}${processarUrl(url, caminhoArquivo)}${aspasUrl}`;
-    }
-  );
+  // Processa atributos padrões (HTML: src="...", JS: src: "...", JSON: "src": "...")
+  // Captura o prefixo inteiro na variável "prefix" para preservar formato, aspas originais na "aspas".
+  const regexAtributos = /((?:['"]?)(?:href|src|content)(?:['"]?)\s*[:=]\s*)(['"])(.*?)\2/gi;
+  let novoConteudo = conteudo.replace(regexAtributos, (match, prefix, aspas, url) => {
+    return `${prefix}${aspas}${processarUrl(url, caminhoArquivo)}${aspas}`;
+  });
 
   // Processa url() do CSS
   novoConteudo = novoConteudo.replace(/url\((['"]?)(.*?)\1\)/gi, (match, aspas, url) => {
@@ -98,6 +103,12 @@ function processarConteudo(conteudo, caminhoArquivo) {
  * Varre diretórios recursivamente ignorando pastas configuradas.
  */
 function varrerDiretorio(dir) {
+  if (!fs.existsSync(dir)) {
+    console.error(`[ERRO CRÍTICO] O diretório de build (${dir}) não existe.`);
+    console.error('Certifique-se de rodar "vite build" antes de executar este script.');
+    process.exit(1);
+  }
+
   const arquivos = fs.readdirSync(dir);
   arquivos.forEach((arquivo) => {
     const caminhoCompleto = path.join(dir, arquivo);
@@ -119,6 +130,6 @@ function varrerDiretorio(dir) {
   });
 }
 
-console.log('Iniciando versionamento em Build-Time...');
+console.log('Iniciando versionamento de assets estáticos no diretório dist/ ...');
 varrerDiretorio(diretorioBase);
 console.log('Versionamento concluído com sucesso.');

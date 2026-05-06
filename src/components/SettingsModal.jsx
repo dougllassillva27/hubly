@@ -52,6 +52,7 @@ const tabs = [
   { id: 'news', label: 'Notícias', icon: Newspaper },
   { id: 'widgets', label: 'Widgets', icon: LayoutGrid },
   { id: 'categories', label: 'Categorias', icon: FolderOpen },
+  { id: 'futebol', label: 'Futebol', icon: Trophy },
   { id: 'data', label: 'Dados', icon: Database },
 ];
 
@@ -67,6 +68,18 @@ const availableTopics = [
   { id: 'business', label: 'Negócios' },
   { id: 'health', label: 'Saúde' },
   { id: 'sports', label: 'Esportes' },
+];
+
+const availableFutebolChampionships = [
+  'Série A',
+  'Série B',
+  'Copa do Brasil',
+  'Libertadores',
+  'Sul-Americana',
+  'Champions',
+  'Premier League',
+  'La Liga',
+  'Copa Sul-Sudeste',
 ];
 
 function SortableCategoryItem({ cat, onRemove, onUpdate }) {
@@ -156,6 +169,8 @@ export default function SettingsModal() {
     setNewsApiKey,
     newsTopics,
     setNewsTopics,
+    futebolCampeonatos,
+    setFutebolCampeonatos,
     weatherCity,
     setWeatherCity,
     categories,
@@ -290,6 +305,15 @@ export default function SettingsModal() {
       setNewsTopics(newsTopics.filter((t) => t !== topicId));
     } else {
       setNewsTopics([...newsTopics, topicId]);
+    }
+  };
+
+  const toggleCampeonato = (camp) => {
+    const lower = camp.toLowerCase();
+    if (futebolCampeonatos.includes(lower)) {
+      setFutebolCampeonatos(futebolCampeonatos.filter((c) => c !== lower));
+    } else {
+      setFutebolCampeonatos([...futebolCampeonatos, lower]);
     }
   };
 
@@ -608,6 +632,48 @@ export default function SettingsModal() {
                 </div>
               </div>
               */}
+            </div>
+          )}
+
+          {/* Futebol Tab */}
+          {activeTab === 'futebol' && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-sm font-medium text-muted mb-3">Filtro de Campeonatos (Jogos de Hoje)</h3>
+                <p className="text-sm text-muted mb-4">
+                  Selecione quais competições devem aparecer no seu widget de jogos. Torneios sazonais maiores (como
+                  Copa do Mundo) furarão esse filtro e aparecerão automaticamente.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {availableFutebolChampionships.map((camp) => {
+                    const lower = camp.toLowerCase();
+                    const isChecked = futebolCampeonatos.includes(lower);
+                    return (
+                      <label
+                        key={camp}
+                        className={`flex items-center gap-3 p-3 rounded-xl border transition-all cursor-pointer select-none ${
+                          isChecked ? 'border-accent bg-accent/10' : 'border-border bg-bg hover:border-accent/50'
+                        }`}
+                      >
+                        <div className="relative flex items-center justify-center">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            onChange={() => toggleCampeonato(camp)}
+                            className="peer appearance-none w-5 h-5 border-2 border-muted rounded bg-transparent checked:bg-accent checked:border-accent transition-colors"
+                          />
+                          {isChecked && <Check size={14} className="absolute text-bg pointer-events-none" />}
+                        </div>
+                        <span
+                          className={`text-sm font-medium transition-colors ${isChecked ? 'text-accent' : 'text-text'}`}
+                        >
+                          {camp}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           )}
 

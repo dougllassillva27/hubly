@@ -15,6 +15,17 @@ const searchProviders = [
   { name: 'AI Chat', url: '', color: '#00D4AA', icon: 'AI', type: 'ai' },
 ].filter(Boolean);
 
+const defaultFutebolCampeonatos = [
+  'série a',
+  'série b',
+  'copa do brasil',
+  'libertadores',
+  'sul-americana',
+  'champions',
+  'premier league',
+  'la liga',
+];
+
 const getSavedCategory = () => {
   try {
     let val = localStorage.getItem('sp_active_category');
@@ -78,6 +89,9 @@ const useStore = create((set, get) => ({
   chatMessages: [],
   chatLoading: false,
   initialChatMessage: null,
+
+  // Futebol
+  futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
 
   // UI State
   settingsOpen: false,
@@ -381,6 +395,12 @@ const useStore = create((set, get) => ({
     get().triggerAutoSync();
   },
 
+  setFutebolCampeonatos: (campeonatos) => {
+    storage.set('futebol_campeonatos', campeonatos);
+    set({ futebolCampeonatos: campeonatos });
+    get().triggerAutoSync();
+  },
+
   // AI Chat Actions
   setOpenAiApiKey: (key) => {
     const token = get().syncToken;
@@ -476,6 +496,7 @@ const useStore = create((set, get) => ({
         newsProvider: storage.get('news_provider') || 'rss',
         newsApiKey: storage.get('news_apikey') || '',
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
+        futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
         notesContent: storage.get('notes_content') || '',
         weatherCity: storage.get('weather_city') || '',
         homeSortMethod: storage.get('home_sort_method') || 'manual',
