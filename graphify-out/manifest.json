@@ -36,8 +36,8 @@
     "hash": "12146ad3a70fbd9296e74c8ef77420a0"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\proxy-img.js": {
-    "mtime": 1777248399.7686417,
-    "hash": "062ea9e82449c958f93a500ea5c069f1"
+    "mtime": 1778696893.7247694,
+    "hash": "1e2e73834781a7029d7061a50097d694"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\resolver-favicon.js": {
     "mtime": 1777240159.5556948,
@@ -52,8 +52,8 @@
     "hash": "7456edb56f5fd8641fa8d205814d21ff"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\App.jsx": {
-    "mtime": 1778072715.800944,
-    "hash": "a8f36e86d2b2f376e5d21e80e563d600"
+    "mtime": 1778694487.71959,
+    "hash": "6dcc7f0bcba8884d0d875f1901393cc9"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\main.jsx": {
     "mtime": 1776810841.9045424,
@@ -112,12 +112,12 @@
     "hash": "8fc21b75db380a520475b6e50c9ff647"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\SiteCard.jsx": {
-    "mtime": 1777502328.496325,
-    "hash": "1bf14f5e0fa186e7b06a7aeb71515f59"
+    "mtime": 1778697608.4763982,
+    "hash": "b8ff20518a321bff12667a9d005deedc"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\SiteGrid.jsx": {
-    "mtime": 1776962152.9915679,
-    "hash": "c1243d2ce92cea81151f844621b88550"
+    "mtime": 1778677317.3750675,
+    "hash": "dd24040a5c37158760ca9ec4dda22d51"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\StarCanvas.jsx": {
     "mtime": 1776810841.9016204,
@@ -176,8 +176,8 @@
     "hash": "756669e98ab51871127cf4fb5536a809"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\store\\useStore.js": {
-    "mtime": 1778072642.9540203,
-    "hash": "5a90cec9fdbc7ace1c0507d456c14247"
+    "mtime": 1778697608.4763982,
+    "hash": "897f30ab902d18b8314fd8d48d5f8996"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\themes\\themes.js": {
     "mtime": 1776819727.0941465,
@@ -188,8 +188,8 @@
     "hash": "ae2c18bcc5dab5aa94a9834245de6a48"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\utils\\favicon.js": {
-    "mtime": 1776854607.0743682,
-    "hash": "57f98db917f1f9bc8768ec58a2a4b53d"
+    "mtime": 1778696903.5272863,
+    "hash": "411cfe4040e1b25a18bbb65c15f5c68a"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\utils\\faviconDb.js": {
     "mtime": 1776856060.2163403,
@@ -207,9 +207,9 @@
     "mtime": 1776862284.4487216,
     "hash": "6a4a1418fd709b2d143888ec52257d73"
   },
-  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\GEMINI.md": {
-    "mtime": 1778018353.27977,
-    "hash": "8836f95bb6836bf2abbb09cc67c7706b"
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\Geral.txt": {
+    "mtime": 1778697554.8025358,
+    "hash": "ab2cb5bcd86647a06d5e023d0da936c7"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\index.html": {
     "mtime": 1776887706.8806703,
@@ -220,8 +220,12 @@
     "hash": "1cab13688f694e2de4702b747a5456a9"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\resumo-de-trabalho.md": {
-    "mtime": 1778104109.4349804,
-    "hash": "417ac2d70e3411a03a8e9b4118b11782"
+    "mtime": 1778697723.418033,
+    "hash": "3c1866df5b2843792bdbb64e17a87cef"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\docs\\bkp\\resumo-old.md": {
+    "mtime": 1778696692.7533672,
+    "hash": "9c8911ca4ce537710f4a493de478ec29"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\docs\\feature\\PLANO-IMPLEMENTACAO-FUTEBOL-HUBLY-NETLIFY.md": {
     "mtime": 1776963076.851,

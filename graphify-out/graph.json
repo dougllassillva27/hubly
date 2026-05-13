@@ -216,7 +216,7 @@
       "source_file": "src/App.jsx",
       "source_location": "L1",
       "id": "src_app_jsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "app.jsx"
     },
     {
@@ -225,7 +225,7 @@
       "source_file": "src/App.jsx",
       "source_location": "L20",
       "id": "src_app_app",
-      "community": 0,
+      "community": 1,
       "norm_label": "app()"
     },
     {
@@ -486,7 +486,7 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L1",
       "id": "src_components_sitecard_jsx",
-      "community": 1,
+      "community": 0,
       "norm_label": "sitecard.jsx"
     },
     {
@@ -495,25 +495,16 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L10",
       "id": "components_sitecard_getavatarcolor",
-      "community": 1,
+      "community": 0,
       "norm_label": "getavatarcolor()"
-    },
-    {
-      "label": "getProxiedUrl()",
-      "file_type": "code",
-      "source_file": "src/components/SiteCard.jsx",
-      "source_location": "L31",
-      "id": "components_sitecard_getproxiedurl",
-      "community": 1,
-      "norm_label": "getproxiedurl()"
     },
     {
       "label": "SiteCard()",
       "file_type": "code",
       "source_file": "src/components/SiteCard.jsx",
-      "source_location": "L40",
+      "source_location": "L31",
       "id": "components_sitecard_sitecard",
-      "community": 1,
+      "community": 0,
       "norm_label": "sitecard()"
     },
     {
@@ -765,7 +756,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L1",
       "id": "src_services_resolvedorfavicon_js",
-      "community": 1,
+      "community": 0,
       "norm_label": "resolvedorfavicon.js"
     },
     {
@@ -774,7 +765,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L12",
       "id": "services_resolvedorfavicon_processqueue",
-      "community": 1,
+      "community": 0,
       "norm_label": "processqueue()"
     },
     {
@@ -783,7 +774,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L42",
       "id": "services_resolvedorfavicon_getcachedfavicon",
-      "community": 1,
+      "community": 0,
       "norm_label": "getcachedfavicon()"
     },
     {
@@ -792,7 +783,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L50",
       "id": "services_resolvedorfavicon_setcachedfavicon",
-      "community": 1,
+      "community": 0,
       "norm_label": "setcachedfavicon()"
     },
     {
@@ -801,7 +792,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L57",
       "id": "services_resolvedorfavicon_resolverfavicon",
-      "community": 1,
+      "community": 0,
       "norm_label": "resolverfavicon()"
     },
     {
@@ -810,7 +801,7 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L1",
       "id": "src_store_usestore_js",
-      "community": 0,
+      "community": 1,
       "norm_label": "usestore.js"
     },
     {
@@ -819,7 +810,7 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L29",
       "id": "store_usestore_getsavedcategory",
-      "community": 0,
+      "community": 1,
       "norm_label": "getsavedcategory()"
     },
     {
@@ -828,7 +819,7 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L44",
       "id": "store_usestore_setsavedcategory",
-      "community": 0,
+      "community": 1,
       "norm_label": "setsavedcategory()"
     },
     {
@@ -837,7 +828,7 @@
       "source_file": "src/themes/themes.js",
       "source_location": "L1",
       "id": "src_themes_themes_js",
-      "community": 0,
+      "community": 1,
       "norm_label": "themes.js"
     },
     {
@@ -846,7 +837,7 @@
       "source_file": "src/themes/themes.js",
       "source_location": "L92",
       "id": "themes_themes_applytheme",
-      "community": 0,
+      "community": 1,
       "norm_label": "applytheme()"
     },
     {
@@ -855,7 +846,7 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L1",
       "id": "src_utils_crypto_js",
-      "community": 0,
+      "community": 1,
       "norm_label": "crypto.js"
     },
     {
@@ -864,7 +855,7 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L3",
       "id": "utils_crypto_encrypt",
-      "community": 0,
+      "community": 1,
       "norm_label": "encrypt()"
     },
     {
@@ -873,7 +864,7 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L8",
       "id": "utils_crypto_decrypt",
-      "community": 0,
+      "community": 1,
       "norm_label": "decrypt()"
     },
     {
@@ -882,25 +873,43 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L1",
       "id": "src_utils_favicon_js",
-      "community": 1,
+      "community": 0,
       "norm_label": "favicon.js"
+    },
+    {
+      "label": "isLocalDomain()",
+      "file_type": "code",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L1",
+      "id": "utils_favicon_islocaldomain",
+      "community": 0,
+      "norm_label": "islocaldomain()"
+    },
+    {
+      "label": "getProxiedUrl()",
+      "file_type": "code",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L10",
+      "id": "utils_favicon_getproxiedurl",
+      "community": 0,
+      "norm_label": "getproxiedurl()"
     },
     {
       "label": "getFaviconUrls()",
       "file_type": "code",
       "source_file": "src/utils/favicon.js",
-      "source_location": "L1",
+      "source_location": "L20",
       "id": "utils_favicon_getfaviconurls",
-      "community": 1,
+      "community": 0,
       "norm_label": "getfaviconurls()"
     },
     {
       "label": "getDomain()",
       "file_type": "code",
       "source_file": "src/utils/favicon.js",
-      "source_location": "L43",
+      "source_location": "L56",
       "id": "utils_favicon_getdomain",
-      "community": 1,
+      "community": 0,
       "norm_label": "getdomain()"
     },
     {
@@ -909,7 +918,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L1",
       "id": "src_utils_favicondb_js",
-      "community": 0,
+      "community": 1,
       "norm_label": "favicondb.js"
     },
     {
@@ -918,7 +927,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L7",
       "id": "utils_favicondb_carregarfaviconsdb",
-      "community": 0,
+      "community": 1,
       "norm_label": "carregarfaviconsdb()"
     },
     {
@@ -927,7 +936,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L24",
       "id": "utils_favicondb_salvarfavicondb",
-      "community": 0,
+      "community": 1,
       "norm_label": "salvarfavicondb()"
     },
     {
@@ -936,7 +945,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L43",
       "id": "utils_favicondb_deletarfavicondb",
-      "community": 0,
+      "community": 1,
       "norm_label": "deletarfavicondb()"
     },
     {
@@ -992,6 +1001,15 @@
       "id": "versionamento_versionador_varrerdiretorio",
       "community": 3,
       "norm_label": "varrerdiretorio()"
+    },
+    {
+      "label": "getProxiedUrl()",
+      "file_type": "code",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L31",
+      "community": 0,
+      "norm_label": "getproxiedurl()",
+      "id": "components_sitecard_getproxiedurl"
     }
   ],
   "links": [
@@ -1347,6 +1365,28 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "utils_favicon_islocaldomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "utils_favicon_getproxiedurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
       "source_location": "L7",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -1400,21 +1440,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/SiteCard.jsx",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_components_sitecard_jsx",
-      "target": "components_sitecard_getproxiedurl"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/SiteCard.jsx",
       "source_location": "L40",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
       "target": "components_sitecard_sitecard"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_sitecard_jsx",
+      "target": "components_sitecard_getproxiedurl"
     },
     {
       "relation": "calls",
@@ -1426,17 +1466,6 @@
       "confidence_score": 1.0,
       "source": "components_sitecard_sitecard",
       "target": "components_sitecard_getavatarcolor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/SiteCard.jsx",
-      "source_location": "L283",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_sitecard_sitecard",
-      "target": "components_sitecard_getproxiedurl"
     },
     {
       "relation": "calls",
@@ -1455,10 +1484,43 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "utils_favicon_islocaldomain"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/SiteCard.jsx",
       "source_location": "L57",
       "weight": 1.0,
       "source": "components_sitecard_sitecard",
       "target": "services_resolvedorfavicon_getcachedfavicon"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "utils_favicon_getproxiedurl"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/SiteCard.jsx",
+      "source_location": "L283",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_sitecard_sitecard",
+      "target": "components_sitecard_getproxiedurl"
     },
     {
       "relation": "contains",
@@ -1807,6 +1869,26 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L1",
       "weight": 1.0,
+      "source": "src_utils_favicon_js",
+      "target": "utils_favicon_islocaldomain",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_utils_favicon_js",
+      "target": "utils_favicon_getproxiedurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L1",
+      "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_utils_favicon_js",
       "target": "utils_favicon_getfaviconurls"
@@ -1820,6 +1902,17 @@
       "confidence_score": 1.0,
       "source": "src_utils_favicon_js",
       "target": "utils_favicon_getdomain"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "utils_favicon_getfaviconurls",
+      "target": "utils_favicon_islocaldomain",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -1904,5 +1997,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "02dd1688cf479759ed48a41cb70ab4fb64a9fd87"
+  "built_at_commit": "707852b315ef133daa02a81f658406606d585b1d"
 }

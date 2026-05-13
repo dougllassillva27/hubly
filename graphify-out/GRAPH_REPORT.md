@@ -1,16 +1,16 @@
-# Graph Report - Hubly  (2026-05-12)
+# Graph Report - Hubly  (2026-05-13)
 
 ## Corpus Check
-- 51 files · ~300,173 words
+- 51 files · ~290,431 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 110 nodes · 88 edges · 41 communities (37 shown, 4 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
+- 112 nodes · 95 edges · 41 communities (37 shown, 4 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `02dd1688`
+- Built from commit: `707852b3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,36 +24,38 @@
 - [[_COMMUNITY_Community 6|Community 6]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `SiteCard()` - 5 edges
+1. `SiteCard()` - 7 edges
 2. `getDomain()` - 5 edges
 3. `handler()` - 4 edges
-4. `useJogosHoje()` - 3 edges
-5. `useNoticiasFutebol()` - 3 edges
-6. `getCachedFavicon()` - 3 edges
-7. `applyTheme()` - 3 edges
-8. `isPrivateIP()` - 2 edges
-9. `handler()` - 2 edges
-10. `isPrivateIP()` - 2 edges
+4. `isLocalDomain()` - 4 edges
+5. `useJogosHoje()` - 3 edges
+6. `useNoticiasFutebol()` - 3 edges
+7. `getCachedFavicon()` - 3 edges
+8. `applyTheme()` - 3 edges
+9. `getProxiedUrl()` - 3 edges
+10. `getFaviconUrls()` - 3 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `SiteCard()` --calls--> `getDomain()`  [INFERRED]
   src/components/SiteCard.jsx → src/utils/favicon.js
+- `SiteCard()` --calls--> `isLocalDomain()`  [INFERRED]
+  src/components/SiteCard.jsx → src/utils/favicon.js
 - `SiteCard()` --calls--> `getCachedFavicon()`  [INFERRED]
   src/components/SiteCard.jsx → src/services/resolvedorFavicon.js
+- `SiteCard()` --calls--> `getProxiedUrl()`  [INFERRED]
+  src/components/SiteCard.jsx → src/utils/favicon.js
 - `JogosHoje()` --calls--> `useJogosHoje()`  [INFERRED]
   src/components/futebol/JogosHoje.jsx → src/hooks/useJogosHoje.js
-- `NoticiasFutebol()` --calls--> `useNoticiasFutebol()`  [INFERRED]
-  src/components/futebol/NoticiasFutebol.jsx → src/hooks/useNoticiasFutebol.js
 
 ## Communities (41 total, 4 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.16
-Nodes (6): applyTheme(), decrypt(), encrypt(), carregarFaviconsDb(), deletarFaviconDb(), salvarFaviconDb()
+Cohesion: 0.29
+Nodes (10): getAvatarColor(), getProxiedUrl(), SiteCard(), getCachedFavicon(), resolverFavicon(), setCachedFavicon(), getDomain(), getFaviconUrls() (+2 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.29
-Nodes (8): getAvatarColor(), getProxiedUrl(), SiteCard(), getCachedFavicon(), resolverFavicon(), setCachedFavicon(), getDomain(), getFaviconUrls()
+Cohesion: 0.16
+Nodes (6): applyTheme(), decrypt(), encrypt(), carregarFaviconsDb(), deletarFaviconDb(), salvarFaviconDb()
 
 ### Community 2 - "Community 2"
 Cohesion: 0.7
@@ -65,7 +67,7 @@ Nodes (4): extractIcons(), getBestIcon(), handler(), isPrivateIP()
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `getDomain()` connect `Community 1` to `Community 0`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
-- **Are the 2 inferred relationships involving `SiteCard()` (e.g. with `getDomain()` and `getCachedFavicon()`) actually correct?**
-  _`SiteCard()` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `getDomain()` connect `Community 0` to `Community 1`?**
+  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+- **Are the 4 inferred relationships involving `SiteCard()` (e.g. with `getDomain()` and `isLocalDomain()`) actually correct?**
+  _`SiteCard()` has 4 INFERRED edges - model-reasoned connections that need verification._

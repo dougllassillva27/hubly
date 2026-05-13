@@ -590,13 +590,15 @@ const useStore = create((set, get) => ({
     const urlsToPreload = new Set();
     
     sites.forEach(site => {
+      const domain = getDomain(site.url);
+      const isLocal = isLocalDomain(domain);
+
       if (site.customIcon) {
         urlsToPreload.add(getProxiedUrl(site.customIcon));
         return;
       }
       
-      const domain = getDomain(site.url);
-      if (isLocalDomain(domain)) return;
+      if (isLocal) return; // Ignora IPs locais/privados no warmup de nuvem
 
       // Prioridade: FaviconDb (Cloud) -> LocalStorage (Cache) -> URL Padrão
       const cachedUrl = faviconsDb[domain] || getCachedFavicon(domain);
@@ -611,7 +613,7 @@ const useStore = create((set, get) => ({
             img.src = proxied;
             img.onload = () => markIconAsLoaded(proxied);
           }
-        });
+        }).catch(() => {}); // Silencia erros de rede no console
       }
     });
 
