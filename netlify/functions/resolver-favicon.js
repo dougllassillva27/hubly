@@ -1,4 +1,3 @@
-import dns from 'node:dns/promises';
 import { URL } from 'node:url';
 
 const MAX_BYTES = 150 * 1024; // 150KB - Early Abort Stream Threshold
@@ -111,18 +110,12 @@ export const handler = async (event) => {
     const urlObj = new URL(url);
     console.log(`[${requestId}] Hostname: ${urlObj.hostname}`);
     
-    const { address } = await dns.lookup(urlObj.hostname).catch((err) => {
-      console.error(`[${requestId}] DNS Lookup falhou:`, err.message);
-      return { address: null };
-    });
-
-    if (address) {
-      const privateIP = isPrivateIP(address);
-      console.log(`[${requestId}] IP resolvido: ${address} (Privado: ${privateIP})`);
-      if (privateIP) {
-        console.warn(`[${requestId}] SSRF detectado para IP privado: ${address}`);
-        return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado', ip: address }) };
-      }
+    // Simplificando: Removemos DNS lookup para evitar problemas de build no Netlify 
+    // com módulos nativos node:dns/promises em certos ambientes de bundler.
+    // O bloqueio de IP privado agora foca no formato da própria URL.
+    if (isPrivateIP(urlObj.hostname)) {
+        console.warn(`[${requestId}] SSRF detectado para hostname privado: ${urlObj.hostname}`);
+        return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado', host: urlObj.hostname }) };
     }
 
     const controller = new AbortController();
