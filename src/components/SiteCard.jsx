@@ -3,7 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Pencil, Trash2 } from 'lucide-react';
 import useStore from '../store/useStore';
-import { getFaviconUrls, getDomain } from '../utils/favicon';
+import { getFaviconUrls, getDomain, isLocalDomain } from '../utils/favicon';
 import { salvarFaviconDb } from '../utils/faviconDb';
 import { resolverFavicon, getCachedFavicon, setCachedFavicon } from '../services/resolvedorFavicon';
 
@@ -32,7 +32,14 @@ const getProxiedUrl = (url) => {
   if (!url) return '';
   if (url.startsWith('data:') || url.startsWith('/')) return url;
   if (url.includes('google.com/s2')) return url;
-  if (url.includes('localhost') || url.match(/\b(127|192\.168|10|172\.(1[6-9]|2[0-9]|3[0-1]))\./)) return url;
+
+  try {
+    const domain = new URL(url).hostname;
+    if (isLocalDomain(domain)) return url;
+  } catch {
+    return url;
+  }
+
   if (url.startsWith('/.netlify/')) return url;
   return `/.netlify/functions/proxy-img?url=${encodeURIComponent(url)}`;
 };
@@ -51,9 +58,10 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   const [showActions, setShowActions] = useState(false);
 
   const domain = getDomain(site.url);
+  const isLocal = isLocalDomain(domain);
   const dbUrl = faviconsDb[domain];
 
-  // L� o cache local de forma s�ncrona para evitar delays de promises ao transitar categorias
+  // L o cache local de forma sncrona para evitar delays de promises ao transitar categorias
   const localCachedUrl = getCachedFavicon(domain);
 
   const [faviconUrls, setFaviconUrls] = useState(() => {
@@ -64,8 +72,9 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   });
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [imgFailed, setImgFailed] = useState(false);
-  const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl);
+  const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl && !isLocal);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
 
   const timerRef = useRef(null);
   const isTouchRef = useRef(false);
@@ -102,6 +111,16 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       return;
     }
 
+    if (isLocal) {
+      const localUrls = getFaviconUrls(site.url);
+      setFaviconUrls(localUrls);
+      setCurrentUrlIndex(0);
+      setImgFailed(localUrls.length === 0);
+      setIsResolving(false);
+      setIsImageLoaded(false);
+      return;
+    }
+
     setIsResolving(true);
     setImgFailed(false);
     setIsImageLoaded(false);
@@ -119,7 +138,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
     return () => {
       mounted = false;
     };
-  }, [site.url, site.customIcon, dbUrl]);
+  }, [site.url, site.customIcon, dbUrl, isLocal]);
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: site.id,
@@ -309,13 +328,13 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
 
         {/* Card Body */}
         <div className="relative w-full h-full bg-card/80 backdrop-blur-md border border-border/50 group-hover/card:border-accent/50 rounded-2xl flex items-center justify-center shadow-sm group-hover/card:shadow-md transition-all duration-300 group-hover/card:-translate-y-1 overflow-hidden">
-          {/* Fallback base (sempre no DOM como base) */}
+          {/* Fallback base (Oculto via opacity-0 quando a imagem carrega para suportar transparência PNG) */}
           <span
             className={`absolute flex w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-xl sm:text-3xl font-bold bg-gradient-to-br ${getAvatarColor(
               site.name
             )} rounded-xl transition-all duration-300 group-hover/card:scale-110 shadow-inner ${
-              isResolving && !isImageLoaded ? 'animate-pulse opacity-50' : ''
-            }`}
+              isImageLoaded ? 'opacity-0 scale-90' : 'opacity-100'
+            } ${isResolving && !isImageLoaded ? 'animate-pulse opacity-50' : ''}`}
           >
             {site.name?.[0]?.toUpperCase()}
           </span>
@@ -326,7 +345,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
               src={getProxiedUrl(faviconUrls[currentUrlIndex])}
               alt={site.name}
               className={`absolute w-10 h-10 sm:w-14 sm:h-14 object-contain transition-all duration-300 group-hover/card:scale-110 drop-shadow-md ${
-                isImageLoaded ? 'opacity-100' : 'opacity-0'
+                isImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
               }`}
               onError={handleImageError}
               onLoad={handleImageLoad}

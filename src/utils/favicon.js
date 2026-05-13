@@ -1,15 +1,18 @@
+export const isLocalDomain = (domain) => {
+  return (
+    domain === 'localhost' ||
+    !domain.includes('.') ||
+    /\.(local|lan|test|dashboard|home|corp)$/.test(domain) ||
+    domain.match(/^(127|192\.168|10|172\.(1[6-9]|2[0-9]|3[0-1]))\./)
+  );
+};
+
 export const getFaviconUrls = (url) => {
   try {
     const urlObj = new URL(url);
     const domain = urlObj.hostname;
 
-    const isLocal =
-      domain === 'localhost' ||
-      !domain.includes('.') ||
-      /\.(local|lan|test|dashboard|home|corp)$/.test(domain) ||
-      domain.match(/^(127|192\.168|10|172\.(1[6-9]|2[0-9]|3[0-1]))\./);
-
-    if (isLocal) {
+    if (isLocalDomain(domain)) {
       return [`${urlObj.origin}/favicon.ico`, `${urlObj.origin}/favicon.png`];
     }
 
