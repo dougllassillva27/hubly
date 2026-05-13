@@ -30,17 +30,28 @@ const getAvatarColor = (name) => {
 
 const getProxiedUrl = (url) => {
   if (!url) return '';
+  // Bypass apenas para data URIs e caminhos relativos
   if (url.startsWith('data:') || url.startsWith('/')) return url;
-  if (url.includes('google.com/s2')) return url;
 
   try {
-    const domain = new URL(url).hostname;
-    if (isLocalDomain(domain)) return url;
+    const urlObj = new URL(url);
+    const hostname = urlObj.hostname;
+    
+    // Bypass restritivo: apenas localhost e IPs privados literais
+    const isBypass = 
+      hostname === 'localhost' || 
+      hostname === '127.0.0.1' || 
+      hostname.startsWith('192.168.') || 
+      hostname.startsWith('10.') || 
+      hostname.startsWith('172.') || // Cobre a faixa 172.16-31 de forma simplificada
+      !hostname.includes('.'); // Domínios sem ponto (locais)
+
+    if (isBypass) return url;
   } catch {
     return url;
   }
 
-  if (url.startsWith('/.netlify/')) return url;
+  // Todo o resto DEVE passar pelo proxy para evitar CORP/CORS (NotSameOrigin)
   return `/.netlify/functions/proxy-img?url=${encodeURIComponent(url)}`;
 };
 
@@ -63,7 +74,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   const isLocal = isLocalDomain(domain);
   const dbUrl = faviconsDb[domain];
 
-  // L o cache local de forma sncrona para evitar delays de promises ao transitar categorias
+  // Lê o cache local de forma síncrona para evitar delays de promises ao transitar categorias
   const localCachedUrl = getCachedFavicon(domain);
 
   const [faviconUrls, setFaviconUrls] = useState(() => {
@@ -75,9 +86,12 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [imgFailed, setImgFailed] = useState(false);
   const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl && !isLocal);
+  
+  // Inicialização robusta do estado de carregamento
   const [isImageLoaded, setIsImageLoaded] = useState(() => {
     const currentUrl = faviconUrls[currentUrlIndex];
-    return currentUrl ? loadedIcons.has(getProxiedUrl(currentUrl)) : false;
+    if (!currentUrl) return false;
+    return loadedIcons.has(getProxiedUrl(currentUrl));
   });
 
 
@@ -99,7 +113,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setImgFailed(false);
       setIsResolving(false);
       setIsImageLoaded(checkLoaded(site.customIcon));
-      return;
+      return ;
     }
 
     if (dbUrl) {
@@ -108,7 +122,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setImgFailed(false);
       setIsResolving(false);
       setIsImageLoaded(checkLoaded(dbUrl));
-      return;
+      return ;
     }
 
     const cachedUrl = getCachedFavicon(domain);
@@ -118,7 +132,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setImgFailed(false);
       setIsResolving(false);
       setIsImageLoaded(checkLoaded(cachedUrl));
-      return;
+      return ;
     }
 
     if (isLocal) {
@@ -128,12 +142,18 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setImgFailed(localUrls.length === 0);
       setIsResolving(false);
       setIsImageLoaded(localUrls.length > 0 ? checkLoaded(localUrls[0]) : false);
-      return;
+      return ;
     }
 
     setIsResolving(true);
     setImgFailed(false);
-    setIsImageLoaded(false);
+    
+    // Não resetamos isImageLoaded para false se a URL atual já estiver no cache global
+    // Isso evita o flicker ao trocar de abas
+    const currentUrl = faviconUrls[currentUrlIndex];
+    if (currentUrl && !checkLoaded(currentUrl)) {
+      setIsImageLoaded(false);
+    }
 
     resolverFavicon(site.url).then((resolvedUrl) => {
       if (!mounted) return;
@@ -196,14 +216,14 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   };
 
   const handleMouseLeave = () => {
-    if (isTouchRef.current) return;
+    if (isTouchRef.current) return ;
     if (timerRef.current) clearTimeout(timerRef.current);
     setShowActions(false);
   };
 
   const handleTouchStart = (e) => {
     const isRecentlyDropped = lastDropTime?.current && (Date.now() - lastDropTime.current < 500);
-    if (isDragging || isDraggingGlobal?.current || isRecentlyDropped) return;
+    if (isDragging || isDraggingGlobal?.current || isRecentlyDropped) return ;
     isTouchRef.current = true;
     if (timerRef.current) clearTimeout(timerRef.current);
     
@@ -279,7 +299,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   };
 
   const handleAuxClick = (e) => {
-    if (e.button !== 1) return; // Not a middle click
+    if (e.button !== 1) return ; // Not a middle click
     const shouldNavigate = handleInteraction(e);
     if (shouldNavigate) {
       registerSiteVisit(site.id);
@@ -299,7 +319,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
 
   const handleImageLoad = () => {
     const currentUrl = faviconUrls[currentUrlIndex];
-    if (!currentUrl) return;
+    if (!currentUrl) return ;
 
     const proxiedUrl = getProxiedUrl(currentUrl);
     setIsImageLoaded(true);
@@ -317,7 +337,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   };
 
   return (
-    <div
+    <div 
       ref={setNodeRef}
       style={style}
       className={`relative group flex flex-col items-center select-none ${isDragging ? 'z-50' : 'z-0'}`}
@@ -362,8 +382,8 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
               src={getProxiedUrl(faviconUrls[currentUrlIndex])}
               alt={site.name}
               className={`absolute w-10 h-10 sm:w-14 sm:h-14 object-contain transition-all duration-300 group-hover/card:scale-110 drop-shadow-md ${
-                isImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
-              }`}
+              isImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+            }`}
               onError={handleImageError}
               onLoad={handleImageLoad}
               referrerPolicy="no-referrer"

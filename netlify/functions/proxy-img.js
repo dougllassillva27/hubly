@@ -62,7 +62,7 @@ export const handler = async (event) => {
 
     // --- Tentativa 2: Fallback via CDN de Cache ---
     if (!response || !response.ok) {
-      const cdnProxyUrl = `https://images.weserv.nl/?url=${encodeURIComponent(url)}`;
+      const cdnProxyUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(url);
       response = await fetch(cdnProxyUrl, {
         signal: controller.signal,
         headers: { 'User-Agent': fetchHeaders['User-Agent'] },
@@ -90,14 +90,13 @@ export const handler = async (event) => {
       };
     }
 
-    // --- Fallback Final: Redirecionamento ---
+    // --- Fallback Final: 404 ---
     return { statusCode: 404, body: 'Imagem não encontrada ou bloqueada' };
   } catch (error) {
     // Fallback de segurança para erros assíncronos não mapeados
     return {
-      statusCode: 302,
-      headers: { Location: url, 'Cache-Control': 'no-cache' },
-      body: '',
+      statusCode: 404,
+      body: 'Erro interno no proxy',
     };
   }
 };
