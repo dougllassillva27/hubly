@@ -1,5 +1,5 @@
 import { storage } from '../utils/storage';
-import { getDomain } from '../utils/favicon';
+import { getDomain, isLocalDomain } from '../utils/favicon';
 
 const RESOLVER_API = '/.netlify/functions/resolver-favicon';
 const CACHE_PREFIX = 'sp_favicon_cache_';
@@ -57,6 +57,17 @@ export const setCachedFavicon = (domain, url) => {
 export const resolverFavicon = (url) => {
   return new Promise((resolve) => {
     const domain = getDomain(url);
+
+    // Se for domínio local, resolvemos direto sem passar pelo backend (evita erro 403 SSRF)
+    if (isLocalDomain(domain)) {
+      try {
+        const urlObj = new URL(url);
+        return resolve(`${urlObj.origin}/favicon.ico`);
+      } catch {
+        return resolve(null);
+      }
+    }
+
     const cached = storage.get(`${CACHE_PREFIX}${domain}`);
 
     if (cached && cached.timestamp && Date.now() - cached.timestamp < CACHE_TTL) {
