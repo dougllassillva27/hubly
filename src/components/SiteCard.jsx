@@ -53,7 +53,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   const domain = getDomain(site.url);
   const dbUrl = faviconsDb[domain];
 
-  // Lê o cache local de forma síncrona para evitar delays de promises ao transitar categorias
+  // Lï¿½ o cache local de forma sï¿½ncrona para evitar delays de promises ao transitar categorias
   const localCachedUrl = getCachedFavicon(domain);
 
   const [faviconUrls, setFaviconUrls] = useState(() => {
@@ -309,26 +309,24 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
 
         {/* Card Body */}
         <div className="relative w-full h-full bg-card/80 backdrop-blur-md border border-border/50 group-hover/card:border-accent/50 rounded-2xl flex items-center justify-center shadow-sm group-hover/card:shadow-md transition-all duration-300 group-hover/card:-translate-y-1 overflow-hidden">
-          {/* Fallback / Loading State */}
-          {(!isImageLoaded || isResolving || imgFailed) && (
-            <span
-              className={`flex w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-xl sm:text-3xl font-bold bg-gradient-to-br ${getAvatarColor(
-                site.name
-              )} rounded-xl transition-all duration-300 group-hover/card:scale-110 shadow-inner ${
-                isResolving ? 'animate-pulse opacity-50' : ''
-              } ${!isResolving && !imgFailed ? 'absolute inset-0 m-auto' : ''}`}
-            >
-              {site.name?.[0]?.toUpperCase()}
-            </span>
-          )}
+          {/* Fallback base (sempre no DOM como base) */}
+          <span
+            className={`absolute flex w-10 h-10 sm:w-14 sm:h-14 items-center justify-center text-xl sm:text-3xl font-bold bg-gradient-to-br ${getAvatarColor(
+              site.name
+            )} rounded-xl transition-all duration-300 group-hover/card:scale-110 shadow-inner ${
+              isResolving && !isImageLoaded ? 'animate-pulse opacity-50' : ''
+            }`}
+          >
+            {site.name?.[0]?.toUpperCase()}
+          </span>
 
-          {/* Imagem Real */}
-          {!imgFailed && !isResolving && (
+          {/* Imagem Real (em absoluto sobre o fallback) */}
+          {!imgFailed && (
             <img
               src={getProxiedUrl(faviconUrls[currentUrlIndex])}
               alt={site.name}
-              className={`w-10 h-10 sm:w-14 sm:h-14 object-contain transition-all duration-300 group-hover/card:scale-110 drop-shadow-md ${
-                isImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-90 absolute'
+              className={`absolute w-10 h-10 sm:w-14 sm:h-14 object-contain transition-all duration-300 group-hover/card:scale-110 drop-shadow-md ${
+                isImageLoaded ? 'opacity-100' : 'opacity-0'
               }`}
               onError={handleImageError}
               onLoad={handleImageLoad}
