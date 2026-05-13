@@ -28,33 +28,6 @@ const getAvatarColor = (name) => {
   return colors[Math.abs(hash) % colors.length];
 };
 
-const getProxiedUrl = (url) => {
-  if (!url) return '';
-  // Bypass apenas para data URIs e caminhos relativos
-  if (url.startsWith('data:') || url.startsWith('/')) return url;
-
-  try {
-    const urlObj = new URL(url);
-    const hostname = urlObj.hostname;
-    
-    // Bypass restritivo: apenas localhost e IPs privados literais
-    const isBypass = 
-      hostname === 'localhost' || 
-      hostname === '127.0.0.1' || 
-      hostname.startsWith('192.168.') || 
-      hostname.startsWith('10.') || 
-      hostname.startsWith('172.') || // Cobre a faixa 172.16-31 de forma simplificada
-      !hostname.includes('.'); // Domínios sem ponto (locais)
-
-    if (isBypass) return url;
-  } catch {
-    return url;
-  }
-
-  // Todo o resto DEVE passar pelo proxy para evitar CORP/CORS (NotSameOrigin)
-  return `/.netlify/functions/proxy-img?url=${encodeURIComponent(url)}`;
-};
-
 export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDropTime }) {
   const {
     confirmDeleteSite,
