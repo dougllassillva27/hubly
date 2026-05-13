@@ -37,7 +37,7 @@ const getProxiedUrl = (url) => {
   return `/.netlify/functions/proxy-img?url=${encodeURIComponent(url)}`;
 };
 
-export default function SiteCard({ site, disableDrag }) {
+export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDropTime }) {
   const {
     confirmDeleteSite,
     openAddSite,
@@ -68,7 +68,6 @@ export default function SiteCard({ site, disableDrag }) {
 
   const timerRef = useRef(null);
   const isTouchRef = useRef(false);
-  const wasDraggingRef = useRef(false);
   const ignoreNextClickRef = useRef(false);
 
   useEffect(() => {
@@ -124,14 +123,8 @@ export default function SiteCard({ site, disableDrag }) {
 
   useEffect(() => {
     if (isDragging) {
-      wasDraggingRef.current = true;
       if (timerRef.current) clearTimeout(timerRef.current);
       setShowActions(false);
-    } else {
-      const timer = setTimeout(() => {
-        wasDraggingRef.current = false;
-      }, 150);
-      return () => clearTimeout(timer);
     }
   }, [isDragging]);
 
@@ -139,22 +132,26 @@ export default function SiteCard({ site, disableDrag }) {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
-    zIndex: isDragging ? 1 : 0,
+    zIndex: isDragging ? 10 : 0,
+    cursor: isDragging ? 'grabbing' : 'auto',
   };
 
   const handleEdit = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setEditingSite(site);
     openAddSite();
   };
 
   const handleDelete = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     confirmDeleteSite(site.id);
   };
 
   const handleMouseEnter = () => {
-    if (isTouchRef.current || isDragging) return;
+    const isRecentlyDropped = lastDropTime?.current && (Date.now() - lastDropTime.current < 500);
+    if (isTouchRef.current || isDragging || isDraggingGlobal?.current || isRecentlyDropped) return;
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       setShowActions(true);
@@ -167,8 +164,9 @@ export default function SiteCard({ site, disableDrag }) {
     setShowActions(false);
   };
 
-  const handleTouchStart = () => {
-    if (isDragging) return;
+  const handleTouchStart = (e) => {
+    const isRecentlyDropped = lastDropTime?.current && (Date.now() - lastDropTime.current < 500);
+    if (isDragging || isDraggingGlobal?.current || isRecentlyDropped) return;
     isTouchRef.current = true;
     if (timerRef.current) clearTimeout(timerRef.current);
     
@@ -179,17 +177,25 @@ export default function SiteCard({ site, disableDrag }) {
         window.navigator.vibrate(50);
       }
     }, 500);
+
+    if (listeners?.onTouchStart) listeners.onTouchStart(e);
   };
 
-  const handleTouchEnd = () => {
+  const handleTouchEnd = (e) => {
     if (timerRef.current) clearTimeout(timerRef.current);
     setTimeout(() => {
       ignoreNextClickRef.current = false;
     }, 300);
+    if (listeners?.onTouchEnd) listeners.onTouchEnd(e);
   };
 
-  const handleTouchMove = () => {
+  const handleTouchMove = (e) => {
     if (timerRef.current) clearTimeout(timerRef.current);
+    if (listeners?.onTouchMove) listeners.onTouchMove(e);
+  };
+
+  const handleMouseDown = (e) => {
+    if (listeners?.onMouseDown) listeners.onMouseDown(e);
   };
 
   const handleContextMenu = (e) => {
@@ -199,7 +205,9 @@ export default function SiteCard({ site, disableDrag }) {
   };
 
   const handleInteraction = (e) => {
-    if (wasDraggingRef.current) {
+    const isRecentlyDropped = lastDropTime?.current && (Date.now() - lastDropTime.current < 500);
+    
+    if (isDraggingGlobal?.current || isDragging || isRecentlyDropped) {
       e.preventDefault();
       e.stopPropagation();
       return false;
@@ -216,6 +224,14 @@ export default function SiteCard({ site, disableDrag }) {
       return false;
     }
     return true;
+  };
+
+  const handleCaptureClick = (e) => {
+    const isRecentlyDropped = lastDropTime?.current && (Date.now() - lastDropTime.current < 500);
+    if (isDraggingGlobal?.current || isDragging || isRecentlyDropped) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   };
 
   const handleRegularClick = (e) => {
@@ -260,32 +276,25 @@ export default function SiteCard({ site, disableDrag }) {
     <div
       ref={setNodeRef}
       style={style}
-      className="relative group flex flex-col items-center"
+      className={`relative group flex flex-col items-center select-none ${isDragging ? 'z-50' : 'z-0'}`}
       {...attributes}
-      {...listeners}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onTouchStart={(e) => {
-        handleTouchStart();
-        if (listeners?.onTouchStart) listeners.onTouchStart(e);
-      }}
-      onTouchEnd={(e) => {
-        handleTouchEnd();
-        if (listeners?.onTouchEnd) listeners.onTouchEnd(e);
-      }}
-      onTouchMove={(e) => {
-        handleTouchMove();
-        if (listeners?.onTouchMove) listeners.onTouchMove(e);
-      }}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchMove}
     >
       <a
         href={site.url}
         target={linkTarget}
         rel="noopener noreferrer"
+        onClickCapture={handleCaptureClick}
         onClick={handleRegularClick}
         onAuxClick={handleAuxClick}
         onContextMenu={handleContextMenu}
-        className="group/card relative cursor-pointer w-16 h-16 sm:w-24 sm:h-24 mb-3 mx-auto"
+        className="group/card relative w-16 h-16 sm:w-24 sm:h-24 mb-3 mx-auto flex items-center justify-center pointer-events-auto"
+        style={{ cursor: isDragging ? 'grabbing' : 'pointer' }}
       >
         {/* Glow effect */}
         <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
