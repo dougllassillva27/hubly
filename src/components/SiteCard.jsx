@@ -67,8 +67,9 @@ export default function SiteCard({ site, disableDrag }) {
   const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl);
 
   const timerRef = useRef(null);
-  const isLongPressRef = useRef(false);
   const isTouchRef = useRef(false);
+  const wasDraggingRef = useRef(false);
+  const ignoreNextClickRef = useRef(false);
 
   useEffect(() => {
     let mounted = true;
@@ -123,8 +124,14 @@ export default function SiteCard({ site, disableDrag }) {
 
   useEffect(() => {
     if (isDragging) {
+      wasDraggingRef.current = true;
       if (timerRef.current) clearTimeout(timerRef.current);
       setShowActions(false);
+    } else {
+      const timer = setTimeout(() => {
+        wasDraggingRef.current = false;
+      }, 150);
+      return () => clearTimeout(timer);
     }
   }, [isDragging]);
 
@@ -164,10 +171,10 @@ export default function SiteCard({ site, disableDrag }) {
     if (isDragging) return;
     isTouchRef.current = true;
     if (timerRef.current) clearTimeout(timerRef.current);
-    isLongPressRef.current = false;
+    
     timerRef.current = setTimeout(() => {
       setShowActions(true);
-      isLongPressRef.current = true;
+      ignoreNextClickRef.current = true;
       if (window.navigator && window.navigator.vibrate) {
         window.navigator.vibrate(50);
       }
@@ -176,6 +183,9 @@ export default function SiteCard({ site, disableDrag }) {
 
   const handleTouchEnd = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
+    setTimeout(() => {
+      ignoreNextClickRef.current = false;
+    }, 300);
   };
 
   const handleTouchMove = () => {
@@ -183,25 +193,29 @@ export default function SiteCard({ site, disableDrag }) {
   };
 
   const handleContextMenu = (e) => {
-    if (isTouchRef.current || isLongPressRef.current) {
+    if (isTouchRef.current || ignoreNextClickRef.current) {
       e.preventDefault();
     }
   };
 
   const handleInteraction = (e) => {
-    if (isLongPressRef.current) {
+    if (wasDraggingRef.current) {
       e.preventDefault();
       e.stopPropagation();
-      isLongPressRef.current = false; // Reset after use
-      return false; // Block navigation
+      return false;
+    }
+    if (ignoreNextClickRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
     }
     if (showActions && isTouchRef.current) {
       e.preventDefault();
       e.stopPropagation();
       setShowActions(false);
-      return false; // Block navigation
+      return false;
     }
-    return true; // Allow navigation
+    return true;
   };
 
   const handleRegularClick = (e) => {

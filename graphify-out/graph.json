@@ -9,7 +9,7 @@
       "source_file": "postcss.config.js",
       "source_location": "L1",
       "id": "postcss_config_js",
-      "community": 27,
+      "community": 35,
       "norm_label": "postcss.config.js"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "tailwind.config.js",
       "source_location": "L1",
       "id": "tailwind_config_js",
-      "community": 28,
+      "community": 36,
       "norm_label": "tailwind.config.js"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "vite.config.js",
       "source_location": "L1",
       "id": "vite_config_js",
-      "community": 29,
+      "community": 37,
       "norm_label": "vite.config.js"
     },
     {
@@ -36,7 +36,7 @@
       "source_file": "netlify/functions/chat.js",
       "source_location": "L1",
       "id": "netlify_functions_chat_js",
-      "community": 7,
+      "community": 8,
       "norm_label": "chat.js"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "netlify/functions/chat.js",
       "source_location": "L1",
       "id": "functions_chat_handler",
-      "community": 7,
+      "community": 8,
       "norm_label": "handler()"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "netlify/functions/favicon.js",
       "source_location": "L1",
       "id": "netlify_functions_favicon_js",
-      "community": 8,
+      "community": 9,
       "norm_label": "favicon.js"
     },
     {
@@ -63,7 +63,43 @@
       "source_file": "netlify/functions/favicon.js",
       "source_location": "L3",
       "id": "functions_favicon_handler",
-      "community": 8,
+      "community": 9,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "futebol-jogos.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/futebol-jogos.js",
+      "source_location": "L1",
+      "id": "netlify_functions_futebol_jogos_js",
+      "community": 10,
+      "norm_label": "futebol-jogos.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/futebol-jogos.js",
+      "source_location": "L1",
+      "id": "functions_futebol_jogos_handler",
+      "community": 10,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "futebol-noticias.js",
+      "file_type": "code",
+      "source_file": "netlify/functions/futebol-noticias.js",
+      "source_location": "L1",
+      "id": "netlify_functions_futebol_noticias_js",
+      "community": 11,
+      "norm_label": "futebol-noticias.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "netlify/functions/futebol-noticias.js",
+      "source_location": "L1",
+      "id": "functions_futebol_noticias_handler",
+      "community": 11,
       "norm_label": "handler()"
     },
     {
@@ -72,7 +108,7 @@
       "source_file": "netlify/functions/proxy-img.js",
       "source_location": "L1",
       "id": "netlify_functions_proxy_img_js",
-      "community": 5,
+      "community": 6,
       "norm_label": "proxy-img.js"
     },
     {
@@ -81,7 +117,7 @@
       "source_file": "netlify/functions/proxy-img.js",
       "source_location": "L6",
       "id": "functions_proxy_img_isprivateip",
-      "community": 5,
+      "community": 6,
       "norm_label": "isprivateip()"
     },
     {
@@ -90,7 +126,7 @@
       "source_file": "netlify/functions/proxy-img.js",
       "source_location": "L25",
       "id": "functions_proxy_img_handler",
-      "community": 5,
+      "community": 6,
       "norm_label": "handler()"
     },
     {
@@ -144,7 +180,7 @@
       "source_file": "netlify/functions/rss.js",
       "source_location": "L1",
       "id": "netlify_functions_rss_js",
-      "community": 9,
+      "community": 12,
       "norm_label": "rss.js"
     },
     {
@@ -153,7 +189,7 @@
       "source_file": "netlify/functions/rss.js",
       "source_location": "L1",
       "id": "functions_rss_handler",
-      "community": 9,
+      "community": 12,
       "norm_label": "handler()"
     },
     {
@@ -162,7 +198,7 @@
       "source_file": "netlify/functions/sync.js",
       "source_location": "L1",
       "id": "netlify_functions_sync_js",
-      "community": 10,
+      "community": 13,
       "norm_label": "sync.js"
     },
     {
@@ -171,7 +207,7 @@
       "source_file": "netlify/functions/sync.js",
       "source_location": "L4",
       "id": "functions_sync_handler",
-      "community": 10,
+      "community": 13,
       "norm_label": "handler()"
     },
     {
@@ -180,16 +216,16 @@
       "source_file": "src/App.jsx",
       "source_location": "L1",
       "id": "src_app_jsx",
-      "community": 4,
+      "community": 0,
       "norm_label": "app.jsx"
     },
     {
       "label": "App()",
       "file_type": "code",
       "source_file": "src/App.jsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "id": "src_app_app",
-      "community": 4,
+      "community": 0,
       "norm_label": "app()"
     },
     {
@@ -198,7 +234,7 @@
       "source_file": "src/main.jsx",
       "source_location": "L1",
       "id": "src_main_jsx",
-      "community": 30,
+      "community": 38,
       "norm_label": "main.jsx"
     },
     {
@@ -207,7 +243,7 @@
       "source_file": "src/components/AddSiteModal.jsx",
       "source_location": "L1",
       "id": "src_components_addsitemodal_jsx",
-      "community": 11,
+      "community": 14,
       "norm_label": "addsitemodal.jsx"
     },
     {
@@ -216,7 +252,7 @@
       "source_file": "src/components/AddSiteModal.jsx",
       "source_location": "L5",
       "id": "components_addsitemodal_addsitemodal",
-      "community": 11,
+      "community": 14,
       "norm_label": "addsitemodal()"
     },
     {
@@ -225,7 +261,7 @@
       "source_file": "src/components/AIChatModal.jsx",
       "source_location": "L1",
       "id": "src_components_aichatmodal_jsx",
-      "community": 12,
+      "community": 15,
       "norm_label": "aichatmodal.jsx"
     },
     {
@@ -234,7 +270,7 @@
       "source_file": "src/components/AIChatModal.jsx",
       "source_location": "L6",
       "id": "components_aichatmodal_aichatmodal",
-      "community": 12,
+      "community": 15,
       "norm_label": "aichatmodal()"
     },
     {
@@ -243,16 +279,16 @@
       "source_file": "src/components/BottomSection.jsx",
       "source_location": "L1",
       "id": "src_components_bottomsection_jsx",
-      "community": 13,
+      "community": 16,
       "norm_label": "bottomsection.jsx"
     },
     {
       "label": "BottomSection()",
       "file_type": "code",
       "source_file": "src/components/BottomSection.jsx",
-      "source_location": "L7",
+      "source_location": "L13",
       "id": "components_bottomsection_bottomsection",
-      "community": 13,
+      "community": 16,
       "norm_label": "bottomsection()"
     },
     {
@@ -261,7 +297,7 @@
       "source_file": "src/components/CategoryFilter.jsx",
       "source_location": "L1",
       "id": "src_components_categoryfilter_jsx",
-      "community": 14,
+      "community": 17,
       "norm_label": "categoryfilter.jsx"
     },
     {
@@ -270,7 +306,7 @@
       "source_file": "src/components/CategoryFilter.jsx",
       "source_location": "L12",
       "id": "components_categoryfilter_categoryfilter",
-      "community": 14,
+      "community": 17,
       "norm_label": "categoryfilter()"
     },
     {
@@ -279,7 +315,7 @@
       "source_file": "src/components/Clock.jsx",
       "source_location": "L1",
       "id": "src_components_clock_jsx",
-      "community": 15,
+      "community": 18,
       "norm_label": "clock.jsx"
     },
     {
@@ -288,7 +324,7 @@
       "source_file": "src/components/Clock.jsx",
       "source_location": "L19",
       "id": "components_clock_clock",
-      "community": 15,
+      "community": 18,
       "norm_label": "clock()"
     },
     {
@@ -297,7 +333,7 @@
       "source_file": "src/components/ConfirmModal.jsx",
       "source_location": "L1",
       "id": "src_components_confirmmodal_jsx",
-      "community": 16,
+      "community": 19,
       "norm_label": "confirmmodal.jsx"
     },
     {
@@ -306,7 +342,7 @@
       "source_file": "src/components/ConfirmModal.jsx",
       "source_location": "L4",
       "id": "components_confirmmodal_confirmmodal",
-      "community": 16,
+      "community": 19,
       "norm_label": "confirmmodal()"
     },
     {
@@ -315,7 +351,7 @@
       "source_file": "src/components/FloatingMenu.jsx",
       "source_location": "L1",
       "id": "src_components_floatingmenu_jsx",
-      "community": 17,
+      "community": 20,
       "norm_label": "floatingmenu.jsx"
     },
     {
@@ -324,7 +360,7 @@
       "source_file": "src/components/FloatingMenu.jsx",
       "source_location": "L5",
       "id": "components_floatingmenu_floatingmenu",
-      "community": 17,
+      "community": 20,
       "norm_label": "floatingmenu()"
     },
     {
@@ -333,7 +369,7 @@
       "source_file": "src/components/ImportBookmarksModal.jsx",
       "source_location": "L1",
       "id": "src_components_importbookmarksmodal_jsx",
-      "community": 18,
+      "community": 21,
       "norm_label": "importbookmarksmodal.jsx"
     },
     {
@@ -342,7 +378,7 @@
       "source_file": "src/components/ImportBookmarksModal.jsx",
       "source_location": "L5",
       "id": "components_importbookmarksmodal_importbookmarksmodal",
-      "community": 18,
+      "community": 21,
       "norm_label": "importbookmarksmodal()"
     },
     {
@@ -351,7 +387,7 @@
       "source_file": "src/components/NewsFeed.jsx",
       "source_location": "L1",
       "id": "src_components_newsfeed_jsx",
-      "community": 19,
+      "community": 22,
       "norm_label": "newsfeed.jsx"
     },
     {
@@ -360,7 +396,7 @@
       "source_file": "src/components/NewsFeed.jsx",
       "source_location": "L23",
       "id": "components_newsfeed_newsfeed",
-      "community": 19,
+      "community": 22,
       "norm_label": "newsfeed()"
     },
     {
@@ -369,7 +405,7 @@
       "source_file": "src/components/NotesWidget.jsx",
       "source_location": "L1",
       "id": "src_components_noteswidget_jsx",
-      "community": 20,
+      "community": 23,
       "norm_label": "noteswidget.jsx"
     },
     {
@@ -378,8 +414,26 @@
       "source_file": "src/components/NotesWidget.jsx",
       "source_location": "L5",
       "id": "components_noteswidget_noteswidget",
-      "community": 20,
+      "community": 23,
       "norm_label": "noteswidget()"
+    },
+    {
+      "label": "OnboardingModal.jsx",
+      "file_type": "code",
+      "source_file": "src/components/OnboardingModal.jsx",
+      "source_location": "L1",
+      "id": "src_components_onboardingmodal_jsx",
+      "community": 24,
+      "norm_label": "onboardingmodal.jsx"
+    },
+    {
+      "label": "OnboardingModal()",
+      "file_type": "code",
+      "source_file": "src/components/OnboardingModal.jsx",
+      "source_location": "L4",
+      "id": "components_onboardingmodal_onboardingmodal",
+      "community": 24,
+      "norm_label": "onboardingmodal()"
     },
     {
       "label": "SearchBar.jsx",
@@ -387,7 +441,7 @@
       "source_file": "src/components/SearchBar.jsx",
       "source_location": "L1",
       "id": "src_components_searchbar_jsx",
-      "community": 21,
+      "community": 25,
       "norm_label": "searchbar.jsx"
     },
     {
@@ -396,7 +450,7 @@
       "source_file": "src/components/SearchBar.jsx",
       "source_location": "L5",
       "id": "components_searchbar_searchbar",
-      "community": 21,
+      "community": 25,
       "norm_label": "searchbar()"
     },
     {
@@ -405,25 +459,25 @@
       "source_file": "src/components/SettingsModal.jsx",
       "source_location": "L1",
       "id": "src_components_settingsmodal_jsx",
-      "community": 6,
+      "community": 7,
       "norm_label": "settingsmodal.jsx"
     },
     {
       "label": "SortableCategoryItem()",
       "file_type": "code",
       "source_file": "src/components/SettingsModal.jsx",
-      "source_location": "L72",
+      "source_location": "L85",
       "id": "components_settingsmodal_sortablecategoryitem",
-      "community": 6,
+      "community": 7,
       "norm_label": "sortablecategoryitem()"
     },
     {
       "label": "SettingsModal()",
       "file_type": "code",
       "source_file": "src/components/SettingsModal.jsx",
-      "source_location": "L141",
+      "source_location": "L154",
       "id": "components_settingsmodal_settingsmodal",
-      "community": 6,
+      "community": 7,
       "norm_label": "settingsmodal()"
     },
     {
@@ -432,7 +486,7 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L1",
       "id": "src_components_sitecard_jsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "sitecard.jsx"
     },
     {
@@ -441,7 +495,7 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L10",
       "id": "components_sitecard_getavatarcolor",
-      "community": 0,
+      "community": 1,
       "norm_label": "getavatarcolor()"
     },
     {
@@ -450,7 +504,7 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L31",
       "id": "components_sitecard_getproxiedurl",
-      "community": 0,
+      "community": 1,
       "norm_label": "getproxiedurl()"
     },
     {
@@ -459,7 +513,7 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L40",
       "id": "components_sitecard_sitecard",
-      "community": 0,
+      "community": 1,
       "norm_label": "sitecard()"
     },
     {
@@ -468,7 +522,7 @@
       "source_file": "src/components/SiteGrid.jsx",
       "source_location": "L1",
       "id": "src_components_sitegrid_jsx",
-      "community": 22,
+      "community": 26,
       "norm_label": "sitegrid.jsx"
     },
     {
@@ -477,7 +531,7 @@
       "source_file": "src/components/SiteGrid.jsx",
       "source_location": "L15",
       "id": "components_sitegrid_sitegrid",
-      "community": 22,
+      "community": 26,
       "norm_label": "sitegrid()"
     },
     {
@@ -486,7 +540,7 @@
       "source_file": "src/components/StarCanvas.jsx",
       "source_location": "L1",
       "id": "src_components_starcanvas_jsx",
-      "community": 23,
+      "community": 27,
       "norm_label": "starcanvas.jsx"
     },
     {
@@ -495,7 +549,7 @@
       "source_file": "src/components/StarCanvas.jsx",
       "source_location": "L4",
       "id": "components_starcanvas_starcanvas",
-      "community": 23,
+      "community": 27,
       "norm_label": "starcanvas()"
     },
     {
@@ -504,7 +558,7 @@
       "source_file": "src/components/WeatherWidget.jsx",
       "source_location": "L1",
       "id": "src_components_weatherwidget_jsx",
-      "community": 24,
+      "community": 28,
       "norm_label": "weatherwidget.jsx"
     },
     {
@@ -513,7 +567,7 @@
       "source_file": "src/components/WeatherWidget.jsx",
       "source_location": "L5",
       "id": "components_weatherwidget_weatherwidget",
-      "community": 24,
+      "community": 28,
       "norm_label": "weatherwidget()"
     },
     {
@@ -522,8 +576,134 @@
       "source_file": "src/components/Widgets.jsx",
       "source_location": "L1",
       "id": "src_components_widgets_jsx",
-      "community": 31,
+      "community": 39,
       "norm_label": "widgets.jsx"
+    },
+    {
+      "label": "CardJogoHoje.jsx",
+      "file_type": "code",
+      "source_file": "src/components/futebol/CardJogoHoje.jsx",
+      "source_location": "L1",
+      "id": "src_components_futebol_cardjogohoje_jsx",
+      "community": 29,
+      "norm_label": "cardjogohoje.jsx"
+    },
+    {
+      "label": "CardJogoHoje()",
+      "file_type": "code",
+      "source_file": "src/components/futebol/CardJogoHoje.jsx",
+      "source_location": "L1",
+      "id": "futebol_cardjogohoje_cardjogohoje",
+      "community": 29,
+      "norm_label": "cardjogohoje()"
+    },
+    {
+      "label": "CardNoticiaFutebol.jsx",
+      "file_type": "code",
+      "source_file": "src/components/futebol/CardNoticiaFutebol.jsx",
+      "source_location": "L1",
+      "id": "src_components_futebol_cardnoticiafutebol_jsx",
+      "community": 30,
+      "norm_label": "cardnoticiafutebol.jsx"
+    },
+    {
+      "label": "CardNoticiaFutebol()",
+      "file_type": "code",
+      "source_file": "src/components/futebol/CardNoticiaFutebol.jsx",
+      "source_location": "L3",
+      "id": "futebol_cardnoticiafutebol_cardnoticiafutebol",
+      "community": 30,
+      "norm_label": "cardnoticiafutebol()"
+    },
+    {
+      "label": "FutebolWidget.jsx",
+      "file_type": "code",
+      "source_file": "src/components/futebol/FutebolWidget.jsx",
+      "source_location": "L1",
+      "id": "src_components_futebol_futebolwidget_jsx",
+      "community": 31,
+      "norm_label": "futebolwidget.jsx"
+    },
+    {
+      "label": "FutebolWidget()",
+      "file_type": "code",
+      "source_file": "src/components/futebol/FutebolWidget.jsx",
+      "source_location": "L4",
+      "id": "futebol_futebolwidget_futebolwidget",
+      "community": 31,
+      "norm_label": "futebolwidget()"
+    },
+    {
+      "label": "JogosHoje.jsx",
+      "file_type": "code",
+      "source_file": "src/components/futebol/JogosHoje.jsx",
+      "source_location": "L1",
+      "id": "src_components_futebol_jogoshoje_jsx",
+      "community": 4,
+      "norm_label": "jogoshoje.jsx"
+    },
+    {
+      "label": "JogosHoje()",
+      "file_type": "code",
+      "source_file": "src/components/futebol/JogosHoje.jsx",
+      "source_location": "L5",
+      "id": "futebol_jogoshoje_jogoshoje",
+      "community": 4,
+      "norm_label": "jogoshoje()"
+    },
+    {
+      "label": "NoticiasFutebol.jsx",
+      "file_type": "code",
+      "source_file": "src/components/futebol/NoticiasFutebol.jsx",
+      "source_location": "L1",
+      "id": "src_components_futebol_noticiasfutebol_jsx",
+      "community": 5,
+      "norm_label": "noticiasfutebol.jsx"
+    },
+    {
+      "label": "NoticiasFutebol()",
+      "file_type": "code",
+      "source_file": "src/components/futebol/NoticiasFutebol.jsx",
+      "source_location": "L5",
+      "id": "futebol_noticiasfutebol_noticiasfutebol",
+      "community": 5,
+      "norm_label": "noticiasfutebol()"
+    },
+    {
+      "label": "NoticiasWidget.jsx",
+      "file_type": "code",
+      "source_file": "src/components/futebol/NoticiasWidget.jsx",
+      "source_location": "L1",
+      "id": "src_components_futebol_noticiaswidget_jsx",
+      "community": 32,
+      "norm_label": "noticiaswidget.jsx"
+    },
+    {
+      "label": "NoticiasWidget()",
+      "file_type": "code",
+      "source_file": "src/components/futebol/NoticiasWidget.jsx",
+      "source_location": "L4",
+      "id": "futebol_noticiaswidget_noticiaswidget",
+      "community": 32,
+      "norm_label": "noticiaswidget()"
+    },
+    {
+      "label": "useJogosHoje.js",
+      "file_type": "code",
+      "source_file": "src/hooks/useJogosHoje.js",
+      "source_location": "L1",
+      "id": "src_hooks_usejogoshoje_js",
+      "community": 4,
+      "norm_label": "usejogoshoje.js"
+    },
+    {
+      "label": "useJogosHoje()",
+      "file_type": "code",
+      "source_file": "src/hooks/useJogosHoje.js",
+      "source_location": "L4",
+      "id": "hooks_usejogoshoje_usejogoshoje",
+      "community": 4,
+      "norm_label": "usejogoshoje()"
     },
     {
       "label": "useNews.js",
@@ -531,7 +711,7 @@
       "source_file": "src/hooks/useNews.js",
       "source_location": "L1",
       "id": "src_hooks_usenews_js",
-      "community": 25,
+      "community": 33,
       "norm_label": "usenews.js"
     },
     {
@@ -540,8 +720,26 @@
       "source_file": "src/hooks/useNews.js",
       "source_location": "L12",
       "id": "hooks_usenews_usenews",
-      "community": 25,
+      "community": 33,
       "norm_label": "usenews()"
+    },
+    {
+      "label": "useNoticiasFutebol.js",
+      "file_type": "code",
+      "source_file": "src/hooks/useNoticiasFutebol.js",
+      "source_location": "L1",
+      "id": "src_hooks_usenoticiasfutebol_js",
+      "community": 5,
+      "norm_label": "usenoticiasfutebol.js"
+    },
+    {
+      "label": "useNoticiasFutebol()",
+      "file_type": "code",
+      "source_file": "src/hooks/useNoticiasFutebol.js",
+      "source_location": "L3",
+      "id": "hooks_usenoticiasfutebol_usenoticiasfutebol",
+      "community": 5,
+      "norm_label": "usenoticiasfutebol()"
     },
     {
       "label": "useSearch.js",
@@ -549,7 +747,7 @@
       "source_file": "src/hooks/useSearch.js",
       "source_location": "L1",
       "id": "src_hooks_usesearch_js",
-      "community": 26,
+      "community": 34,
       "norm_label": "usesearch.js"
     },
     {
@@ -558,7 +756,7 @@
       "source_file": "src/hooks/useSearch.js",
       "source_location": "L3",
       "id": "hooks_usesearch_usesearch",
-      "community": 26,
+      "community": 34,
       "norm_label": "usesearch()"
     },
     {
@@ -567,7 +765,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L1",
       "id": "src_services_resolvedorfavicon_js",
-      "community": 0,
+      "community": 1,
       "norm_label": "resolvedorfavicon.js"
     },
     {
@@ -576,7 +774,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L12",
       "id": "services_resolvedorfavicon_processqueue",
-      "community": 0,
+      "community": 1,
       "norm_label": "processqueue()"
     },
     {
@@ -585,7 +783,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L42",
       "id": "services_resolvedorfavicon_getcachedfavicon",
-      "community": 0,
+      "community": 1,
       "norm_label": "getcachedfavicon()"
     },
     {
@@ -594,7 +792,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L50",
       "id": "services_resolvedorfavicon_setcachedfavicon",
-      "community": 0,
+      "community": 1,
       "norm_label": "setcachedfavicon()"
     },
     {
@@ -603,7 +801,7 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L57",
       "id": "services_resolvedorfavicon_resolverfavicon",
-      "community": 0,
+      "community": 1,
       "norm_label": "resolverfavicon()"
     },
     {
@@ -612,25 +810,25 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L1",
       "id": "src_store_usestore_js",
-      "community": 1,
+      "community": 0,
       "norm_label": "usestore.js"
     },
     {
       "label": "getSavedCategory()",
       "file_type": "code",
       "source_file": "src/store/useStore.js",
-      "source_location": "L18",
+      "source_location": "L29",
       "id": "store_usestore_getsavedcategory",
-      "community": 1,
+      "community": 0,
       "norm_label": "getsavedcategory()"
     },
     {
       "label": "setSavedCategory()",
       "file_type": "code",
       "source_file": "src/store/useStore.js",
-      "source_location": "L33",
+      "source_location": "L44",
       "id": "store_usestore_setsavedcategory",
-      "community": 1,
+      "community": 0,
       "norm_label": "setsavedcategory()"
     },
     {
@@ -639,7 +837,7 @@
       "source_file": "src/themes/themes.js",
       "source_location": "L1",
       "id": "src_themes_themes_js",
-      "community": 4,
+      "community": 0,
       "norm_label": "themes.js"
     },
     {
@@ -648,7 +846,7 @@
       "source_file": "src/themes/themes.js",
       "source_location": "L92",
       "id": "themes_themes_applytheme",
-      "community": 4,
+      "community": 0,
       "norm_label": "applytheme()"
     },
     {
@@ -657,7 +855,7 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L1",
       "id": "src_utils_crypto_js",
-      "community": 1,
+      "community": 0,
       "norm_label": "crypto.js"
     },
     {
@@ -666,7 +864,7 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L3",
       "id": "utils_crypto_encrypt",
-      "community": 1,
+      "community": 0,
       "norm_label": "encrypt()"
     },
     {
@@ -675,7 +873,7 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L8",
       "id": "utils_crypto_decrypt",
-      "community": 1,
+      "community": 0,
       "norm_label": "decrypt()"
     },
     {
@@ -684,7 +882,7 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L1",
       "id": "src_utils_favicon_js",
-      "community": 0,
+      "community": 1,
       "norm_label": "favicon.js"
     },
     {
@@ -693,7 +891,7 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L1",
       "id": "utils_favicon_getfaviconurls",
-      "community": 0,
+      "community": 1,
       "norm_label": "getfaviconurls()"
     },
     {
@@ -702,7 +900,7 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L43",
       "id": "utils_favicon_getdomain",
-      "community": 0,
+      "community": 1,
       "norm_label": "getdomain()"
     },
     {
@@ -711,7 +909,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L1",
       "id": "src_utils_favicondb_js",
-      "community": 1,
+      "community": 0,
       "norm_label": "favicondb.js"
     },
     {
@@ -720,7 +918,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L7",
       "id": "utils_favicondb_carregarfaviconsdb",
-      "community": 1,
+      "community": 0,
       "norm_label": "carregarfaviconsdb()"
     },
     {
@@ -729,7 +927,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L24",
       "id": "utils_favicondb_salvarfavicondb",
-      "community": 1,
+      "community": 0,
       "norm_label": "salvarfavicondb()"
     },
     {
@@ -738,7 +936,7 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L43",
       "id": "utils_favicondb_deletarfavicondb",
-      "community": 1,
+      "community": 0,
       "norm_label": "deletarfavicondb()"
     },
     {
@@ -747,7 +945,7 @@
       "source_file": "src/utils/storage.js",
       "source_location": "L1",
       "id": "src_utils_storage_js",
-      "community": 32,
+      "community": 40,
       "norm_label": "storage.js"
     },
     {
@@ -763,7 +961,7 @@
       "label": "gerarHash()",
       "file_type": "code",
       "source_file": "versionamento/versionador.js",
-      "source_location": "L30",
+      "source_location": "L34",
       "id": "versionamento_versionador_gerarhash",
       "community": 3,
       "norm_label": "gerarhash()"
@@ -772,7 +970,7 @@
       "label": "processarUrl()",
       "file_type": "code",
       "source_file": "versionamento/versionador.js",
-      "source_location": "L38",
+      "source_location": "L42",
       "id": "versionamento_versionador_processarurl",
       "community": 3,
       "norm_label": "processarurl()"
@@ -781,7 +979,7 @@
       "label": "processarConteudo()",
       "file_type": "code",
       "source_file": "versionamento/versionador.js",
-      "source_location": "L73",
+      "source_location": "L77",
       "id": "versionamento_versionador_processarconteudo",
       "community": 3,
       "norm_label": "processarconteudo()"
@@ -790,7 +988,7 @@
       "label": "varrerDiretorio()",
       "file_type": "code",
       "source_file": "versionamento/versionador.js",
-      "source_location": "L105",
+      "source_location": "L109",
       "id": "versionamento_versionador_varrerdiretorio",
       "community": 3,
       "norm_label": "varrerdiretorio()"
@@ -803,9 +1001,9 @@
       "source_file": "netlify/functions/chat.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_chat_js",
-      "target": "functions_chat_handler",
-      "confidence_score": 1.0
+      "target": "functions_chat_handler"
     },
     {
       "relation": "contains",
@@ -813,9 +1011,29 @@
       "source_file": "netlify/functions/favicon.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_favicon_js",
-      "target": "functions_favicon_handler",
-      "confidence_score": 1.0
+      "target": "functions_favicon_handler"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/futebol-jogos.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "netlify_functions_futebol_jogos_js",
+      "target": "functions_futebol_jogos_handler"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/futebol-noticias.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "netlify_functions_futebol_noticias_js",
+      "target": "functions_futebol_noticias_handler"
     },
     {
       "relation": "contains",
@@ -823,9 +1041,9 @@
       "source_file": "netlify/functions/proxy-img.js",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_proxy_img_js",
-      "target": "functions_proxy_img_isprivateip",
-      "confidence_score": 1.0
+      "target": "functions_proxy_img_isprivateip"
     },
     {
       "relation": "contains",
@@ -833,9 +1051,9 @@
       "source_file": "netlify/functions/proxy-img.js",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_proxy_img_js",
-      "target": "functions_proxy_img_handler",
-      "confidence_score": 1.0
+      "target": "functions_proxy_img_handler"
     },
     {
       "relation": "calls",
@@ -844,9 +1062,9 @@
       "source_file": "netlify/functions/proxy-img.js",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "functions_proxy_img_handler",
-      "target": "functions_proxy_img_isprivateip",
-      "confidence_score": 1.0
+      "target": "functions_proxy_img_isprivateip"
     },
     {
       "relation": "contains",
@@ -854,9 +1072,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_resolver_favicon_js",
-      "target": "functions_resolver_favicon_isprivateip",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_isprivateip"
     },
     {
       "relation": "contains",
@@ -864,9 +1082,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_resolver_favicon_js",
-      "target": "functions_resolver_favicon_extracticons",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_extracticons"
     },
     {
       "relation": "contains",
@@ -874,9 +1092,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_resolver_favicon_js",
-      "target": "functions_resolver_favicon_getbesticon",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_getbesticon"
     },
     {
       "relation": "contains",
@@ -884,9 +1102,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_resolver_favicon_js",
-      "target": "functions_resolver_favicon_handler",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_handler"
     },
     {
       "relation": "calls",
@@ -895,9 +1113,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L110",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "functions_resolver_favicon_handler",
-      "target": "functions_resolver_favicon_isprivateip",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_isprivateip"
     },
     {
       "relation": "calls",
@@ -906,9 +1124,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L162",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "functions_resolver_favicon_handler",
-      "target": "functions_resolver_favicon_extracticons",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_extracticons"
     },
     {
       "relation": "calls",
@@ -917,9 +1135,9 @@
       "source_file": "netlify/functions/resolver-favicon.js",
       "source_location": "L163",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "functions_resolver_favicon_handler",
-      "target": "functions_resolver_favicon_getbesticon",
-      "confidence_score": 1.0
+      "target": "functions_resolver_favicon_getbesticon"
     },
     {
       "relation": "contains",
@@ -927,9 +1145,9 @@
       "source_file": "netlify/functions/rss.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_rss_js",
-      "target": "functions_rss_handler",
-      "confidence_score": 1.0
+      "target": "functions_rss_handler"
     },
     {
       "relation": "contains",
@@ -937,9 +1155,9 @@
       "source_file": "netlify/functions/sync.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_sync_js",
-      "target": "functions_sync_handler",
-      "confidence_score": 1.0
+      "target": "functions_sync_handler"
     },
     {
       "relation": "imports",
@@ -948,9 +1166,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_jsx",
-      "target": "themes_themes_applytheme",
-      "confidence_score": 1.0
+      "target": "themes_themes_applytheme"
     },
     {
       "relation": "contains",
@@ -958,9 +1176,9 @@
       "source_file": "src/App.jsx",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_jsx",
-      "target": "src_app_app",
-      "confidence_score": 1.0
+      "target": "src_app_app"
     },
     {
       "relation": "contains",
@@ -968,9 +1186,9 @@
       "source_file": "src/components/AddSiteModal.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_addsitemodal_jsx",
-      "target": "components_addsitemodal_addsitemodal",
-      "confidence_score": 1.0
+      "target": "components_addsitemodal_addsitemodal"
     },
     {
       "relation": "contains",
@@ -978,9 +1196,9 @@
       "source_file": "src/components/AIChatModal.jsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_aichatmodal_jsx",
-      "target": "components_aichatmodal_aichatmodal",
-      "confidence_score": 1.0
+      "target": "components_aichatmodal_aichatmodal"
     },
     {
       "relation": "contains",
@@ -988,9 +1206,9 @@
       "source_file": "src/components/BottomSection.jsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_bottomsection_jsx",
-      "target": "components_bottomsection_bottomsection",
-      "confidence_score": 1.0
+      "target": "components_bottomsection_bottomsection"
     },
     {
       "relation": "contains",
@@ -998,9 +1216,9 @@
       "source_file": "src/components/CategoryFilter.jsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_categoryfilter_jsx",
-      "target": "components_categoryfilter_categoryfilter",
-      "confidence_score": 1.0
+      "target": "components_categoryfilter_categoryfilter"
     },
     {
       "relation": "contains",
@@ -1008,9 +1226,9 @@
       "source_file": "src/components/Clock.jsx",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_clock_jsx",
-      "target": "components_clock_clock",
-      "confidence_score": 1.0
+      "target": "components_clock_clock"
     },
     {
       "relation": "contains",
@@ -1018,9 +1236,9 @@
       "source_file": "src/components/ConfirmModal.jsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_confirmmodal_jsx",
-      "target": "components_confirmmodal_confirmmodal",
-      "confidence_score": 1.0
+      "target": "components_confirmmodal_confirmmodal"
     },
     {
       "relation": "contains",
@@ -1028,9 +1246,9 @@
       "source_file": "src/components/FloatingMenu.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_floatingmenu_jsx",
-      "target": "components_floatingmenu_floatingmenu",
-      "confidence_score": 1.0
+      "target": "components_floatingmenu_floatingmenu"
     },
     {
       "relation": "contains",
@@ -1038,9 +1256,9 @@
       "source_file": "src/components/ImportBookmarksModal.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_importbookmarksmodal_jsx",
-      "target": "components_importbookmarksmodal_importbookmarksmodal",
-      "confidence_score": 1.0
+      "target": "components_importbookmarksmodal_importbookmarksmodal"
     },
     {
       "relation": "contains",
@@ -1048,9 +1266,9 @@
       "source_file": "src/components/NewsFeed.jsx",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_newsfeed_jsx",
-      "target": "components_newsfeed_newsfeed",
-      "confidence_score": 1.0
+      "target": "components_newsfeed_newsfeed"
     },
     {
       "relation": "contains",
@@ -1058,9 +1276,19 @@
       "source_file": "src/components/NotesWidget.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_noteswidget_jsx",
-      "target": "components_noteswidget_noteswidget",
-      "confidence_score": 1.0
+      "target": "components_noteswidget_noteswidget"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/OnboardingModal.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_onboardingmodal_jsx",
+      "target": "components_onboardingmodal_onboardingmodal"
     },
     {
       "relation": "contains",
@@ -1068,9 +1296,9 @@
       "source_file": "src/components/SearchBar.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_searchbar_jsx",
-      "target": "components_searchbar_searchbar",
-      "confidence_score": 1.0
+      "target": "components_searchbar_searchbar"
     },
     {
       "relation": "contains",
@@ -1078,9 +1306,9 @@
       "source_file": "src/components/SettingsModal.jsx",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_settingsmodal_jsx",
-      "target": "components_settingsmodal_sortablecategoryitem",
-      "confidence_score": 1.0
+      "target": "components_settingsmodal_sortablecategoryitem"
     },
     {
       "relation": "contains",
@@ -1088,9 +1316,9 @@
       "source_file": "src/components/SettingsModal.jsx",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_settingsmodal_jsx",
-      "target": "components_settingsmodal_settingsmodal",
-      "confidence_score": 1.0
+      "target": "components_settingsmodal_settingsmodal"
     },
     {
       "relation": "imports",
@@ -1099,9 +1327,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "utils_favicon_getfaviconurls",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getfaviconurls"
     },
     {
       "relation": "imports",
@@ -1110,9 +1338,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "utils_favicon_getdomain",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getdomain"
     },
     {
       "relation": "imports",
@@ -1121,9 +1349,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "utils_favicondb_salvarfavicondb",
-      "confidence_score": 1.0
+      "target": "utils_favicondb_salvarfavicondb"
     },
     {
       "relation": "imports",
@@ -1132,9 +1360,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "services_resolvedorfavicon_resolverfavicon",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_resolverfavicon"
     },
     {
       "relation": "imports",
@@ -1143,9 +1371,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "services_resolvedorfavicon_getcachedfavicon",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_getcachedfavicon"
     },
     {
       "relation": "imports",
@@ -1154,9 +1382,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "services_resolvedorfavicon_setcachedfavicon",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_setcachedfavicon"
     },
     {
       "relation": "contains",
@@ -1164,9 +1392,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "components_sitecard_getavatarcolor",
-      "confidence_score": 1.0
+      "target": "components_sitecard_getavatarcolor"
     },
     {
       "relation": "contains",
@@ -1174,9 +1402,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "components_sitecard_getproxiedurl",
-      "confidence_score": 1.0
+      "target": "components_sitecard_getproxiedurl"
     },
     {
       "relation": "contains",
@@ -1184,9 +1412,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "components_sitecard_sitecard",
-      "confidence_score": 1.0
+      "target": "components_sitecard_sitecard"
     },
     {
       "relation": "calls",
@@ -1195,9 +1423,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L292",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_sitecard_sitecard",
-      "target": "components_sitecard_getavatarcolor",
-      "confidence_score": 1.0
+      "target": "components_sitecard_getavatarcolor"
     },
     {
       "relation": "calls",
@@ -1206,9 +1434,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L283",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_sitecard_sitecard",
-      "target": "components_sitecard_getproxiedurl",
-      "confidence_score": 1.0
+      "target": "components_sitecard_getproxiedurl"
     },
     {
       "relation": "calls",
@@ -1238,9 +1466,9 @@
       "source_file": "src/components/SiteGrid.jsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitegrid_jsx",
-      "target": "components_sitegrid_sitegrid",
-      "confidence_score": 1.0
+      "target": "components_sitegrid_sitegrid"
     },
     {
       "relation": "contains",
@@ -1248,9 +1476,9 @@
       "source_file": "src/components/StarCanvas.jsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_starcanvas_jsx",
-      "target": "components_starcanvas_starcanvas",
-      "confidence_score": 1.0
+      "target": "components_starcanvas_starcanvas"
     },
     {
       "relation": "contains",
@@ -1258,9 +1486,123 @@
       "source_file": "src/components/WeatherWidget.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_weatherwidget_jsx",
-      "target": "components_weatherwidget_weatherwidget",
-      "confidence_score": 1.0
+      "target": "components_weatherwidget_weatherwidget"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/CardJogoHoje.jsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_cardjogohoje_jsx",
+      "target": "futebol_cardjogohoje_cardjogohoje"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/CardNoticiaFutebol.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_cardnoticiafutebol_jsx",
+      "target": "futebol_cardnoticiafutebol_cardnoticiafutebol"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/FutebolWidget.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_futebolwidget_jsx",
+      "target": "futebol_futebolwidget_futebolwidget"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/JogosHoje.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_jogoshoje_jsx",
+      "target": "hooks_usejogoshoje_usejogoshoje"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/JogosHoje.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_jogoshoje_jsx",
+      "target": "futebol_jogoshoje_jogoshoje"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/futebol/JogosHoje.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "futebol_jogoshoje_jogoshoje",
+      "target": "hooks_usejogoshoje_usejogoshoje"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/NoticiasFutebol.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_noticiasfutebol_jsx",
+      "target": "hooks_usenoticiasfutebol_usenoticiasfutebol"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/NoticiasFutebol.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_noticiasfutebol_jsx",
+      "target": "futebol_noticiasfutebol_noticiasfutebol"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/components/futebol/NoticiasFutebol.jsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "futebol_noticiasfutebol_noticiasfutebol",
+      "target": "hooks_usenoticiasfutebol_usenoticiasfutebol"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/futebol/NoticiasWidget.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_components_futebol_noticiaswidget_jsx",
+      "target": "futebol_noticiaswidget_noticiaswidget"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hooks/useJogosHoje.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_hooks_usejogoshoje_js",
+      "target": "hooks_usejogoshoje_usejogoshoje"
     },
     {
       "relation": "contains",
@@ -1268,9 +1610,19 @@
       "source_file": "src/hooks/useNews.js",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_hooks_usenews_js",
-      "target": "hooks_usenews_usenews",
-      "confidence_score": 1.0
+      "target": "hooks_usenews_usenews"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/hooks/useNoticiasFutebol.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_hooks_usenoticiasfutebol_js",
+      "target": "hooks_usenoticiasfutebol_usenoticiasfutebol"
     },
     {
       "relation": "contains",
@@ -1278,9 +1630,9 @@
       "source_file": "src/hooks/useSearch.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_hooks_usesearch_js",
-      "target": "hooks_usesearch_usesearch",
-      "confidence_score": 1.0
+      "target": "hooks_usesearch_usesearch"
     },
     {
       "relation": "imports",
@@ -1289,9 +1641,9 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_services_resolvedorfavicon_js",
-      "target": "utils_favicon_getdomain",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getdomain"
     },
     {
       "relation": "contains",
@@ -1299,9 +1651,9 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_services_resolvedorfavicon_js",
-      "target": "services_resolvedorfavicon_processqueue",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_processqueue"
     },
     {
       "relation": "contains",
@@ -1309,9 +1661,9 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_services_resolvedorfavicon_js",
-      "target": "services_resolvedorfavicon_getcachedfavicon",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_getcachedfavicon"
     },
     {
       "relation": "contains",
@@ -1319,9 +1671,9 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_services_resolvedorfavicon_js",
-      "target": "services_resolvedorfavicon_setcachedfavicon",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_setcachedfavicon"
     },
     {
       "relation": "contains",
@@ -1329,9 +1681,9 @@
       "source_file": "src/services/resolvedorFavicon.js",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_services_resolvedorfavicon_js",
-      "target": "services_resolvedorfavicon_resolverfavicon",
-      "confidence_score": 1.0
+      "target": "services_resolvedorfavicon_resolverfavicon"
     },
     {
       "relation": "imports",
@@ -1340,9 +1692,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "themes_themes_applytheme",
-      "confidence_score": 1.0
+      "target": "themes_themes_applytheme"
     },
     {
       "relation": "imports",
@@ -1351,9 +1703,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "utils_crypto_encrypt",
-      "confidence_score": 1.0
+      "target": "utils_crypto_encrypt"
     },
     {
       "relation": "imports",
@@ -1362,9 +1714,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "utils_crypto_decrypt",
-      "confidence_score": 1.0
+      "target": "utils_crypto_decrypt"
     },
     {
       "relation": "imports",
@@ -1373,9 +1725,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "utils_favicon_getdomain",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getdomain"
     },
     {
       "relation": "imports",
@@ -1384,9 +1736,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "utils_favicondb_carregarfaviconsdb",
-      "confidence_score": 1.0
+      "target": "utils_favicondb_carregarfaviconsdb"
     },
     {
       "relation": "imports",
@@ -1395,9 +1747,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "utils_favicondb_deletarfavicondb",
-      "confidence_score": 1.0
+      "target": "utils_favicondb_deletarfavicondb"
     },
     {
       "relation": "contains",
@@ -1405,9 +1757,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "store_usestore_getsavedcategory",
-      "confidence_score": 1.0
+      "target": "store_usestore_getsavedcategory"
     },
     {
       "relation": "contains",
@@ -1415,9 +1767,9 @@
       "source_file": "src/store/useStore.js",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_store_usestore_js",
-      "target": "store_usestore_setsavedcategory",
-      "confidence_score": 1.0
+      "target": "store_usestore_setsavedcategory"
     },
     {
       "relation": "contains",
@@ -1425,9 +1777,9 @@
       "source_file": "src/themes/themes.js",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_themes_themes_js",
-      "target": "themes_themes_applytheme",
-      "confidence_score": 1.0
+      "target": "themes_themes_applytheme"
     },
     {
       "relation": "contains",
@@ -1435,9 +1787,9 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_crypto_js",
-      "target": "utils_crypto_encrypt",
-      "confidence_score": 1.0
+      "target": "utils_crypto_encrypt"
     },
     {
       "relation": "contains",
@@ -1445,9 +1797,9 @@
       "source_file": "src/utils/crypto.js",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_crypto_js",
-      "target": "utils_crypto_decrypt",
-      "confidence_score": 1.0
+      "target": "utils_crypto_decrypt"
     },
     {
       "relation": "contains",
@@ -1455,9 +1807,9 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicon_js",
-      "target": "utils_favicon_getfaviconurls",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getfaviconurls"
     },
     {
       "relation": "contains",
@@ -1465,9 +1817,9 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicon_js",
-      "target": "utils_favicon_getdomain",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getdomain"
     },
     {
       "relation": "contains",
@@ -1475,9 +1827,9 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicondb_js",
-      "target": "utils_favicondb_carregarfaviconsdb",
-      "confidence_score": 1.0
+      "target": "utils_favicondb_carregarfaviconsdb"
     },
     {
       "relation": "contains",
@@ -1485,9 +1837,9 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicondb_js",
-      "target": "utils_favicondb_salvarfavicondb",
-      "confidence_score": 1.0
+      "target": "utils_favicondb_salvarfavicondb"
     },
     {
       "relation": "contains",
@@ -1495,9 +1847,9 @@
       "source_file": "src/utils/faviconDb.js",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicondb_js",
-      "target": "utils_favicondb_deletarfavicondb",
-      "confidence_score": 1.0
+      "target": "utils_favicondb_deletarfavicondb"
     },
     {
       "relation": "contains",
@@ -1505,9 +1857,9 @@
       "source_file": "versionamento/versionador.js",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "versionamento_versionador_js",
-      "target": "versionamento_versionador_gerarhash",
-      "confidence_score": 1.0
+      "target": "versionamento_versionador_gerarhash"
     },
     {
       "relation": "contains",
@@ -1515,9 +1867,9 @@
       "source_file": "versionamento/versionador.js",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "versionamento_versionador_js",
-      "target": "versionamento_versionador_processarurl",
-      "confidence_score": 1.0
+      "target": "versionamento_versionador_processarurl"
     },
     {
       "relation": "contains",
@@ -1525,9 +1877,9 @@
       "source_file": "versionamento/versionador.js",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "versionamento_versionador_js",
-      "target": "versionamento_versionador_processarconteudo",
-      "confidence_score": 1.0
+      "target": "versionamento_versionador_processarconteudo"
     },
     {
       "relation": "contains",
@@ -1535,9 +1887,9 @@
       "source_file": "versionamento/versionador.js",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "versionamento_versionador_js",
-      "target": "versionamento_versionador_varrerdiretorio",
-      "confidence_score": 1.0
+      "target": "versionamento_versionador_varrerdiretorio"
     },
     {
       "relation": "calls",
@@ -1546,11 +1898,11 @@
       "source_file": "versionamento/versionador.js",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "versionamento_versionador_processarurl",
-      "target": "versionamento_versionador_gerarhash",
-      "confidence_score": 1.0
+      "target": "versionamento_versionador_gerarhash"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "738d5c8584fb3d3dd206369447b114b6d3853002"
+  "built_at_commit": "02dd1688cf479759ed48a41cb70ab4fb64a9fd87"
 }

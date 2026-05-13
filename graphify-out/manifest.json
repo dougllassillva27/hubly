@@ -27,6 +27,14 @@
     "mtime": 1776859814.7087936,
     "hash": "92b7c1bf9b97798acb8ef20792bbc4ef"
   },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\futebol-jogos.js": {
+    "mtime": 1778067298.5597522,
+    "hash": "e0320a28f4c6d9c1b1d2ae64ac416fad"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\futebol-noticias.js": {
+    "mtime": 1778064627.986404,
+    "hash": "12146ad3a70fbd9296e74c8ef77420a0"
+  },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\proxy-img.js": {
     "mtime": 1777248399.7686417,
     "hash": "062ea9e82449c958f93a500ea5c069f1"
@@ -44,8 +52,8 @@
     "hash": "7456edb56f5fd8641fa8d205814d21ff"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\App.jsx": {
-    "mtime": 1777311456.6444485,
-    "hash": "b9df3a628cce6aac928890ffbb28622b"
+    "mtime": 1778072715.800944,
+    "hash": "a8f36e86d2b2f376e5d21e80e563d600"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\main.jsx": {
     "mtime": 1776810841.9045424,
@@ -60,8 +68,8 @@
     "hash": "1e1b0b17f07775068bf463dd2811eb0d"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\BottomSection.jsx": {
-    "mtime": 1777304179.6379416,
-    "hash": "c6af0e34ee493c82b475e49de03b45d6"
+    "mtime": 1778064333.8048675,
+    "hash": "8a1edf57eb220bd4a04906a2609d517f"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\CategoryFilter.jsx": {
     "mtime": 1776872383.865397,
@@ -84,20 +92,24 @@
     "hash": "5d46488273b72f0721aa61a6ab1ad2bb"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\NewsFeed.jsx": {
-    "mtime": 1776979346.2013936,
+    "mtime": 1778063669.658538,
     "hash": "d08174542e028215ce18c20261db51c3"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\NotesWidget.jsx": {
     "mtime": 1777306491.9594185,
     "hash": "ab2aa09eac42a56c5ca4616c24cdde5d"
   },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\OnboardingModal.jsx": {
+    "mtime": 1778072712.2259443,
+    "hash": "0c6b7ec0286f27bc0746991ad6d5e8d0"
+  },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\SearchBar.jsx": {
     "mtime": 1777501802.37426,
     "hash": "36972b212dedcad3d48e4080e3092431"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\SettingsModal.jsx": {
-    "mtime": 1777501790.7867763,
-    "hash": "3d5aed375d5511ac4777fe830782bf64"
+    "mtime": 1778067302.1705782,
+    "hash": "8fc21b75db380a520475b6e50c9ff647"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\SiteCard.jsx": {
     "mtime": 1777502328.496325,
@@ -112,16 +124,48 @@
     "hash": "d5a4ffb6787189ae44c079f797eb22c7"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\WeatherWidget.jsx": {
-    "mtime": 1777306490.9274356,
-    "hash": "07527702586aaee508003544e283ef3d"
+    "mtime": 1778072381.6027186,
+    "hash": "84fd800795bd8ba56184469d2d89e4a7"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\Widgets.jsx": {
     "mtime": 1777306236.3180282,
     "hash": "d41d8cd98f00b204e9800998ecf8427e"
   },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\futebol\\CardJogoHoje.jsx": {
+    "mtime": 1778063973.2755392,
+    "hash": "e84c793a74df095c7c3930bf5181dc82"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\futebol\\CardNoticiaFutebol.jsx": {
+    "mtime": 1778064629.5474558,
+    "hash": "028ce8e07963427c975cee30526bc4ba"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\futebol\\FutebolWidget.jsx": {
+    "mtime": 1778065056.3250499,
+    "hash": "103f5c9d5802aba39ddb3146afb10428"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\futebol\\JogosHoje.jsx": {
+    "mtime": 1778064337.3798685,
+    "hash": "0bb1bdcfdcce90ba1dd517d61de9738b"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\futebol\\NoticiasFutebol.jsx": {
+    "mtime": 1778065058.041385,
+    "hash": "e6ffd9339d8af4af71cc63b1be0ac2ef"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\components\\futebol\\NoticiasWidget.jsx": {
+    "mtime": 1778065055.5404356,
+    "hash": "dd706d94cab35215dc35a2b80f784c54"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\hooks\\useJogosHoje.js": {
+    "mtime": 1778066024.9316752,
+    "hash": "fac366c6fbee9e5631b83b37a18bfabd"
+  },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\hooks\\useNews.js": {
     "mtime": 1776821902.966333,
     "hash": "9a07812d87374a0f9ed6bdb1d89777ef"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\hooks\\useNoticiasFutebol.js": {
+    "mtime": 1778065057.1575155,
+    "hash": "0ffaa0b962661de1fca1550948946cdf"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\hooks\\useSearch.js": {
     "mtime": 1776810841.9035683,
@@ -132,8 +176,8 @@
     "hash": "756669e98ab51871127cf4fb5536a809"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\store\\useStore.js": {
-    "mtime": 1777501782.7724333,
-    "hash": "0be4c9bd7fbcf5cdc6f360f99c7cb398"
+    "mtime": 1778072642.9540203,
+    "hash": "5a90cec9fdbc7ace1c0507d456c14247"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\themes\\themes.js": {
     "mtime": 1776819727.0941465,
@@ -156,8 +200,8 @@
     "hash": "48d0b46d8c770fc798d02b0161cb8e05"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\versionamento\\versionador.js": {
-    "mtime": 1777062823.2931838,
-    "hash": "68fbc9486b1d762f502b8ee86d859a62"
+    "mtime": 1778067984.334279,
+    "hash": "33453d748e91308114295b2bef26556a"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\AGENTS.md": {
     "mtime": 1776862284.4487216,
@@ -176,8 +220,8 @@
     "hash": "1cab13688f694e2de4702b747a5456a9"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\resumo-de-trabalho.md": {
-    "mtime": 1777502335.420705,
-    "hash": "5b65b84da90299969b32a7e5aca7320a"
+    "mtime": 1778104109.4349804,
+    "hash": "417ac2d70e3411a03a8e9b4118b11782"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\docs\\feature\\PLANO-IMPLEMENTACAO-FUTEBOL-HUBLY-NETLIFY.md": {
     "mtime": 1776963076.851,
