@@ -62,12 +62,9 @@ export const setCachedFavicon = (domain, url) => {
 
 export const resolverFavicon = (url) => {
   return new Promise((resolve) => {
-    const domain = getDomain(url);
-    console.log(`[FaviconResolver] Iniciando para: ${url} (Domain: ${domain})`);
-
-    // Se for domínio local, resolvemos direto sem passar pelo backend (evita erro 403 SSRF)
-    if (isLocalDomain(domain)) {
-      console.log(`[FaviconResolver] Domínio local detectado: ${domain}. Usando bypass.`);
+    // IMPORTANTE: isLocalDomain agora aceita a URL completa e extrai o host internamente
+    if (isLocalDomain(url)) {
+      console.log(`[FaviconResolver] Domínio local detectado via URL: ${url}. Usando bypass.`);
       try {
         const urlObj = new URL(url);
         const localIcon = `${urlObj.origin}/favicon.ico`;
@@ -78,6 +75,9 @@ export const resolverFavicon = (url) => {
         return resolve(null);
       }
     }
+
+    const domain = getDomain(url);
+    console.log(`[FaviconResolver] Iniciando para: ${url} (Domain: ${domain})`);
 
     const cached = storage.get(`${CACHE_PREFIX}${domain}`);
     if (cached && cached.timestamp && Date.now() - cached.timestamp < CACHE_TTL) {
