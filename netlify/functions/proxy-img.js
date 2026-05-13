@@ -79,14 +79,19 @@ export const handler = async (event) => {
 
       return {
         statusCode: 200,
-        headers: { 'Content-Type': contentType, 'Cache-Control': 'public, max-age=31536000, immutable' },
+        headers: {
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=31536000, immutable',
+          'Cross-Origin-Resource-Policy': 'cross-origin',
+          'Access-Control-Allow-Origin': '*',
+        },
         isBase64Encoded: true,
         body: base64,
       };
     }
 
     // --- Fallback Final: Redirecionamento ---
-    return { statusCode: 302, headers: { Location: url, 'Cache-Control': 'no-cache' }, body: '' };
+    return { statusCode: 404, body: 'Imagem não encontrada ou bloqueada' };
   } catch (error) {
     // Fallback de segurança para erros assíncronos não mapeados
     return {

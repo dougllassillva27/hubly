@@ -94,6 +94,7 @@ const useStore = create((set, get) => ({
   futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
 
   onboardingShown: storage.get('onboarding_shown') || false,
+  loadedIcons: new Set(),
   // UI State
   settingsOpen: false,
   addSiteOpen: false,
@@ -545,6 +546,15 @@ const useStore = create((set, get) => ({
     });
     if (!response.ok) throw new Error('Falha no sync');
     return true;
+  },
+
+  markIconAsLoaded: (url) => {
+    const { loadedIcons } = get();
+    if (!loadedIcons.has(url)) {
+      const newSet = new Set(loadedIcons);
+      newSet.add(url);
+      set({ loadedIcons: newSet });
+    }
   },
 
   pullFromCloud: async () => {

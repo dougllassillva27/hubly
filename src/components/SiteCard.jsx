@@ -54,6 +54,8 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
     faviconsDb,
     registerSiteVisit,
     linkTarget,
+    loadedIcons,
+    markIconAsLoaded,
   } = useStore();
   const [showActions, setShowActions] = useState(false);
 
@@ -73,22 +75,30 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [imgFailed, setImgFailed] = useState(false);
   const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl && !isLocal);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(() => {
+    const currentUrl = faviconUrls[currentUrlIndex];
+    return currentUrl ? loadedIcons.has(getProxiedUrl(currentUrl)) : false;
+  });
 
 
   const timerRef = useRef(null);
   const isTouchRef = useRef(false);
   const ignoreNextClickRef = useRef(false);
 
-  useEffect(() => {
+    useEffect(() => {
     let mounted = true;
+
+    const checkLoaded = (url) => {
+      if (!url) return false;
+      return loadedIcons.has(getProxiedUrl(url));
+    };
 
     if (site.customIcon) {
       setFaviconUrls([site.customIcon]);
       setCurrentUrlIndex(0);
       setImgFailed(false);
       setIsResolving(false);
-      setIsImageLoaded(false);
+      setIsImageLoaded(checkLoaded(site.customIcon));
       return;
     }
 
@@ -97,7 +107,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setCurrentUrlIndex(0);
       setImgFailed(false);
       setIsResolving(false);
-      setIsImageLoaded(false);
+      setIsImageLoaded(checkLoaded(dbUrl));
       return;
     }
 
@@ -107,7 +117,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setCurrentUrlIndex(0);
       setImgFailed(false);
       setIsResolving(false);
-      setIsImageLoaded(false);
+      setIsImageLoaded(checkLoaded(cachedUrl));
       return;
     }
 
@@ -117,7 +127,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setCurrentUrlIndex(0);
       setImgFailed(localUrls.length === 0);
       setIsResolving(false);
-      setIsImageLoaded(false);
+      setIsImageLoaded(localUrls.length > 0 ? checkLoaded(localUrls[0]) : false);
       return;
     }
 
@@ -133,12 +143,15 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       setCurrentUrlIndex(0);
       setImgFailed(finalUrls.length === 0);
       setIsResolving(false);
+      if (finalUrls.length > 0) {
+        setIsImageLoaded(checkLoaded(finalUrls[0]));
+      }
     });
 
     return () => {
       mounted = false;
     };
-  }, [site.url, site.customIcon, dbUrl, isLocal]);
+  }, [site.url, site.customIcon, dbUrl, isLocal, loadedIcons]);
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: site.id,
@@ -275,8 +288,10 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
 
   const handleImageError = () => {
     if (currentUrlIndex < faviconUrls.length - 1) {
-      setCurrentUrlIndex((prev) => prev + 1);
-      setIsImageLoaded(false);
+      const nextIndex = currentUrlIndex + 1;
+      setCurrentUrlIndex(nextIndex);
+      const nextUrl = faviconUrls[nextIndex];
+      setIsImageLoaded(nextUrl ? loadedIcons.has(getProxiedUrl(nextUrl)) : false);
     } else {
       setImgFailed(true);
     }
@@ -286,7 +301,9 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
     const currentUrl = faviconUrls[currentUrlIndex];
     if (!currentUrl) return;
 
+    const proxiedUrl = getProxiedUrl(currentUrl);
     setIsImageLoaded(true);
+    markIconAsLoaded(proxiedUrl);
 
     const cached = getCachedFavicon(domain);
     if (cached !== currentUrl) {
