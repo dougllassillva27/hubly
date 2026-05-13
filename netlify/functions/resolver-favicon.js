@@ -91,6 +91,9 @@ function getBestIcon(icons) {
 }
 
 export const handler = async (event) => {
+  const requestId = Math.random().toString(36).substring(7);
+  console.log(`[${requestId}] Request iniciada: ${event.queryStringParameters?.url}`);
+
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -106,9 +109,20 @@ export const handler = async (event) => {
     }
 
     const urlObj = new URL(url);
-    const { address } = await dns.lookup(urlObj.hostname).catch(() => ({ address: null }));
-    if (address && isPrivateIP(address)) {
-      return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado' }) };
+    console.log(`[${requestId}] Hostname: ${urlObj.hostname}`);
+    
+    const { address } = await dns.lookup(urlObj.hostname).catch((err) => {
+      console.error(`[${requestId}] DNS Lookup falhou:`, err.message);
+      return { address: null };
+    });
+
+    if (address) {
+      const privateIP = isPrivateIP(address);
+      console.log(`[${requestId}] IP resolvido: ${address} (Privado: ${privateIP})`);
+      if (privateIP) {
+        console.warn(`[${requestId}] SSRF detectado para IP privado: ${address}`);
+        return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado', ip: address }) };
+      }
     }
 
     const controller = new AbortController();
