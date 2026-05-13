@@ -1,6 +1,19 @@
-export const isLocalDomain = (domain) => {
+export const isLocalDomain = (domainOrUrl) => {
+  if (!domainOrUrl) return false;
+  
+  let domain = domainOrUrl;
+  try {
+    // Se for uma URL completa, extrai apenas o hostname
+    if (domainOrUrl.includes('://')) {
+      domain = new URL(domainOrUrl).hostname;
+    }
+  } catch (e) {
+    // Se falhar no parse, mantém o valor original para o regex
+  }
+
   return (
     domain === 'localhost' ||
+    domain === '127.0.0.1' ||
     !domain.includes('.') ||
     /\.(local|lan|test|dashboard|home|corp)$/.test(domain) ||
     domain.match(/^(127|192\.168|10|172\.(1[6-9]|2[0-9]|3[0-1]))\./)
