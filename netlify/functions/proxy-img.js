@@ -23,13 +23,27 @@ function isPrivateIP(ip) {
 }
 
 export const handler = async (event) => {
+  const commonHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Cross-Origin-Resource-Policy': 'cross-origin',
+    'Cache-Control': 'public, max-age=31536000, immutable',
+  };
+
   if (event.httpMethod !== 'GET') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { 
+      statusCode: 405, 
+      headers: commonHeaders,
+      body: 'Method Not Allowed' 
+    };
   }
 
   const { url } = event.queryStringParameters || {};
   if (!url) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'URL obrigatória' }) };
+    return { 
+      statusCode: 400, 
+      headers: commonHeaders,
+      body: JSON.stringify({ error: 'URL obrigatória' }) 
+    };
   }
 
   try {
@@ -40,7 +54,11 @@ export const handler = async (event) => {
     const address = dnsResult?.address;
 
     if (address && isPrivateIP(address)) {
-      return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado' }) };
+      return { 
+        statusCode: 403, 
+        headers: commonHeaders,
+        body: JSON.stringify({ error: 'SSRF bloqueado' }) 
+      };
     }
 
     const controller = new AbortController();
@@ -58,7 +76,7 @@ export const handler = async (event) => {
     let response = await fetch(url, {
       signal: controller.signal,
       headers: fetchHeaders,
-    }).catch(() => null); // Se a rede do Node falhar, capturamos como nulo
+    }).catch(() => null);
 
     // --- Tentativa 2: Fallback via CDN de Cache ---
     if (!response || !response.ok) {
@@ -80,10 +98,8 @@ export const handler = async (event) => {
       return {
         statusCode: 200,
         headers: {
+          ...commonHeaders,
           'Content-Type': contentType,
-          'Cache-Control': 'public, max-age=31536000, immutable',
-          'Cross-Origin-Resource-Policy': 'cross-origin',
-          'Access-Control-Allow-Origin': '*',
         },
         isBase64Encoded: true,
         body: base64,
@@ -91,11 +107,15 @@ export const handler = async (event) => {
     }
 
     // --- Fallback Final: 404 ---
-    return { statusCode: 404, body: 'Imagem não encontrada ou bloqueada' };
+    return { 
+      statusCode: 404, 
+      headers: commonHeaders,
+      body: 'Imagem não encontrada ou bloqueada' 
+    };
   } catch (error) {
-    // Fallback de segurança para erros assíncronos não mapeados
     return {
-      statusCode: 404,
+      statusCode: 500,
+      headers: commonHeaders,
       body: 'Erro interno no proxy',
     };
   }

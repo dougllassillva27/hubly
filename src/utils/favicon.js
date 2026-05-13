@@ -7,6 +7,16 @@ export const isLocalDomain = (domain) => {
   );
 };
 
+export const getProxiedUrl = (url) => {
+  if (!url) return null;
+  if (url.startsWith('data:')) return url;
+  if (url.includes('google.com/s2/favicons')) return url;
+  if (url.includes('icon.horse')) return url;
+  
+  // Se for uma URL direta ou de terceiros restritiva, passa pelo proxy do Netlify
+  return `/.netlify/functions/proxy-img?url=${encodeURIComponent(url)}`;
+};
+
 export const getFaviconUrls = (url) => {
   try {
     const urlObj = new URL(url);

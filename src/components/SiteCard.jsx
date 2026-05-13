@@ -3,7 +3,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Pencil, Trash2 } from 'lucide-react';
 import useStore from '../store/useStore';
-import { getFaviconUrls, getDomain, isLocalDomain } from '../utils/favicon';
+import { getFaviconUrls, getDomain, isLocalDomain, getProxiedUrl } from '../utils/favicon';
 import { salvarFaviconDb } from '../utils/faviconDb';
 import { resolverFavicon, getCachedFavicon, setCachedFavicon } from '../services/resolvedorFavicon';
 

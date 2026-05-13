@@ -580,6 +580,49 @@ const useStore = create((set, get) => ({
     }
     return false;
   },
+
+  warmUpFavicons: async () => {
+    const { sites, faviconsDb, markIconAsLoaded } = get();
+    const { resolverFavicon, getCachedFavicon } = await import('../services/resolvedorFavicon');
+    const { isLocalDomain, getDomain, getProxiedUrl } = await import('../utils/favicon');
+    
+    // 1. Coleta URLs candidatas a favicon (Cache local, Banco ou Provedor Padrão)
+    const urlsToPreload = new Set();
+    
+    sites.forEach(site => {
+      if (site.customIcon) {
+        urlsToPreload.add(getProxiedUrl(site.customIcon));
+        return;
+      }
+      
+      const domain = getDomain(site.url);
+      if (isLocalDomain(domain)) return;
+
+      // Prioridade: FaviconDb (Cloud) -> LocalStorage (Cache) -> URL Padrão
+      const cachedUrl = faviconsDb[domain] || getCachedFavicon(domain);
+      if (cachedUrl) {
+        urlsToPreload.add(getProxiedUrl(cachedUrl));
+      } else {
+        // Se não tem cache, dispara resolução em background e pré-carrega o resultado
+        resolverFavicon(site.url).then(resolved => {
+          if (resolved) {
+            const proxied = getProxiedUrl(resolved);
+            const img = new Image();
+            img.src = proxied;
+            img.onload = () => markIconAsLoaded(proxied);
+          }
+        });
+      }
+    });
+
+    // 2. Pré-carrega fisicamente no cache do navegador
+    urlsToPreload.forEach(url => {
+      if (!url) return;
+      const img = new Image();
+      img.src = url;
+      img.onload = () => markIconAsLoaded(url);
+    });
+  },
 }));
 
 export { searchProviders };

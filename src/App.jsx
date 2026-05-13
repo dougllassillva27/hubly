@@ -28,13 +28,23 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    const { autoSync, syncToken, pullFromCloud, carregarFaviconsDb } = useStore.getState();
+    const { autoSync, syncToken, pullFromCloud, carregarFaviconsDb, warmUpFavicons } = useStore.getState(); 
 
-    if (autoSync && syncToken) {
-      pullFromCloud().catch((erro) => console.error('Erro no auto-pull:', erro));
-    }
+    const init = async () => {
+      if (autoSync && syncToken) {
+        try {
+          await pullFromCloud();
+        } catch (erro) {
+          console.error('Erro no auto-pull:', erro);
+        }
+      }
 
-    carregarFaviconsDb();
+      await carregarFaviconsDb();
+      // Inicia o Warm Cache em background para domínios não resolvidos
+      warmUpFavicons();
+    };
+
+    init();
 
     if (
       window.matchMedia('(display-mode: standalone)').matches ||
@@ -44,7 +54,6 @@ export default function App() {
       setIsFocusMode(true);
     }
   }, []);
-
   useEffect(() => {
     if (settingsOpen || addSiteOpen || chatOpen || importBookmarksOpen || deleteConfirmId) {
       document.body.style.overflow = 'hidden';
