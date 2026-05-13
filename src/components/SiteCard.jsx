@@ -50,22 +50,22 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
   // Lê o cache local de forma síncrona para evitar delays de promises ao transitar categorias
   const localCachedUrl = getCachedFavicon(domain);
 
+  // 1. Resolvemos a URL candidata (Prioridade: Custom -> DB -> Cache Local)
+  const initialUrl = site.customIcon || dbUrl || localCachedUrl;
+  const initialProxied = initialUrl ? getProxiedUrl(initialUrl) : null;
+  const isAlreadyLoaded = initialProxied ? loadedIcons.has(initialProxied) : false;
+
   const [faviconUrls, setFaviconUrls] = useState(() => {
-    if (site.customIcon) return [site.customIcon];
-    if (dbUrl) return [dbUrl];
-    if (localCachedUrl) return [localCachedUrl];
+    if (initialUrl) return [initialUrl];
     return [];
   });
+  
   const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
   const [imgFailed, setImgFailed] = useState(false);
-  const [isResolving, setIsResolving] = useState(() => !site.customIcon && !dbUrl && !localCachedUrl && !isLocal);
   
-  // Inicialização robusta do estado de carregamento
-  const [isImageLoaded, setIsImageLoaded] = useState(() => {
-    const currentUrl = faviconUrls[currentUrlIndex];
-    if (!currentUrl) return false;
-    return loadedIcons.has(getProxiedUrl(currentUrl));
-  });
+  // Se já está no cache global, não precisamos do estado 'resolving' nem ocultar a imagem
+  const [isResolving, setIsResolving] = useState(() => !initialUrl && !isLocal);
+  const [isImageLoaded, setIsImageLoaded] = useState(isAlreadyLoaded);
 
 
   const timerRef = useRef(null);
@@ -80,31 +80,13 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       return loadedIcons.has(getProxiedUrl(url));
     };
 
-    if (site.customIcon) {
-      setFaviconUrls([site.customIcon]);
+    // Se a URL mudou ou o cache global foi atualizado, sincronizamos
+    if (initialUrl) {
+      setFaviconUrls([initialUrl]);
       setCurrentUrlIndex(0);
       setImgFailed(false);
       setIsResolving(false);
-      setIsImageLoaded(checkLoaded(site.customIcon));
-      return ;
-    }
-
-    if (dbUrl) {
-      setFaviconUrls([dbUrl]);
-      setCurrentUrlIndex(0);
-      setImgFailed(false);
-      setIsResolving(false);
-      setIsImageLoaded(checkLoaded(dbUrl));
-      return ;
-    }
-
-    const cachedUrl = getCachedFavicon(domain);
-    if (cachedUrl) {
-      setFaviconUrls([cachedUrl]);
-      setCurrentUrlIndex(0);
-      setImgFailed(false);
-      setIsResolving(false);
-      setIsImageLoaded(checkLoaded(cachedUrl));
+      setIsImageLoaded(checkLoaded(initialUrl));
       return ;
     }
 
@@ -121,13 +103,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
     setIsResolving(true);
     setImgFailed(false);
     
-    // Não resetamos isImageLoaded para false se a URL atual já estiver no cache global
-    // Isso evita o flicker ao trocar de abas
-    const currentUrl = faviconUrls[currentUrlIndex];
-    if (currentUrl && !checkLoaded(currentUrl)) {
-      setIsImageLoaded(false);
-    }
-
+    // Se não temos URL candidata, resolvemos via scraper
     resolverFavicon(site.url).then((resolvedUrl) => {
       if (!mounted) return;
       const fallbacks = getFaviconUrls(site.url);

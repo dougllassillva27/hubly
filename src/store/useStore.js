@@ -603,7 +603,7 @@ const useStore = create((set, get) => ({
       if (cachedUrl) {
         urlsToPreload.add(getProxiedUrl(cachedUrl));
       } else {
-        // Se não tem cache, dispara resolução em background e pré-carrega o resultado
+        // Se não tem cache e não é local, dispara resolução em background
         resolverFavicon(site.url).then(resolved => {
           if (resolved) {
             const proxied = getProxiedUrl(resolved);
