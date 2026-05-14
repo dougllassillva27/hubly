@@ -1,4 +1,4 @@
-export const isLocalDomain = (domainOrUrl) => {
+﻿export const isLocalDomain = (domainOrUrl) => {
   if (!domainOrUrl) return false;
   
   let domain = domainOrUrl;
@@ -6,23 +6,38 @@ export const isLocalDomain = (domainOrUrl) => {
     // Se for uma URL completa, extrai apenas o hostname
     if (domainOrUrl.includes('://')) {
       domain = new URL(domainOrUrl).hostname;
+    } else if (domainOrUrl.includes('/')) {
+      domain = domainOrUrl.split('/')[0];
+    }
+    
+    // Remove porta se presente (ex: localhost:3000 -> localhost)
+    if (domain.includes(':')) {
+      domain = domain.split(':')[0];
     }
   } catch (e) {
-    // Se falhar no parse, mantém o valor original para o regex
+    // Fallback manual se URL falhar
+    domain = domainOrUrl.replace(/^https?:\/\//, '').split(/[:\/]/)[0];
   }
+
+  if (!domain) return false;
+  domain = domain.toLowerCase();
 
   return (
     domain === 'localhost' ||
     domain === '127.0.0.1' ||
     !domain.includes('.') ||
     /\.(local|lan|test|dashboard|home|corp)$/.test(domain) ||
-    domain.match(/^(127|192\.168|10|172\.(1[6-9]|2[0-9]|3[0-1]))\./)
+    /^(127|192\.168|10|172\.(1[6-9]|2[0-9]|3[0-1]))(\.|$)/.test(domain)
   );
 };
 
 export const getProxiedUrl = (url) => {
   if (!url) return null;
   if (url.startsWith('data:')) return url;
+  
+  // NUNCA passar domínios locais pelo proxy do Netlify (evita 403 SSRF)
+  if (isLocalDomain(url)) return url;
+  
   if (url.includes('google.com/s2/favicons')) return url;
   if (url.includes('icon.horse')) return url;
   
@@ -49,15 +64,13 @@ export const getFaviconUrls = (url) => {
       }
     }
 
-    // Fontes confiáveis: Google retorna 404 real para domínios sem favicon (correto).
-    // DuckDuckGo REMOVIDO: retorna globo placeholder com HTTP 200, envenenando o cache.
+    // Fontes confiáveis
     const urls = [`https://www.google.com/s2/favicons?domain=${domain}&sz=128`];
 
     if (rootDomain !== domain) {
       urls.push(`https://www.google.com/s2/favicons?domain=${rootDomain}&sz=128`);
     }
 
-    // icon.horse como penúltimo recurso (pode ter rate limit, mas retorna 404 real)
     urls.push(`https://icon.horse/icon/${domain}`, `${urlObj.origin}/favicon.ico`);
 
     return urls;
@@ -67,9 +80,10 @@ export const getFaviconUrls = (url) => {
 };
 
 export const getDomain = (url) => {
+  if (!url) return '';
   try {
-    return new URL(url).hostname;
+    return new URL(url).hostname || url;
   } catch {
-    return url;
+    return url.replace(/^https?:\/\//, '').split(/[:\/]/)[0] || url;
   }
 };

@@ -1,4 +1,4 @@
-import { storage } from '../utils/storage';
+﻿import { storage } from '../utils/storage';
 import { getDomain, isLocalDomain } from '../utils/favicon';
 
 const RESOLVER_API = '/.netlify/functions/resolver-favicon';
@@ -14,29 +14,24 @@ function processQueue() {
   const { resolve, url, domain } = queue.shift();
   activeRequests++;
 
-  console.log(`[FaviconResolver] Chamando API para: ${domain} (Ativas: ${activeRequests})`);
-
   fetch(`${RESOLVER_API}?url=${encodeURIComponent(url)}`)
     .then((res) => {
-      console.log(`[FaviconResolver] Resposta API (${domain}): ${res.status} ${res.statusText}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
       return res.json();
     })
     .then((data) => {
       if (data.favicon_url) {
-        console.log(`[FaviconResolver] Sucesso para ${domain}: ${data.favicon_url}`);
         storage.set(`${CACHE_PREFIX}${domain}`, {
           url: data.favicon_url,
           timestamp: Date.now(),
         });
         resolve(data.favicon_url);
       } else {
-        console.warn(`[FaviconResolver] API não retornou ícone para ${domain}`);
         resolve(null);
       }
     })
     .catch((err) => {
-      console.error(`[FaviconResolver] Erro na requisição para ${domain}:`, err);
+      console.error(`[FaviconResolver] Erro para ${domain}:`, err.message);
       resolve(null);
     })
     .finally(() => {
@@ -62,30 +57,19 @@ export const setCachedFavicon = (domain, url) => {
 
 export const resolverFavicon = (url) => {
   return new Promise((resolve) => {
-    // IMPORTANTE: isLocalDomain agora aceita a URL completa e extrai o host internamente
     if (isLocalDomain(url)) {
-      console.log(`[FaviconResolver] Domínio local detectado via URL: ${url}. Usando bypass.`);
       try {
         const urlObj = new URL(url);
-        const localIcon = `${urlObj.origin}/favicon.ico`;
-        console.log(`[FaviconResolver] Ícone local sugerido: ${localIcon}`);
-        return resolve(localIcon);
+        return resolve(`${urlObj.origin}/favicon.ico`);
       } catch (e) {
-        console.error(`[FaviconResolver] Erro ao processar URL local: ${e.message}`);
         return resolve(null);
       }
     }
 
     const domain = getDomain(url);
-    console.log(`[FaviconResolver] Iniciando para: ${url} (Domain: ${domain})`);
+    const cached = getCachedFavicon(domain);
+    if (cached) return resolve(cached);
 
-    const cached = storage.get(`${CACHE_PREFIX}${domain}`);
-    if (cached && cached.timestamp && Date.now() - cached.timestamp < CACHE_TTL) {
-      console.log(`[FaviconResolver] Cache hit para ${domain}: ${cached.url}`);
-      return resolve(cached.url);
-    }
-
-    console.log(`[FaviconResolver] Cache miss. Encaminhando para fila: ${domain}`);
     queue.push({ resolve, url, domain });
     processQueue();
   });
