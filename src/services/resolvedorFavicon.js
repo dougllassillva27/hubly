@@ -1,4 +1,4 @@
-﻿import { storage } from '../utils/storage';
+import { storage } from '../utils/storage';
 import { getDomain, isLocalDomain } from '../utils/favicon';
 
 const RESOLVER_API = '/.netlify/functions/resolver-favicon';
@@ -16,7 +16,7 @@ function processQueue() {
 
   fetch(`${RESOLVER_API}?url=${encodeURIComponent(url)}`)
     .then((res) => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json();
     })
     .then((data) => {
@@ -30,8 +30,7 @@ function processQueue() {
         resolve(null);
       }
     })
-    .catch((err) => {
-      console.error(`[FaviconResolver] Erro para ${domain}:`, err.message);
+    .catch(() => {
       resolve(null);
     })
     .finally(() => {
@@ -57,18 +56,22 @@ export const setCachedFavicon = (domain, url) => {
 
 export const resolverFavicon = (url) => {
   return new Promise((resolve) => {
+    // Early bypass para domínios locais
     if (isLocalDomain(url)) {
       try {
         const urlObj = new URL(url);
         return resolve(`${urlObj.origin}/favicon.ico`);
-      } catch (e) {
+      } catch {
         return resolve(null);
       }
     }
 
     const domain = getDomain(url);
-    const cached = getCachedFavicon(domain);
-    if (cached) return resolve(cached);
+    const cached = storage.get(`${CACHE_PREFIX}${domain}`);
+
+    if (cached && cached.timestamp && Date.now() - cached.timestamp < CACHE_TTL) {
+      return resolve(cached.url);
+    }
 
     queue.push({ resolve, url, domain });
     processQueue();
