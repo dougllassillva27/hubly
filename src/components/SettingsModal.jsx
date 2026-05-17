@@ -171,6 +171,8 @@ export default function SettingsModal() {
     setNewsTopics,
     futebolCampeonatos,
     setFutebolCampeonatos,
+    favoriteTeam,
+    setFavoriteTeam,
     weatherCity,
     setWeatherCity,
     categories,
@@ -687,6 +689,25 @@ export default function SettingsModal() {
                     );
                   })}
                 </div>
+              </div>
+
+              <hr className="border-border" />
+
+              <div>
+                <label htmlFor="favoriteTeam" className="block text-sm font-medium text-muted mb-3">
+                  Time do Coração
+                </label>
+                <p className="text-sm text-muted mb-4">
+                  Digite os nomes dos times separados por vírgula (ex: Grêmio, Inter, Vasco).
+                </p>
+                <input
+                  id="favoriteTeam"
+                  type="text"
+                  value={favoriteTeam}
+                  onChange={(e) => setFavoriteTeam(e.target.value)}
+                  placeholder="Ex: Grêmio, Inter, Vasco..."
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text placeholder-muted focus:border-accent transition-colors"
+                />
               </div>
             </div>
           )}

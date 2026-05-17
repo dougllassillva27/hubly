@@ -92,6 +92,7 @@ const useStore = create((set, get) => ({
 
   // Futebol
   futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
+  favoriteTeam: storage.get('favorite_team') || '',
 
   onboardingShown: storage.get('onboarding_shown') || false,
   loadedIcons: new Set(),
@@ -409,6 +410,12 @@ const useStore = create((set, get) => ({
     get().triggerAutoSync();
   },
 
+  setFavoriteTeam: (team) => {
+    storage.set('favorite_team', team);
+    set({ favoriteTeam: team });
+    get().triggerAutoSync();
+  },
+
   setOnboardingShown: (shown) => {
     storage.set('onboarding_shown', shown);
     set({ onboardingShown: shown });
@@ -511,6 +518,7 @@ const useStore = create((set, get) => ({
         newsApiKey: storage.get('news_apikey') || '',
         newsTopics: storage.get('news_topics') || defaultNewsTopics,
         futebolCampeonatos: storage.get('futebol_campeonatos') || defaultFutebolCampeonatos,
+        favoriteTeam: storage.get('favorite_team') || '',
         notesContent: storage.get('notes_content') || '',
         onboardingShown: storage.get('onboarding_shown') || false,
         weatherCity: storage.get('weather_city') || '',
