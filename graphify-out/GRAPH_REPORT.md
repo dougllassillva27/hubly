@@ -1,16 +1,16 @@
-# Graph Report - Hubly  (2026-05-13)
+# Graph Report - Hubly  (2026-05-17)
 
 ## Corpus Check
-- 51 files · ~290,431 words
+- 51 files · ~291,032 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 112 nodes · 95 edges · 41 communities (37 shown, 4 thin omitted)
+- 112 nodes · 97 edges · 41 communities (37 shown, 4 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `707852b3`
+- Built from commit: `4578c95d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,14 +25,14 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `SiteCard()` - 7 edges
-2. `getDomain()` - 5 edges
-3. `handler()` - 4 edges
-4. `isLocalDomain()` - 4 edges
-5. `useJogosHoje()` - 3 edges
-6. `useNoticiasFutebol()` - 3 edges
-7. `getCachedFavicon()` - 3 edges
-8. `applyTheme()` - 3 edges
-9. `getProxiedUrl()` - 3 edges
+2. `isLocalDomain()` - 6 edges
+3. `getDomain()` - 5 edges
+4. `handler()` - 4 edges
+5. `getProxiedUrl()` - 4 edges
+6. `useJogosHoje()` - 3 edges
+7. `useNoticiasFutebol()` - 3 edges
+8. `getCachedFavicon()` - 3 edges
+9. `applyTheme()` - 3 edges
 10. `getFaviconUrls()` - 3 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -50,7 +50,7 @@
 ## Communities (41 total, 4 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.29
+Cohesion: 0.31
 Nodes (10): getAvatarColor(), getProxiedUrl(), SiteCard(), getCachedFavicon(), resolverFavicon(), setCachedFavicon(), getDomain(), getFaviconUrls() (+2 more)
 
 ### Community 1 - "Community 1"
@@ -68,6 +68,6 @@ Nodes (4): extractIcons(), getBestIcon(), handler(), isPrivateIP()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `getDomain()` connect `Community 0` to `Community 1`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `SiteCard()` (e.g. with `getDomain()` and `isLocalDomain()`) actually correct?**
   _`SiteCard()` has 4 INFERRED edges - model-reasoned connections that need verification._

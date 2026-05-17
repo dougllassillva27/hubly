@@ -1,270 +1,95 @@
-############################################
-# 📦 NODE.JS
-############################################
+# =========================================
+# SEGURANÇA E AMBIENTE (Hardening)
+# =========================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.pfx
+secrets.*
+credentials.*
+
+# =========================================
+# DEPENDÊNCIAS / LOCKS / CACHES
+# =========================================
 node_modules/
+vendor/
+venv/
+.venv/
+env/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+__pycache__/
+*.py[cod]
+*.cache
+
+# =========================================
+# BUILD / ARTEFATOS GERADOS
+# =========================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+coverage/
+*.min.js
+*.map
+
+# =========================================
+# LOGS / DADOS BRUTOS / TEMP
+# =========================================
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-# Banco de dados local e Sessoes do Telegram (CRITICO)
-data/
-
-############################################
-# 🧱 BUILD / DIST / CACHE
-############################################
-dist/
-build/
-.cache/
-.next/
-.nuxt/
-out/
-coverage/
-.tmp/
+tmp/
 temp/
-# Ambientes Virtuais Python
-venv/
-env/
+backup/
+backups/
+data/
+*.db
+*.sqlite
+*.sqlite3
 
-############################################
-# 🧪 TESTES
-############################################
+# =========================================
+# TESTES
+# =========================================
 test-results/
 playwright-report/
 blob-report/
-playwright/.cache/
-playwright/.auth/
+.playwright/
+.nyc_output/
 
-############################################
-# 🐍 PYTHON
-############################################
-# Cache e arquivos compilados do Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.sqlite3
-*.db
-
-# Virtual env
-venv/
-.env/
-.venv/
-
-############################################
-# 📄 LOGS
-############################################
-# Logs
-*.log
-logs/
-error.log
-service.log
-
-############################################
-# 💻 SISTEMA OPERACIONAL
-############################################
+# =========================================
+# IDE / EDITOR / SISTEMA
+# =========================================
 .DS_Store
 Thumbs.db
-
-############################################
-# 🧠 IDE / EDITORES
-############################################
 .vscode/
 .idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+.code-workspace
 
-############################################
-# 🔒 SEGURANÇA / SENSÍVEIS
-############################################
-*.pem
-*.key
-*.crt
-*.pfx
-secrets.json
-
-############################################
-# 📁 ARQUIVOS LOCAIS / EXPERIMENTAIS
-############################################
-backup/
-tmp/
-temp/
-
-############################################
-# ⚙️ SCRIPTS LOCAIS (SE NÃO FOREM DO PROJETO)
-############################################
-*.ps1
-*.bat
-*.vbs
-
-# Playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
-
-
-############################################
-# ❌ GERAL/PESSOAL
-############################################
-.env
-.env.example
-.env.*
-!.env.example
-
-.geminiignore
-.cursorrules
-
-error.log
-Single user/
-service.log
-migrate.js
-db.js
-postgre_conection.md
-reverse-migrate.sql
-.DS_Store
-tests/
-buscarContas/
-backup/
-calcularLuz/
-data/
-resumo_skills.json
-skills_completa.json
-resumo-de-trabalho.md
-Single user/
-nssm.exe
-whatch-deploy.ps1
-guia_integracao.md
-.env.example
-resumo_skills.json
-skills_completa.json
-docs/history/contas-a-pagar.7z
-master-skill-config.json
-docs/history/resumo-de-trabalho-arquivado.md
-docs/skills/commit.md
-docs/skills/resumo_skills - original.json
+# =========================================
+# GERENCIAMENTO IA (Context Hygiene)
+# =========================================
 .aiexclude
-
-.env
-.env.example
-.env.*
-!.env.example
-
 .geminiignore
-.cursorrules
-
-error.log
-Single user/
-service.log
-migrate.js
-db.js
-postgre_conection.md
-reverse-migrate.sql
-.DS_Store
-tests/
-buscarContas/
-backup/
-calcularLuz/
-data/
-resumo_skills.json
-skills_completa.json
 resumo-de-trabalho.md
-Single user/
-nssm.exe
-whatch-deploy.ps1
-guia_integracao.md
-.env.example
-resumo_skills.json
-skills_completa.json
-docs/history/contas-a-pagar.7z
-master-skill-config.json
-.env
-.env.example
-.env.*
-!.env.example
 
-.geminiignore
-.cursorrules
-
-error.log
-Single user/
-service.log
-migrate.js
-db.js
-postgre_conection.md
-reverse-migrate.sql
-.DS_Store
-tests/
-buscarContas/
-backup/
-calcularLuz/
-data/
-resumo_skills.json
-skills_completa.json
-resumo-de-trabalho.md
-Single user/
-nssm.exe
-whatch-deploy.ps1
-guia_integracao.md
-.env.example
-resumo_skills.json
-skills_completa.json
-docs/history/contas-a-pagar.7z
-master-skill-config.json
-
-# workflow pessoal / IA
-resumo-de-trabalho.md
-.cursorrules
-.geminiignore
+# =========================================
+# IGNORADOS DO PROJETO (Personal/Local)
+# =========================================
 .aiexclude
-
-# dependências / build
-node_modules/
-dist/
-
-# logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# ambiente
-.env
-.env.*
-!.env.example
-
-# sistema/editor
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-
-# Ignorar cache e mídias temporárias do Graphify
-graphify-out/cache/
-graphify-out/media/
-docs/bkp/contas-a-pagar.7z
-GEMINI.md
-
-
-# backups / dumps / compactados
-*.7z
-*.zip
-*.rar
-*.bak
-*.backup
-*.dump
-*.sql
-*.sqlite
-*.sqlite3
-*.db
-
-docs/bkp/
-docs/history/
-
-backup/
-data/
+.cursorrules
+docs/
 .netlify/
-Geral.txt
+graphify-out/cache/
+_contexto-ia/

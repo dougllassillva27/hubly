@@ -142,7 +142,7 @@
       "label": "isPrivateIP()",
       "file_type": "code",
       "source_file": "netlify/functions/resolver-favicon.js",
-      "source_location": "L7",
+      "source_location": "L6",
       "id": "functions_resolver_favicon_isprivateip",
       "community": 2,
       "norm_label": "isprivateip()"
@@ -151,7 +151,7 @@
       "label": "extractIcons()",
       "file_type": "code",
       "source_file": "netlify/functions/resolver-favicon.js",
-      "source_location": "L26",
+      "source_location": "L25",
       "id": "functions_resolver_favicon_extracticons",
       "community": 2,
       "norm_label": "extracticons()"
@@ -160,7 +160,7 @@
       "label": "getBestIcon()",
       "file_type": "code",
       "source_file": "netlify/functions/resolver-favicon.js",
-      "source_location": "L65",
+      "source_location": "L64",
       "id": "functions_resolver_favicon_getbesticon",
       "community": 2,
       "norm_label": "getbesticon()"
@@ -169,7 +169,7 @@
       "label": "handler()",
       "file_type": "code",
       "source_file": "netlify/functions/resolver-favicon.js",
-      "source_location": "L93",
+      "source_location": "L92",
       "id": "functions_resolver_favicon_handler",
       "community": 2,
       "norm_label": "handler()"
@@ -889,7 +889,7 @@
       "label": "getProxiedUrl()",
       "file_type": "code",
       "source_file": "src/utils/favicon.js",
-      "source_location": "L10",
+      "source_location": "L34",
       "id": "utils_favicon_getproxiedurl",
       "community": 0,
       "norm_label": "getproxiedurl()"
@@ -898,7 +898,7 @@
       "label": "getFaviconUrls()",
       "file_type": "code",
       "source_file": "src/utils/favicon.js",
-      "source_location": "L20",
+      "source_location": "L48",
       "id": "utils_favicon_getfaviconurls",
       "community": 0,
       "norm_label": "getfaviconurls()"
@@ -907,7 +907,7 @@
       "label": "getDomain()",
       "file_type": "code",
       "source_file": "src/utils/favicon.js",
-      "source_location": "L56",
+      "source_location": "L82",
       "id": "utils_favicon_getdomain",
       "community": 0,
       "norm_label": "getdomain()"
@@ -1367,9 +1367,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "utils_favicon_islocaldomain",
-      "confidence_score": 1.0
+      "target": "utils_favicon_islocaldomain"
     },
     {
       "relation": "imports",
@@ -1378,9 +1378,9 @@
       "source_file": "src/components/SiteCard.jsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_components_sitecard_jsx",
-      "target": "utils_favicon_getproxiedurl",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getproxiedurl"
     },
     {
       "relation": "imports",
@@ -1708,6 +1708,17 @@
       "target": "utils_favicon_getdomain"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/services/resolvedorFavicon.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_services_resolvedorfavicon_js",
+      "target": "utils_favicon_islocaldomain",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/services/resolvedorFavicon.js",
@@ -1869,9 +1880,9 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicon_js",
-      "target": "utils_favicon_islocaldomain",
-      "confidence_score": 1.0
+      "target": "utils_favicon_islocaldomain"
     },
     {
       "relation": "contains",
@@ -1879,9 +1890,9 @@
       "source_file": "src/utils/favicon.js",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_utils_favicon_js",
-      "target": "utils_favicon_getproxiedurl",
-      "confidence_score": 1.0
+      "target": "utils_favicon_getproxiedurl"
     },
     {
       "relation": "contains",
@@ -1908,11 +1919,22 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/utils/favicon.js",
-      "source_location": "L25",
+      "source_location": "L39",
       "weight": 1.0,
-      "source": "utils_favicon_getfaviconurls",
+      "source": "utils_favicon_getproxiedurl",
       "target": "utils_favicon_islocaldomain",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/utils/favicon.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "utils_favicon_getfaviconurls",
+      "target": "utils_favicon_islocaldomain"
     },
     {
       "relation": "contains",
@@ -1997,5 +2019,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "707852b315ef133daa02a81f658406606d585b1d"
+  "built_at_commit": "4578c95de54c1c8abd2dfa7e485ee641cceac47e"
 }

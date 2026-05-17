@@ -27,15 +27,27 @@ export const handler = async (event, context) => {
 
     const html = await response.text();
 
-    // O GloboEsporte migrou do Next.js padrão para injeção direta via window.dataSportsSchedule
-    // Como eles injetam um objeto JS literal (sport: {...}) e não JSON estrito, pegamos direto o nó "sport"
-    const sportsScheduleMatch = html.match(/sport:\s*(\{[\s\S]*?\})\s*,\s*multisport:/);
+    const startPattern = 'window.dataSportsSchedule = {';
+    const startIndex = html.indexOf(startPattern);
+    
+    if (startIndex === -1) {
+      throw new Error('Objeto dataSportsSchedule não encontrado no HTML alvo.');
+    }
+
+    // Encontra o início do objeto JSON real (após a atribuição)
+    const jsonStartIndex = startIndex + startPattern.length - 1;
+    
+    // Tenta encontrar o fechamento do objeto principal, mas como é um script complexo,
+    // vamos buscar pela tag de fechamento do script ou o final do objeto correspondente
+    // Por hora, uma abordagem mais simples: buscar até 'multisport:' e refinar
+    const sportsScheduleMatch = html.substring(jsonStartIndex).match(/sport:\s*(\{[\s\S]*?\})\s*,\s*multisport:/);
 
     if (!sportsScheduleMatch || !sportsScheduleMatch[1]) {
       throw new Error('Nó "sport" do dataSportsSchedule não encontrado no HTML alvo.');
     }
 
     const sportDates = JSON.parse(sportsScheduleMatch[1]);
+    console.log('DEBUG: sportDates extraído:', Object.keys(sportDates));
 
     // Tenta encontrar a agenda do dia exato (Brasília)
     const hojeDate = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
@@ -46,11 +58,14 @@ export const handler = async (event, context) => {
       '-' +
       String(hojeDate.getDate()).padStart(2, '0');
 
+    console.log('DEBUG: Data local (Brasília):', hojeLocal);
+
     let agendasDeHoje = sportDates[hojeLocal]?.championshipsAgenda || [];
 
     // Fallback defensivo: se não tiver jogos hoje, pega a primeira data com jogos no payload deles
     if (agendasDeHoje.length === 0) {
       const availableDates = Object.keys(sportDates);
+      console.log('DEBUG: Sem jogos para hoje, usando fallback:', availableDates[0]);
       if (availableDates.length > 0) {
         agendasDeHoje = sportDates[availableDates[0]]?.championshipsAgenda || [];
       }
@@ -108,8 +123,11 @@ export const handler = async (event, context) => {
       }
     }
 
+    console.log('DEBUG: Jogos normalizados (total):', jogosNormalizados.length);
+
     // Filtragem dinâmica por Query String + Regra VIP invisível
     const qsCampeonatos = event.queryStringParameters?.campeonatos;
+    
     let campeonatosAlvo = qsCampeonatos
       ? qsCampeonatos.split(',').map((c) => c.trim().toLowerCase())
       : [
@@ -123,6 +141,8 @@ export const handler = async (event, context) => {
           'la liga',
         ];
 
+    console.log('DEBUG: Campeonatos alvo:', campeonatosAlvo);
+
     // Regra VIP (invisível): Competições gigantes sempre passam no filtro
     const vips = ['copa do mundo', 'eurocopa', 'copa américa', 'recopa gaúcha', 'gauchão', 'campeonato gaúcho'];
     campeonatosAlvo = [...new Set([...campeonatosAlvo, ...vips])];
@@ -132,9 +152,23 @@ export const handler = async (event, context) => {
 
     const jogosFiltrados = jogosNormalizados.filter((j) => {
       const nomeCamp = j.campeonato.toLowerCase();
-      if (blocklist.some((blocked) => nomeCamp.includes(blocked))) return false;
-      return campeonatosAlvo.some((alvo) => nomeCamp.includes(alvo));
+      console.log('DEBUG: Verificando campeonato:', nomeCamp);
+      
+      if (blocklist.some((blocked) => nomeCamp.includes(blocked))) {
+        console.log('DEBUG: Bloqueado:', nomeCamp);
+        return false;
+      }
+      
+      // Verifica se algum dos campeonatos alvo está contido no nome do campeonato
+      const match = campeonatosAlvo.some((alvo) => nomeCamp.includes(alvo) || nomeCamp.includes(alvo.replace('ã', 'a').replace('é', 'e')));
+      
+      if (!match) {
+        console.log('DEBUG: Não corresponde aos alvos:', nomeCamp);
+      }
+      return match;
     });
+
+    console.log('DEBUG: Jogos após filtro:', jogosFiltrados.length);
 
     return {
       statusCode: 200,

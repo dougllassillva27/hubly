@@ -40,8 +40,8 @@
     "hash": "1e2e73834781a7029d7061a50097d694"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\resolver-favicon.js": {
-    "mtime": 1777240159.5556948,
-    "hash": "0656ad250575fa8e0f1f4ad56e583c14"
+    "mtime": 1778704491.8009048,
+    "hash": "ab564984af19db278856bfa82618836e"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\netlify\\functions\\rss.js": {
     "mtime": 1776821900.2975254,
@@ -172,12 +172,12 @@
     "hash": "a05b72ec18555cab59e8fcf378afb618"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\services\\resolvedorFavicon.js": {
-    "mtime": 1777245575.8778238,
-    "hash": "756669e98ab51871127cf4fb5536a809"
+    "mtime": 1778717363.1246216,
+    "hash": "18aa92e805eff09454cbff68187048a7"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\store\\useStore.js": {
-    "mtime": 1778697608.4763982,
-    "hash": "897f30ab902d18b8314fd8d48d5f8996"
+    "mtime": 1778698057.510147,
+    "hash": "44674f2c9fbe75550ac6b9a9deb1db99"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\themes\\themes.js": {
     "mtime": 1776819727.0941465,
@@ -188,8 +188,8 @@
     "hash": "ae2c18bcc5dab5aa94a9834245de6a48"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\utils\\favicon.js": {
-    "mtime": 1778696903.5272863,
-    "hash": "411cfe4040e1b25a18bbb65c15f5c68a"
+    "mtime": 1778716522.7658777,
+    "hash": "e045191e953a14b0b6f313bf83960b24"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\src\\utils\\faviconDb.js": {
     "mtime": 1776856060.2163403,
@@ -207,10 +207,6 @@
     "mtime": 1776862284.4487216,
     "hash": "6a4a1418fd709b2d143888ec52257d73"
   },
-  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\Geral.txt": {
-    "mtime": 1778697554.8025358,
-    "hash": "ab2cb5bcd86647a06d5e023d0da936c7"
-  },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\index.html": {
     "mtime": 1776887706.8806703,
     "hash": "01c4d9344d95d93998a8783d5264ba2c"
@@ -220,8 +216,8 @@
     "hash": "1cab13688f694e2de4702b747a5456a9"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\resumo-de-trabalho.md": {
-    "mtime": 1778697723.418033,
-    "hash": "3c1866df5b2843792bdbb64e17a87cef"
+    "mtime": 1778717372.3241796,
+    "hash": "5677a1953b89b15783d1d45f916a60c8"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\docs\\bkp\\resumo-old.md": {
     "mtime": 1778696692.7533672,
@@ -238,6 +234,10 @@
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\docs\\skills\\commit.md": {
     "mtime": 1776823556.713541,
     "hash": "4e5c2bc1f6af07c4174d696ac4c52e99"
+  },
+  "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\_contexto-ia\\Geral.md": {
+    "mtime": 1779026998.5988472,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
   },
   "D:\\Onedrive - Douglas\\OneDrive\\Pessoal\\Dodo\\Programacao\\Git\\Hubly\\assets\\img\\Hubly - banner.png": {
     "mtime": 1776861458.9831088,
