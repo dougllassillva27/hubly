@@ -115,12 +115,12 @@ const useStore = create((set, get) => ({
   pendingBookmarks: [],
 
   // Actions
-  // ... (dentro de useStore)
-
   setDefaultTab: (tab) => {
     storage.set('default_tab', tab);
     set({ defaultTab: tab });
   },
+
+  setSites: (sites) => {
     storage.set('sites', sites);
     set({ sites });
     get().triggerAutoSync();
