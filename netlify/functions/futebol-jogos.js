@@ -163,20 +163,28 @@ export const handler = async (event, context) => {
 
     const jogosFiltrados = jogosNormalizados.filter((j) => {
       const nomeCamp = j.campeonato.toLowerCase();
-      console.log('DEBUG: Verificando campeonato:', nomeCamp);
       
       if (blocklist.some((blocked) => nomeCamp.includes(blocked))) {
-        console.log('DEBUG: Bloqueado:', nomeCamp);
         return false;
       }
+
+      // Lógica aprimorada:
+      // Se o usuário quer 'campeonato brasileiro' (Série A), 
+      // garante que o nome do campeonato seja EXATAMENTE 'campeonato brasileiro'
+      // ou que contenha o termo mas não contenha "série b" (ou outras séries).
       
-      // Verifica se algum dos campeonatos alvo está contido no nome do campeonato
-      const match = campeonatosAlvo.some((alvo) => nomeCamp.includes(alvo) || nomeCamp.includes(alvo.replace('ã', 'a').replace('é', 'e')));
+      const ehBrasileiraoSerieA = (nomeCamp === 'campeonato brasileiro');
+      const querBrasileirao = campeonatosAlvo.includes('campeonato brasileiro');
       
-      if (!match) {
-        console.log('DEBUG: Não corresponde aos alvos:', nomeCamp);
+      if (querBrasileirao && ehBrasileiraoSerieA) {
+          return true;
       }
-      return match;
+
+      // Caso contrário, usa a busca permissiva para os outros
+      return campeonatosAlvo.some((alvo) => {
+          if (alvo === 'campeonato brasileiro' && nomeCamp.includes('série b')) return false;
+          return nomeCamp.includes(alvo) || nomeCamp.includes(alvo.replace('ã', 'a').replace('é', 'e'));
+      });
     });
 
     console.log('DEBUG: Jogos após filtro:', jogosFiltrados.length);
