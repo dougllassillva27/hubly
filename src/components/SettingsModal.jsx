@@ -192,6 +192,8 @@ export default function SettingsModal() {
     openImportBookmarks,
     linkTarget,
     setLinkTarget,
+    defaultTab,
+    setDefaultTab,
   } = useStore();
 
   const [activeTab, setActiveTab] = useState('appearance');
