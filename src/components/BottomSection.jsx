@@ -3,6 +3,7 @@ import { Newspaper, Trophy, Monitor } from 'lucide-react';
 import NewsFeed from './NewsFeed';
 import FutebolWidget from './futebol/FutebolWidget';
 import NoticiasWidget from './futebol/NoticiasWidget';
+import useStore from '../store/useStore';
 
 const tabs = [
   { id: 'news', label: 'Tecnologia', icon: Monitor },
@@ -11,7 +12,8 @@ const tabs = [
 ];
 
 export default function BottomSection() {
-  const [activeTab, setActiveTab] = useState('news');
+  const defaultTab = useStore((state) => state.defaultTab);
+  const [activeTab, setActiveTab] = useState(defaultTab || 'news');
 
   return (
     <div className="container mx-auto px-4 pb-16 pt-8 border-t border-border">

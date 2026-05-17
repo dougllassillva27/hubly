@@ -108,13 +108,19 @@ const useStore = create((set, get) => ({
   // Widgets
   notesContent: storage.get('notes_content') || '',
   weatherCity: storage.get('weather_city') || '',
+  defaultTab: storage.get('default_tab') || 'news',
 
   // Bookmarks Import
   importBookmarksOpen: false,
   pendingBookmarks: [],
 
   // Actions
-  setSites: (sites) => {
+  // ... (dentro de useStore)
+
+  setDefaultTab: (tab) => {
+    storage.set('default_tab', tab);
+    set({ defaultTab: tab });
+  },
     storage.set('sites', sites);
     set({ sites });
     get().triggerAutoSync();

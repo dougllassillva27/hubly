@@ -449,6 +449,18 @@ export default function SettingsModal() {
           {activeTab === 'home' && (
             <div className="space-y-6">
               <div>
+                <h3 className="text-sm font-medium text-muted mb-3">Aba Padrão da Tela Inicial</h3>
+                <select
+                  value={defaultTab}
+                  onChange={(e) => setDefaultTab(e.target.value)}
+                  className="w-full px-4 py-3 bg-bg border border-border rounded-lg text-text focus:border-accent transition-colors"
+                >
+                  <option value="news">Tecnologia</option>
+                  <option value="futebol_noticias">Notícias</option>
+                  <option value="futebol">Futebol</option>
+                </select>
+              </div>
+              <div>
                 <h3 className="text-sm font-medium text-muted mb-3">Ordenação da aba "Todos"</h3>
                 <select
                   value={homeSortMethod}
