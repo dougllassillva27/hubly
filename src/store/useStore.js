@@ -16,15 +16,15 @@ const searchProviders = [
 ].filter(Boolean);
 
 const defaultFutebolCampeonatos = [
-  'série a',
-  'série b',
-  'copa do brasil',
-  'libertadores',
-  'sul-americana',
-  'champions',
-  'premier league',
-  'la liga',
-];
+    'série a',
+    'série b',
+    'copa do brasil',
+    'libertadores',
+    'sul-americana',
+    'champions',
+    'premier league',
+    'la liga',
+  ];
 
 const getSavedCategory = () => {
   try {

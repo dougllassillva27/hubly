@@ -61,13 +61,16 @@ export const handler = async (event, context) => {
     console.log('DEBUG: Data local (Brasília):', hojeLocal);
 
     let agendasDeHoje = sportDates[hojeLocal]?.championshipsAgenda || [];
+    console.log('DEBUG: Data hojeLocal buscada:', hojeLocal);
+    console.log('DEBUG: Agendas encontradas para hoje:', agendasDeHoje.length);
 
     // Fallback defensivo: se não tiver jogos hoje, pega a primeira data com jogos no payload deles
     if (agendasDeHoje.length === 0) {
       const availableDates = Object.keys(sportDates);
-      console.log('DEBUG: Sem jogos para hoje, usando fallback:', availableDates[0]);
+      console.log('DEBUG: Nenhuma agenda encontrada para hoje. Datas disponíveis:', availableDates);
       if (availableDates.length > 0) {
         agendasDeHoje = sportDates[availableDates[0]]?.championshipsAgenda || [];
+        console.log('DEBUG: Fallback para data:', availableDates[0], 'Agendas:', agendasDeHoje.length);
       }
     }
 
@@ -128,11 +131,21 @@ export const handler = async (event, context) => {
     // Filtragem dinâmica por Query String + Regra VIP invisível
     const qsCampeonatos = event.queryStringParameters?.campeonatos;
     
+    // Tradução de termos comuns para o nome real retornado pela API
+    const tradutor = (termo) => {
+      if (termo.includes('serie a') || termo.includes('série a')) return 'campeonato brasileiro';
+      if (termo.includes('serie b') || termo.includes('série b')) return 'campeonato brasileiro série b';
+      return termo;
+    };
+
     let campeonatosAlvo = qsCampeonatos
-      ? qsCampeonatos.split(',').map((c) => c.trim().toLowerCase())
+      ? qsCampeonatos.split(',').map((c) => {
+          const termo = c.trim().toLowerCase();
+          return tradutor(termo);
+        })
       : [
-          'série a',
-          'série b',
+          'campeonato brasileiro',
+          'serie b',
           'copa do brasil',
           'libertadores',
           'sul-americana',
@@ -141,14 +154,12 @@ export const handler = async (event, context) => {
           'la liga',
         ];
 
-    console.log('DEBUG: Campeonatos alvo:', campeonatosAlvo);
-
     // Regra VIP (invisível): Competições gigantes sempre passam no filtro
     const vips = ['copa do mundo', 'eurocopa', 'copa américa', 'recopa gaúcha', 'gauchão', 'campeonato gaúcho'];
     campeonatosAlvo = [...new Set([...campeonatosAlvo, ...vips])];
 
-    // Blocklist invisível: Remove lixo das buscas parciais (base, divisões inferiores estaduais, feminino)
-    const blocklist = ['sub-', 'feminino', 'feminina', 'série a2', 'série a3', 'série a4', 'série b2', 'aspirantes'];
+    // Blocklist invisível: Remove lixo das buscas parciais
+    const blocklist = ['sub-', 'feminino', 'feminina', 'série a2', 'série a3', 'série a4', 'série b2', 'aspirantes', 'série c', 'série d'];
 
     const jogosFiltrados = jogosNormalizados.filter((j) => {
       const nomeCamp = j.campeonato.toLowerCase();
