@@ -1,0 +1,28 @@
+services:
+  hubly:
+    build: .
+    container_name: hubly
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8300:8300"
+    env_file:
+      - .env
+    depends_on:
+      postgres-hubly:
+        condition: service_healthy
+
+  postgres-hubly:
+    image: postgres:16-alpine
+    container_name: postgres-hubly
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hubly
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina no .env}
+      POSTGRES_DB: hubly
+    volumes:
+      - /root/dodo/hubly-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hubly -d hubly"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
