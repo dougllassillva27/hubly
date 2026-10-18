@@ -2,31 +2,24 @@
   <img src="assets/img/Hubly%20-%20banner.webp" alt="Hubly Banner" />
 </div>
 
-# 🚀 Hubly
+# Hubly
 
 ![Status](https://img.shields.io/badge/status-active-success)
-![Deploy](https://img.shields.io/badge/deploy-netlify-00C7B7)
+![Deploy](https://img.shields.io/badge/deploy-docker%20vps-2496ED)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 **Homepage inteligente, modular e sincronizável para navegador.**
 
 Hubly é uma aplicação web construída com **React 18 + Vite 5 + Tailwind CSS 3**, pensada para funcionar como uma startpage moderna, rápida e personalizável.
 
-O projeto combina experiência de uso simples com uma arquitetura modular, suporte a 8 temas dinâmicos, gestão de sites favoritos, widgets, busca multi-provider, notícias (RSS parser nativo), chat com IA (OpenAI), favicons via cache distribuído e sincronização em nuvem usando **Netlify Functions + Neon DB/PostgreSQL**.
+O projeto combina experiência de uso simples com uma arquitetura modular, suporte a 7 temas dinâmicos, gestão de sites favoritos, widgets, busca multi-provider, notícias (RSS parser nativo), chat com IA (OpenAI), favicons via cache distribuído e sincronização em nuvem usando **server Express + PostgreSQL (Docker na VPS)**.
 
-🔗 **Acesse:** https://gethubly.netlify.app/
-
----
-
-## 🔗 Demo
-
-Acesse a aplicação em produção:
-
-👉 https://gethubly.netlify.app/
+- **Acesso:** https://hubly.dougllassillva.com.br
+- **Preview:** https://gethubly.netlify.app (deploy legado Netlify, sendo desativado)
 
 ---
 
-## 🌌 Preview
+## Preview
 
 <div align="center">
   <img src="assets/img/Hubly%20-%20preview.webp" alt="Hubly Preview" />
@@ -34,21 +27,19 @@ Acesse a aplicação em produção:
 
 ---
 
-## ⚙️ Highlights Técnicos
+## Highlights técnicos
 
-- **Arquitetura Client-Side (SPA):** UI de altíssima performance gerenciada via Zustand para baixo acoplamento.
-- **Estratégia Local-First:** Todos os dados sobrevivem e fluem do `localStorage`. Sincronização em nuvem é estritamente _opt-in_ (sob demanda).
-- **Backend Serverless Oculto:** Rotas isoladas na Netlify para bypass de CORS (Notícias), Chat com OpenAI e interação direta com o PostgreSQL para gravar blobs de metadados.
-- **Favicon Cache Intelligence:** Pipeline tripla (Google S2 -> icon.horse -> Origin) com cache local no navegador e persistência assíncrona no NeonDB para eliminar layouts quebrados ou atrasos visuais provocados por proxies WAF.
-- **Bypass Anti-SSRF e WAF:** Proxy de imagens construído em Node.js com rotação de headers severa para burlar defesas da Cloudflare e injetar Headers de HTTP Cache (`max-age=31536000`) forçados na renderização.
-- **Criptografia Client-Side:** Chave da API da OpenAI protegida, cifrada (AES-256 via `crypto-js`) no navegador e encapsulada através de uma Senha Mestra antes de tocar o localStorage.
-- **PWA Instalável com Modo Foco:** Transforme o Hubly em um aplicativo instalável, com um modo de busca dedicado que centraliza a `SearchBar` para uma experiência de widget.
+- **Arquitetura Client-Side (SPA):** UI de baixo acoplamento gerenciada via Zustand.
+- **Estratégia Local-First:** todos os dados vivem e fluem do `localStorage`. Sincronização em nuvem é estritamente _opt-in_ (sob demanda).
+- **Backend próprio em Express:** as functions serverless originais rodam sem reescrita atrás de um adapter Express→event, expondo as mesmas rotas `/.netlify/functions/*`.
+- **Favicon Cache Intelligence:** pipeline tripla (Google S2 → icon.horse → origin) com cache no navegador e persistência assíncrona no Postgres para eliminar layouts quebrados ou atrasos visuais de proxies WAF.
+- **Bypass Anti-SSRF e WAF:** proxy de imagens em Node.js com rotação de headers, quebrando bloqueios da Cloudflare e injetando `Cache-Control` (`max-age=31536000`) forçado na renderização.
+- **Criptografia Client-Side:** chave da API da OpenAI protegida, cifrada (AES-256 via `crypto-js`) no navegador com a Senha Mestra antes de tocar o localStorage.
+- **PWA Instalável:** aplicativo instalável com manifest e cache busting de assets no build.
 
 ---
 
-## 🏗️ Arquitetura
-
-O Hubly não possui um servidor contínuo, a engenharia foca na agilidade do Edge / Serverless.
+## Arquitetura
 
 ```txt
 Navegador (React + Vite + Tailwind)
@@ -58,21 +49,28 @@ Navegador (React + Vite + Tailwind)
    ├── UI Modular & Drag'n'Drop (@dnd-kit)
    └── Temas Customizáveis (CSS Variables)
    │
-   ▼
-Netlify Functions (Node.js Serverless)
-   │
-   ├── Proxy RSS (Bypass CORS + Parser XML2JS)
-   ├── Proxy Imagens (Bypass Cache-Control/WAF via Redirect 302 / CDN fallback)
-   ├── Chat IA (Streamer OpenAI `text/event-stream`)
-   └── API Favicons & Sync (Transações seguras via @neondatabase/serverless)
+   ▼ HTTPS
+Cloudflare (DNS proxied, SSL Full Strict)
    │
    ▼
-Neon DB / PostgreSQL (Armazenamento Remoto Opt-in)
+Nginx (VPS) → Let's Encrypt
+   │
+   ▼ proxy_pass 127.0.0.1:8300
+hubly (container Docker, server Express)
+   │
+   ├── estático: dist/ (build Vite + versionador)
+   └── /.netlify/functions/* (8 handlers originais via adapter)
+          ├── rss / futebol-jogos / futebol-noticias / proxy-img / resolver-favicon
+          ├── chat → OpenAI (streaming SSE)
+          └── sync / favicon → Postgres
+   │
+   ▼ rede Docker interna
+postgres-hubly (PostgreSQL 16, sem porta pública)
 ```
 
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```txt
 src/
@@ -81,10 +79,15 @@ src/
 ├── components/
 ├── hooks/
 ├── store/
+├── themes/
 └── utils/
 
 netlify/
-└── functions/
+├── functions/
+└── shim-neon-pg.mjs
+
+server/
+└── index.js
 
 docs/
 └── sql/
@@ -92,246 +95,115 @@ docs/
 versionamento/
 └── versionador.js
 
-public/
-assets/
+tests/
+Dockerfile
+docker-compose.yml
 ```
 
 ---
 
-## 📦 Responsabilidades por pasta
+## Responsabilidades por pasta/módulo
 
 ### `src/`
 
-Contém toda a aplicação frontend.
+Toda a aplicação frontend: composição principal da interface, componentes visuais, hooks, store global e utilitários.
 
-É onde ficam a composição principal da interface, componentes visuais, hooks, store global e utilitários.
-
----
-
-### `src/App.jsx`
-
-Responsável por montar a aplicação.
-
-Principais responsabilidades:
-
-- Carregar estrutura visual principal.
-- Aplicar tema atual.
-- Inicializar recursos globais.
-- Conectar layout, widgets, busca, sites e modais.
-- Coordenar a experiência principal da SPA.
-
----
-
-### `src/main.jsx`
-
-Ponto de entrada da aplicação React.
-
-Responsável por renderizar o app dentro do DOM usando Vite.
-
----
-
-### `src/store/`
-
-Camada de estado global.
-
-O projeto utiliza **Zustand** para centralizar dados e ações da aplicação.
-
-Responsabilidades típicas:
-
-- Sites cadastrados.
-- Categorias.
-- Tema ativo.
-- Preferências do usuário.
-- Busca.
-- Configurações de widgets.
-- Sincronização.
-- Favicons.
-- Estado de modais e interações globais.
-- Comportamento de abertura de links.
-
----
-
-### `src/components/`
-
-Camada visual da aplicação.
-
-Responsável por componentes reutilizáveis da interface, como:
-
-- Cards.
-- Modais.
-- Widgets.
-- Barra de busca.
-- Seletor de tema.
-- Gerenciamento de sites.
-- Listas e grids.
-- Elementos de notícias.
-
----
-
-### `src/hooks/`
-
-Hooks customizados para encapsular comportamentos reutilizáveis.
-
-Responsabilidades esperadas:
-
-- Carregamento de dados externos.
-- Integração com notícias.
-- Integração com futebol.
-- Estados derivados da interface.
-
----
-
-### `src/utils/`
-
-Funções auxiliares e integrações internas.
-
-Responsabilidades principais:
-
-- Persistência local.
-- Criptografia local.
-- Integração com banco.
-- Resolução de favicons.
-- Tratamento de dados.
-- Helpers compartilhados.
-
----
+- **`src/App.jsx`** — monta a aplicação, aplica tema, inicializa recursos globais e coordena layout, widgets, busca, sites e modais.
+- **`src/main.jsx`** — ponto de entrada React renderizado via Vite.
+- **`src/store/`** — estado global Zustand (`useStore.js`): sites, categorias, tema, preferências, busca, widgets, sincronização, favicons, modais e comportamento de abertura de links.
+- **`src/components/`** — camada visual reutilizável: cards, modais, widgets, barra de busca, listas/grids e elementos de notícias (inclui subpasta `futebol/`).
+- **`src/hooks/`** — hooks de integração: notícias (`useNews`), futebol (`useJogosHoje`, `useNoticiasFutebol`), busca (`useSearch`).
+- **`src/utils/`** — persistência local (`storage.js`), criptografia (`crypto.js`), favicons (`favicon.js`, `faviconDb.js`).
+- **`src/themes/`** — 7 temas via CSS custom properties (`themes.js`).
 
 ### `netlify/functions/`
 
-Backend serverless do projeto.
+Backend do projeto — handlers no formato Netlify Functions, executados pelo server Express na VPS (ou deployados na Netlify, se usada):
 
-Essa pasta contém funções executadas pela Netlify, usadas para recursos que não devem depender apenas do frontend.
+- `rss.js` — proxy de feeds RSS (bypass CORS).
+- `proxy-img.js` — proxy de imagens anti-WAF.
+- `resolver-favicon.js` — resolução de favicons varrendo HTML/manifests.
+- `chat.js` — proxy streaming OpenAI (`text/event-stream`).
+- `sync.js` — sincronização opt-in do vault (senha mestra → SHA-256 → upsert em `solhub_sync`).
+- `favicon.js` — cache global de favicons (`solhub_favicons`, CRUD por domínio).
+- `futebol-jogos.js` / `futebol-noticias.js` — widgets de futebol.
+- `shim-neon-pg.mjs` — shim que reimplementa `neon()` sobre `pg` padrão (compatibilidade Postgres comum).
 
-Responsabilidades:
+### `server/`
 
-- Buscar notícias via RSS.
-- Resolver favicons varrendo HTML/Manifestos em background para evitar CORS/SSRF.
-- Sincronizar dados com banco remoto.
-- Intermediar chamadas externas quando necessário.
+Server Express (`index.js`) que:
 
----
+- Importa os handlers de `netlify/functions/` intactos via adapter req→event.
+- Serve o build estático `dist/` com fallback SPA (`/*` → `index.html`).
+- Escuta em `PORT` (padrão 8300), publicado apenas em `127.0.0.1`.
 
 ### `docs/sql/`
 
-Documentação e scripts SQL relacionados ao banco.
-
-Usado para estruturar tabelas e recursos necessários no **Neon DB/PostgreSQL**.
-
----
+Scripts de migração do banco (`migration_favicons.sql`). Tabelas: `solhub_sync`, `solhub_favicons`.
 
 ### `versionamento/`
 
-Contém automação de versionamento/cache busting.
+`versionador.js` atualiza referências de assets cache no build (`?v=<hash>` em index.html e manifest).
 
-O script `versionador.js` permite atualizar referências de assets durante o build, evitando problemas de cache no deploy.
+### `tests/`
+
+Testes utilitários do repositório (`node --test`).
 
 ---
 
-## 🔄 Fluxo principal da aplicação
+## Fluxo principal da aplicação
 
 ```txt
-1. Usuário acessa o Hubly
-2. Vite entrega a SPA
-3. React monta a interface
-4. Zustand carrega estado persistido
-5. Preferências e tema são aplicados
-6. Sites, categorias e widgets são renderizados
-7. Recursos externos são consultados quando necessário
-8. Dados locais podem ser sincronizados com Neon DB
+1. Usuário acessa https://hubly.dougllassillva.com.br
+2. Nginx entrega a SPA (dist/ servido pelo Express)
+3. React monta a interface e o Zustand carrega estado do localStorage
+4. Tema, widgets e sites são aplicados/renderizados
+5. Recursos externos (RSS, clima, futebol, chat) passam pelas functions
+6. Favicon cache consultado no Postgres e no localStorage
+7. Sync em nuvem opcional com a Senha Mestra
 ```
 
 ---
 
-## 💾 Persistência
+## Persistência
 
-O Hubly trabalha com dois níveis de persistência.
+Dois níveis:
 
-### 1. Persistência local
+**1. Local (padrão):** sites, categorias, tema, preferências, widgets, notas e configurações no `localStorage` (prefixo `sp_`).
 
-Dados salvos no navegador.
-
-Usada para:
-
-- Sites.
-- Categorias.
-- Tema.
-- Preferências.
-- Widgets.
-- Configurações gerais.
-
-### 2. Persistência remota opcional
-
-Sincronização usando:
-
-- Netlify Functions.
-- Neon DB/PostgreSQL.
-- Senha mestra.
-- Criptografia local para dados sensíveis.
-
-Essa camada permite transportar o ambiente entre dispositivos sem exigir uma conta tradicional.
+**2. Remota (opt-in):** sincronização via Senha Mestra — o token é hasheado em SHA-256 e usado como chave do vault em `solhub_sync (token, data jsonb, updated_at)`. Permite transportar o ambiente entre dispositivos sem conta tradicional.
 
 ---
 
-## 🔐 Segurança e privacidade
+## Segurança e privacidade
 
-O Hubly prioriza controle local dos dados.
-
-Pontos importantes:
-
-- Dados funcionam localmente por padrão.
-- Sincronização é opcional.
-- Senha mestra é usada para proteger dados sincronizados.
-- Dados sensíveis podem ser tratados com criptografia local.
-- Integrações externas passam por backend serverless quando necessário.
+- Dados funcionam localmente por padrão; sync é opcional.
+- Senha Mestra protege os dados sincronizados (hash SHA-256 no servidor).
+- API key da OpenAI é cifrada com AES-256 no navegador antes de persistir.
+- Integrações externas passam pelo backend (functions) quando necessário.
+- `postgres-hubly` não publica porta: só alcançável pelo container `hubly` na rede Docker.
 
 ---
 
-## 🔎 Sistema de busca
+## Sistema de busca
 
-A busca do Hubly atua como camada central da experiência.
+Camada central da experiência: pesquisa em provedores externos, filtro dos sites cadastrados, alternância rápida entre mecanismos e integração com o estado global e a configuração de abertura de links.
 
-Principais recursos:
-
-- Pesquisa em provedores externos.
-- Filtro de sites cadastrados.
-- Alternância rápida entre mecanismos.
-- Integração com o estado global.
-- Respeita a configuração de abertura de links do usuário.
-
-Exemplos de provedores:
-
-- Google.
-- Bing.
-- DuckDuckGo.
-- YouTube.
-- Brave.
-- Ecosia.
+Provedores incluídos: Google, Bing, DuckDuckGo, YouTube, Brave, Ecosia.
 
 ---
 
-## 🧱 Sites e categorias
+## Sites e categorias
 
-O núcleo da aplicação gira em torno da gestão de atalhos.
-
-Recursos:
-
-- Cadastro de sites.
-- Edição.
-- Remoção.
-- Organização por categoria.
-- Reordenação via drag and drop.
-- Favicons automáticos.
-- Cache inteligente de ícones (Serverless Scraper + Neon DB + LocalStorage).
-- Paginação para a categoria "Todos".
-- Ordenação por sites mais recentes na categoria "Todos".
-- Comportamento de abertura de links configurável (nova guia ou mesma guia).
-- Suporte a clique com o botão do meio do mouse para abrir em nova guia.
+- Cadastro, edição, remoção e organização de sites por categoria.
+- Reordenação via drag and drop (@dnd-kit).
+- Favicons automáticos com cache em três níveis (localStorage → Postgres → resolução em background).
+- Paginação e ordenação por recentes na categoria "Todos".
+- Abertura configurável (nova guia ou mesma guia), incluindo clique com botão do meio.
 
 ---
 
-## 🎨 Sistema de temas
-
-O Hubly possui 8 temas visuais:
+## Sistema de temas
 
 | Tema          | Descrição                   |
 | ------------- | --------------------------- |
@@ -342,241 +214,168 @@ O Hubly possui 8 temas visuais:
 | Nord          | Tons frios e suaves         |
 | Sunset        | Tons quentes                |
 | Cyberpunk     | Neon futurista              |
-| Amoled Black  | Preto absoluto              |
 
-A troca de tema é feita sem recarregar a aplicação.
-
----
-
-## 🛠️ Widgets
-
-O projeto possui widgets integrados para enriquecer a homepage.
-
-### 🌦️ Clima
-
-Consulta previsão e informações meteorológicas usando Open-Meteo. Exibido no cabeçalho em desktop (ao lado do relógio) e no rodapé em mobile, com previsão de 7 dias.
-
-### 📝 Bloco de notas
-
-Permite anotações rápidas com persistência. Exibido no cabeçalho em desktop (ao lado do relógio) e no rodapé em mobile.
-
-### 📰 Notícias
-
-Consome feeds RSS via Netlify Functions.
+Troca de tema sem recarregar a aplicação (CSS custom properties aplicadas em `document.documentElement`).
 
 ---
 
-## 🌐 Backend serverless
+## Widgets
 
-O backend do Hubly não é um servidor tradicional.
-
-Ele usa **Netlify Functions**, permitindo:
-
-- Deploy simples.
-- Menos infraestrutura.
-- Integrações seguras.
-- Separação entre frontend e chamadas externas.
-- Uso de variáveis de ambiente no painel da Netlify.
+- **Clima** — previsão de 7 dias via Open-Meteo, no cabeçalho em desktop e rodapé em mobile.
+- **Bloco de notas** — anotações rápidas com persistência local.
+- **Notícias** — feeds RSS via function `rss`.
+- **Futebol** — jogos do dia e notícias via functions dedicadas.
 
 ---
 
-## 🐘 Banco de dados
+## Backend
 
-O projeto usa **Neon DB/PostgreSQL** para recursos remotos.
+Servido por server Express em container Docker (a functionalidade serverless original, hoje em infra própria):
 
-Principais usos:
+- Mesmas rotas `/.netlify/functions/*`, mantendo compatibilidade total com o frontend.
+- Deploy simples via Docker Compose.
+- Integrações externas centralizadas (OpenAI, RSS, APIs de futebol).
+- Variáveis de ambiente via `.env` (chmod 600).
 
-- Sincronização opcional.
-- Cache global de favicons.
-- Persistência de dados compartilháveis entre dispositivos.
+### Banco de dados
 
-Scripts e estrutura ficam documentados em:
+PostgreSQL em container dedicado (`postgres-hubly`):
 
-```txt
-docs/sql/
-```
+- Sincronização opt-in (`solhub_sync`).
+- Cache global de favicons (`solhub_favicons`).
+- Scripts em `docs/sql/`.
 
 ---
 
-## ⚙️ Variáveis de ambiente
+## Variáveis de ambiente
 
-As variáveis devem ser configuradas no ambiente de deploy da Netlify.
-
-Exemplos esperados conforme integrações do projeto:
+Configuradas em `.env` do projeto (não versionado):
 
 ```env
-DATABASE_URL=
+DATABASE_URL=postgres://hubly:SENHA@postgres-hubly:5432/hubly
+POSTGRES_PASSWORD=SENHA
 ```
-
-> Os nomes finais devem seguir exatamente o que estiver implementado nas Netlify Functions do projeto.
 
 ---
 
-## 🚀 Como rodar localmente
-
-Instale as dependências:
+## Como rodar localmente
 
 ```bash
-npm install
+npm install          # dependências
+npm run dev          # dev server (Vite)
 ```
 
-Execute o ambiente de desenvolvimento:
+Acesse `http://localhost:5173`.
+
+Modo completo local (com functions + banco):
 
 ```bash
-npm run dev
-```
-
-Acesse:
-
-```txt
-http://localhost:5173
+# cria o .env conforme seção acima, depois:
+docker compose up -d
 ```
 
 ---
 
-## 🏗️ Build
-
-Gere a versão de produção:
+## Build
 
 ```bash
-npm run build
+npm run build        # vite build + versionamento de assets
 ```
 
-O build final será gerado em:
-
-```txt
-dist/
-```
+Saída em `dist/`.
 
 ---
 
-## 🌍 Deploy
+## Deploy
 
-### Recomendado
+### Produção (VPS Docker)
 
-```txt
-Netlify
+```bash
+cd /root/dodo/aplicacoes/hubly
+git pull
+docker compose up -d --build
 ```
 
-Motivo:
+- Container `hubly` publicado apenas em `127.0.0.1:8300`.
+- Nginx faz proxy de `hubly.dougllassillva.com.br` com Let's Encrypt.
+- Cloudflare proxied com SSL Full (Strict).
 
-- Suporte nativo às Netlify Functions.
-- Configuração simples.
-- Compatível com SPA.
-- Integração direta com variáveis de ambiente.
-- Deploy automático via Git.
+### Limitado (Netlify)
 
-### Limitado
-
-```txt
-GitHub Pages
-```
-
-Limitação:
-
-- Hospeda apenas arquivos estáticos.
-- Não executa Netlify Functions.
-- Recursos como sync, RSS, futebol e favicons remotos podem não funcionar corretamente.
+O deploy Netlify original (`gethubly.netlify.app`) mantém as functions nativas na plataforma, mas com banco Neon — caminho legado em descontinuação. GitHub Pages hospeda apenas estáticos: sem sync, RSS, futebol ou favicons remotos.
 
 ---
 
-## 🧰 Tecnologias
+## Tecnologias
 
-| Tecnologia         | Responsabilidade        |
-| ------------------ | ----------------------- |
-| React 18           | Interface e componentes |
-| Vite               | Build e dev server      |
-| Tailwind CSS       | Estilização             |
-| Zustand            | Estado global           |
-| dnd-kit            | Drag and drop           |
-| Netlify Functions  | Backend serverless      |
-| Neon DB/PostgreSQL | Banco remoto            |
-| Open-Meteo         | Clima                   |
-| RSS                | Notícias                |
-| JavaScript         | Lógica principal        |
-| SQL                | Estrutura de banco      |
-
----
-
-## 🧪 Testes
-
-No estado atual, o projeto não possui testes automatizados detectados.
-
-Validações recomendadas durante evolução:
-
-```txt
-npm run build
-```
-
-Testar manualmente:
-
-- Cadastro de site.
-- Edição de site.
-- Remoção de site.
-- Reordenação.
-- Troca de tema.
-- Exportação/importação.
-- Sync com senha mestra.
-- Notícias.
-- Futebol.
-- Favicons.
-- Deploy na Netlify.
+| Tecnologia          | Responsabilidade                          |
+| ------------------- | ----------------------------------------- |
+| React 18            | Interface e componentes                   |
+| Vite 5              | Build e dev server                        |
+| Tailwind CSS 3      | Estilização                               |
+| Zustand             | Estado global                             |
+| dnd-kit             | Drag and drop                             |
+| Express             | Servidor do dist + functions              |
+| PostgreSQL (pg)     | Banco remoto (sync + favicons)            |
+| crypto-js           | Criptografia AES-256 client-side          |
+| @neondatabase/serverless | Driver compat (shim sobre pg)        |
+| Open-Meteo          | Clima                                     |
+| Node 20 (Docker)    | Runtime                                   |
+| JavaScript (ESM)    | Lógica principal                          |
 
 ---
 
-## 📦 Versionamento e cache busting
+## Testes
 
-O projeto possui um script dedicado em:
-
-```txt
-versionamento/versionador.js
+```bash
+npm test             # node --test tests/**/*.test.js
 ```
 
-Uso esperado no `package.json`:
+Validação de build e smoke test da stack na VPS:
 
-```json
-{
-  "scripts": {
-    "build": "node versionamento/versionador.js"
-  }
-}
+```bash
+curl -s -o /dev/null -w '%{http_code}' https://hubly.dougllassillva.com.br/
+curl -s https://hubly.dougllassillva.com.br/.netlify/functions/sync -H 'x-sync-token: <senha>'
 ```
 
-Esse fluxo ajuda a evitar problemas de cache em assets estáticos após deploy.
+Testes manuais cobertos nas evoluções: cadastro/edição/remoção de site, reordenação, troca de tema, exportação/importação, sync com senha mestra, notícias, futebol, favicons.
 
 ---
 
-## 🧭 Fluxo de dados resumido
+## Versionamento e cache busting
+
+`versionamento/versionador.js` roda dentro do `npm run build`, acrescentando `?v=<hash>` aos assets em `index.html` e `manifest.json` para invalidar cache após cada deploy.
+
+---
+
+## Fluxo de dados resumido
 
 ```txt
 Usuário
   ↓
-Interface React
+Interface React (Zustand)
   ↓
-Zustand Store
+localStorage (campo primário)
+  ↓  (sync opt-in)
+Functions Express (/.netlify/functions/*)
   ↓
-Local Storage / Estado Local
-  ↓
-Netlify Functions
-  ↓
-Neon DB / APIs externas
+PostgreSQL (solhub_sync, solhub_favicons) / APIs externas
 ```
 
 ---
 
-## 📌 Decisões técnicas
+## Decisões técnicas
 
-- SPA para navegação rápida.
-- Zustand em vez de Context API para reduzir boilerplate.
-- Netlify Functions para esconder integrações externas sensíveis.
-- Neon DB para persistência remota leve.
-- Local-first para manter usabilidade mesmo sem sync.
-- Tailwind para velocidade de UI.
-- Vite para desenvolvimento e build rápidos.
+- SPA sem roteador — página única por natureza.
+- Zustand sobre Context API para reduzir boilerplate.
+- Local-first: usabilidade completa sem sync.
+- Functions mantidas no formato Netlify e executadas via adapter Express — o mesmo código roda nas duas plataformas sem reescrita.
+- Postgres próprio na VPS em vez de Neon — custo zero, dados na infra pessoal, mesmo padrão dos demais apps do servidor.
+- Tailwind + CSS variables para temas sem rebuild.
 
 ---
 
-## 📄 Licença
+## Licença
 
 Este projeto é uma versão derivada de Orbit, criado por Matheusz Nied.
 
@@ -586,6 +385,6 @@ A base original foi adaptada, expandida e personalizada por Douglas Silva, mante
 
 <div align="center">
 
-✨ Desenvolvido por Douglas Silva ✨
+Desenvolvido por Douglas Silva
 
 </div>
