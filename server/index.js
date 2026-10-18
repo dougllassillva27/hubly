@@ -1,5 +1,5 @@
 // Serve o dist estático + expõe as Netlify Functions via adapter Express→event.
-// Nenhuma função é reescrita: usamos os arquivos originais de netlify/functions/,
+// Nenhuma função é reescrita: usamos os handlers originais de functions/ (ex-functions Netlify),
 // com shim do driver Neon (@neondatabase/serverless → pg) feito no COPY do Dockerfile.
 import express from 'express';
 import fs from 'fs';
@@ -35,7 +35,7 @@ function sendResult(res, result) {
 }
 
 // --- Rotas das functions ---
-const fnDir = path.join(__dirname, '..', 'netlify', 'functions');
+const fnDir = path.join(__dirname, '..', 'functions');
 const names = fs.readdirSync(fnDir).filter((f) => f.endsWith('.js')).map((f) => f.replace(/\.js$/, ''));
 for (const name of names) {
   const mod = await import(pathToFileURL(path.join(fnDir, name + '.js')));
@@ -54,7 +54,7 @@ console.log('Functions carregadas:', names.join(', '));
 // --- Estático ---
 const dist = path.join(__dirname, '..', 'dist');
 app.use(express.static(dist));
-// SPA fallback (redirect no netlify.toml): /* -> /index.html
+// SPA fallback: /* -> /index.html
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/.netlify/')) return next();
   res.sendFile(path.join(dist, 'index.html'));

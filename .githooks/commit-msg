@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-# Invólucro universal para chamar o commit-msg do Python no Git
-python .githooks/commit-msg.py "$1"
