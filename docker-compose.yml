@@ -20,7 +20,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina no .env}
       POSTGRES_DB: hubly
     volumes:
-      - /root/dodo/hubly-postgres-data:/var/lib/postgresql/data
+      - /root/dodo/data/postgres/hubly:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U hubly -d hubly"]
       interval: 10s
