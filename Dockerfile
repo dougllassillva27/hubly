@@ -1,6 +1,6 @@
 # Single-stage: deps completas (rss-parser/cheerio usados em runtime pelas functions)
 # + server Express que serve o dist e as functions.
-FROM node:20-alpine
+FROM node:22-alpine
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
