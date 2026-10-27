@@ -10,6 +10,9 @@ RUN npm run build \
  && mkdir -p node_modules/@neondatabase/serverless \
  && cp server/shim-neon-pg.mjs node_modules/@neondatabase/serverless/index.mjs \
  && echo '{"name":"@neondatabase/serverless","version":"0.9.0-shim","type":"module","main":"index.mjs","exports":{"import":"./index.mjs","require":"./index.mjs"}}' > node_modules/@neondatabase/serverless/package.json
+RUN addgroup -S app && adduser -S app -G app \
+ && chown -R app:app /app
+USER app
 ENV PORT=8300
 EXPOSE 8300
 CMD ["node", "server/index.js"]

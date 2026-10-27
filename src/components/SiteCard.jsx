@@ -317,7 +317,7 @@ export default function SiteCard({ site, disableDrag, isDraggingGlobal, lastDrop
       onTouchMove={handleTouchMove}
     >
       <a
-        href={site.url}
+        href={/^https?:\/\//i.test(site.url || '') ? site.url : '#'}
         target={linkTarget}
         rel="noopener noreferrer"
         onClickCapture={handleCaptureClick}

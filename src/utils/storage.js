@@ -53,6 +53,8 @@ export const storage = {
   importAll: (data) => {
     try {
       Object.entries(data).forEach(([key, value]) => {
+        if (typeof key !== 'string' || !key.startsWith(PREFIX)) return;
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
         localStorage.setItem(key, JSON.stringify(value))
       })
       return true

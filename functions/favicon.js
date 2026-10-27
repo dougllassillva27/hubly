@@ -27,9 +27,19 @@ export const handler = async (event) => {
 
     // POST: upsert de um favicon { domain, favicon_url }
     if (method === 'POST') {
-      const { domain, favicon_url } = JSON.parse(event.body);
+      const raw = event.body || '';
+      if (raw.length > 64 * 1024) {
+        return { statusCode: 413, body: JSON.stringify({ error: 'Payload muito grande' }) };
+      }
+      const { domain, favicon_url } = JSON.parse(raw);
       if (!domain || !favicon_url) {
         return { statusCode: 400, body: JSON.stringify({ error: 'domain e favicon_url obrigatórios' }) };
+      }
+      try {
+        const u = new URL(favicon_url);
+        if (u.protocol !== 'http:' && u.protocol !== 'https:') throw new Error('bad');
+      } catch {
+        return { statusCode: 400, body: JSON.stringify({ error: 'favicon_url inválida' }) };
       }
       await sql`
         INSERT INTO solhub_favicons (domain, favicon_url, updated_at)
@@ -52,7 +62,7 @@ export const handler = async (event) => {
 
     return { statusCode: 405, body: 'Método não permitido' };
   } catch (error) {
-    console.error('Erro na função favicon:', error);
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+    
+    return { statusCode: 500, body: JSON.stringify({ error: 'Erro interno' }) };
   }
 };

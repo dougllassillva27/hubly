@@ -4,27 +4,34 @@ import { URL } from 'node:url';
 const TIMEOUT_MS = 8000;
 
 function isPrivateIP(ip) {
-  const ipv4Match = ip.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/);
+  const v = (ip || '').toLowerCase();
+  // IPv4-mapped IPv6
+  if (v.startsWith('::ffff:')) {
+    return isPrivateIP(v.slice(7));
+  }
+  const ipv4Match = v.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/);
   if (ipv4Match) {
     const parts = ipv4Match.slice(1).map(Number);
-    if (parts[0] === 10) return true; // 10.0.0.0/8
-    if (parts[0] === 127) return true; // 127.0.0.0/8
-    if (parts[0] === 169 && parts[1] === 254) return true; // 169.254.0.0/16
-    if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true; // 172.16.0.0/12
-    if (parts[0] === 192 && parts[1] === 168) return true; // 192.168.0.0/16
-    if (parts[0] === 0) return true; // 0.0.0.0/8
+    if (parts[0] === 10) return true;
+    if (parts[0] === 127) return true;
+    if (parts[0] === 169 && parts[1] === 254) return true;
+    if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true;
+    if (parts[0] === 192 && parts[1] === 168) return true;
+    if (parts[0] === 0) return true;
+    if (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) return true;
+    if (parts[0] === 198 && (parts[1] === 18 || parts[1] === 19)) return true;
     return false;
   }
-  if (ip === '::1') return true;
-  if (ip.toLowerCase().startsWith('fc') || ip.toLowerCase().startsWith('fd')) return true;
-  if (ip.toLowerCase().startsWith('fe80')) return true;
-  if (ip === '::') return true;
+  if (v === '::1' || v === '::' || v === '::0') return true;
+  if (v.startsWith('fc') || v.startsWith('fd')) return true;
+  if (v.startsWith('fe80')) return true;
+  if (v.startsWith('fec0')) return true;
   return false;
 }
 
 export const handler = async (event) => {
   const commonHeaders = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'same-origin',
     'Cross-Origin-Resource-Policy': 'cross-origin',
     'Cache-Control': 'public, max-age=31536000, immutable',
   };
@@ -76,7 +83,17 @@ export const handler = async (event) => {
     let response = await fetch(url, {
       signal: controller.signal,
       headers: fetchHeaders,
+      redirect: 'manual',
     }).catch(() => null);
+
+    if (response && response.status >= 300 && response.status < 400) {
+      clearTimeout(timeoutId);
+      return {
+        statusCode: 403,
+        headers: commonHeaders,
+        body: JSON.stringify({ error: 'Redirects não permitidos' }),
+      };
+    }
 
     // --- Tentativa 2: Fallback via CDN de Cache ---
     if (!response || !response.ok) {
@@ -84,10 +101,28 @@ export const handler = async (event) => {
       response = await fetch(cdnProxyUrl, {
         signal: controller.signal,
         headers: { 'User-Agent': fetchHeaders['User-Agent'] },
+        redirect: 'manual',
       }).catch(() => null);
     }
 
     clearTimeout(timeoutId);
+
+    // Re-valida o host efetivo da resposta (mitigação TOCTOU/DNS rebinding)
+    if (response && response.url) {
+      try {
+        const finalHost = new URL(response.url).hostname;
+        // re-resolve
+        const r2 = await dns.lookup(finalHost, { family: 0 }).catch(() => ({ address: null }));
+        if (r2?.address && isPrivateIP(r2.address)) {
+          clearTimeout(timeoutId);
+          return {
+            statusCode: 403,
+            headers: commonHeaders,
+            body: JSON.stringify({ error: 'SSRF bloqueado' }),
+          };
+        }
+      } catch {}
+    }
 
     // --- Processamento da Resposta ---
     if (response && response.ok) {

@@ -1,24 +1,29 @@
 import { URL } from 'node:url';
+import dns from 'node:dns/promises';
 
 const MAX_BYTES = 150 * 1024; // 150KB - Early Abort Stream Threshold
 const TIMEOUT_MS = 8000;
 
 function isPrivateIP(ip) {
-  const ipv4Match = ip.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/);
+  const v = (ip || '').toLowerCase();
+  if (v.startsWith('::ffff:')) return isPrivateIP(v.slice(7));
+  const ipv4Match = v.match(/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/);
   if (ipv4Match) {
     const parts = ipv4Match.slice(1).map(Number);
-    if (parts[0] === 10) return true; // 10.0.0.0/8
-    if (parts[0] === 127) return true; // 127.0.0.0/8
-    if (parts[0] === 169 && parts[1] === 254) return true; // 169.254.0.0/16
-    if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true; // 172.16.0.0/12
-    if (parts[0] === 192 && parts[1] === 168) return true; // 192.168.0.0/16
-    if (parts[0] === 0) return true; // 0.0.0.0/8
+    if (parts[0] === 10) return true;
+    if (parts[0] === 127) return true;
+    if (parts[0] === 169 && parts[1] === 254) return true;
+    if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true;
+    if (parts[0] === 192 && parts[1] === 168) return true;
+    if (parts[0] === 0) return true;
+    if (parts[0] === 100 && parts[1] >= 64 && parts[1] <= 127) return true;
+    if (parts[0] === 198 && (parts[1] === 18 || parts[1] === 19)) return true;
     return false;
   }
-  if (ip === '::1') return true;
-  if (ip.toLowerCase().startsWith('fc') || ip.toLowerCase().startsWith('fd')) return true;
-  if (ip.toLowerCase().startsWith('fe80')) return true;
-  if (ip === '::') return true;
+  if (v === '::1' || v === '::' || v === '::0') return true;
+  if (v.startsWith('fc') || v.startsWith('fd')) return true;
+  if (v.startsWith('fe80')) return true;
+  if (v.startsWith('fec0')) return true;
   return false;
 }
 
@@ -110,11 +115,20 @@ export const handler = async (event) => {
     const urlObj = new URL(url);
     console.log(`[${requestId}] Hostname: ${urlObj.hostname}`);
     
-    // Simplificando: Removemos DNS lookup para evitar problemas de build no Netlify 
-    // com módulos nativos node:dns/promises em certos ambientes de bundler.
-    // O bloqueio de IP privado agora foca no formato da própria URL.
+    // DNS resolution + checagem de IP privado (anti-SSRF, anti-rebinding)
+    let resolvedAddress = null;
+    try {
+      const r = await dns.lookup(urlObj.hostname, { family: 0 });
+      resolvedAddress = r?.address;
+    } catch {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Host não resolvível' }) };
+    }
+    if (resolvedAddress && isPrivateIP(resolvedAddress)) {
+        console.warn(`[${requestId}] SSRF detectado para IP privado: ${resolvedAddress}`);
+        return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado', host: urlObj.hostname }) };
+    }
+    // também bloqueia hostname literal privado
     if (isPrivateIP(urlObj.hostname)) {
-        console.warn(`[${requestId}] SSRF detectado para hostname privado: ${urlObj.hostname}`);
         return { statusCode: 403, body: JSON.stringify({ error: 'SSRF bloqueado', host: urlObj.hostname }) };
     }
 
@@ -185,6 +199,21 @@ export const handler = async (event) => {
 
     if (manifestUrl) {
       try {
+        const mUrl = new URL(manifestUrl);
+        // re-valida host do manifest
+        let mAddr = null;
+        try {
+          const mr = await dns.lookup(mUrl.hostname, { family: 0 });
+          mAddr = mr?.address;
+        } catch {
+          throw new Error('manifest host unresolvable');
+        }
+        if (isPrivateIP(mUrl.hostname) || (mAddr && isPrivateIP(mAddr))) {
+          throw new Error('SSRF blocked (manifest)');
+        }
+        if (mUrl.protocol !== 'http:' && mUrl.protocol !== 'https:') {
+          throw new Error('bad protocol');
+        }
         const manifestRes = await fetch(manifestUrl, {
           headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
         });
@@ -229,6 +258,6 @@ export const handler = async (event) => {
       body: JSON.stringify({ favicon_url: fallbackUrl }),
     };
   } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+    return { statusCode: 500, body: JSON.stringify({ error: 'Erro interno' }) };
   }
 };

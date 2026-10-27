@@ -1,6 +1,6 @@
 export const handler = async (event, context) => {
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'same-origin',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
     'Cache-Control': 'public, max-age=300', // Cache de 5 minutos no edge
@@ -198,6 +198,6 @@ export const handler = async (event, context) => {
       }),
     };
   } catch (error) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: error.message, jogos: [] }) };
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'Erro interno', jogos: [] }) };
   }
 };

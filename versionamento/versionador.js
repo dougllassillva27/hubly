@@ -54,6 +54,12 @@ function processarUrl(url, caminhoArquivoAtual) {
     caminhoFisico = path.join(path.dirname(caminhoArquivoAtual), urlPura);
   }
 
+  // Containment: caminho físico deve permanecer dentro de diretorioBase
+  const caminhoResolvido = path.resolve(caminhoFisico);
+  const baseResolvida = path.resolve(diretorioBase);
+  if (!caminhoResolvido.startsWith(baseResolvida + path.sep) && caminhoResolvido !== baseResolvida) {
+    return url;
+  }
   if (fs.existsSync(caminhoFisico) && fs.statSync(caminhoFisico).isFile()) {
     const hash = gerarHash(caminhoFisico);
     const regexV = /([?&])v=[^&#]*/;

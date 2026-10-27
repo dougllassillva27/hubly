@@ -17,7 +17,7 @@ export const handler = async (event, context) => {
     const sql = neon(process.env.DATABASE_URL);
 
     // Hasheia a senha mestra em SHA-256 para ser a chave segura da gaveta no banco
-    const userVaultKey = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const userVaultKey = crypto.scryptSync(rawToken, 'hubly-vault-salt', 32).toString('hex');
 
     if (method === 'GET') {
       const result = await sql`SELECT data FROM solhub_sync WHERE token = ${userVaultKey}`;
@@ -28,7 +28,11 @@ export const handler = async (event, context) => {
     }
 
     if (method === 'POST') {
-      const body = JSON.parse(event.body);
+      const raw = event.body || '';
+      if (raw.length > 1024 * 1024) {
+        return { statusCode: 413, body: JSON.stringify({ error: 'Payload muito grande' }) };
+      }
+      const body = JSON.parse(raw);
       const data = JSON.stringify(body.data);
 
       await sql`
@@ -43,7 +47,7 @@ export const handler = async (event, context) => {
 
     return { statusCode: 405, body: 'Método não permitido' };
   } catch (error) {
-    console.error('Erro na sincronização:', error);
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
+    
+    return { statusCode: 500, body: JSON.stringify({ error: 'Erro interno' }) };
   }
 };
