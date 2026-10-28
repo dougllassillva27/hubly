@@ -55,6 +55,8 @@ export const storage = {
       Object.entries(data).forEach(([key, value]) => {
         if (typeof key !== 'string' || !key.startsWith(PREFIX)) return;
         if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
+        // Prevent prototype pollution: validate key is a plain string property
+        if (Object.prototype.hasOwnProperty.call(Object.create(null), key)) return;
         localStorage.setItem(key, JSON.stringify(value))
       })
       return true

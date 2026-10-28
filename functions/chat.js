@@ -3,6 +3,13 @@ export const handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
+  // Origin validation (same-origin or allowed)
+  const origin = event.headers?.origin || event.headers?.Origin || '';
+  const host = event.headers?.host || event.headers?.Host || '';
+  if (origin && host && !origin.includes(host)) {
+    return { statusCode: 403, body: JSON.stringify({ error: { message: 'Origem não permitida' } }) };
+  }
+
   // Não repassa chave do cliente. Usa chave do servidor (env) quando disponível.
   const serverKey = process.env.OPENAI_API_KEY;
   const authHeader = serverKey ? `Bearer ${serverKey}` : (event.headers.authorization || event.headers.Authorization);

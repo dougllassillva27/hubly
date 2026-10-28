@@ -1,23 +1,25 @@
 import CryptoJS from 'crypto-js';
 
-const SALT = 'hubly-vault-salt-v1';
 const ITERATIONS = 100000;
-
-function deriveKey(secret) {
-  return CryptoJS.PBKDF2(secret, SALT, { keySize: 256 / 32, iterations: ITERATIONS });
-}
 
 export const encrypt = (text, secret) => {
   if (!text || !secret) return '';
-  const key = deriveKey(secret);
-  return CryptoJS.AES.encrypt(text, key).toString();
+  // Random salt per encryption (stored alongside ciphertext)
+  const salt = CryptoJS.lib.WordArray.random(128 / 8);
+  const key = CryptoJS.PBKDF2(secret, salt, { keySize: 256 / 32, iterations: ITERATIONS });
+  const encrypted = CryptoJS.AES.encrypt(text, key).toString();
+  // Prepend salt (hex) to ciphertext for decryption
+  return salt.toString(CryptoJS.enc.Hex) + ':' + encrypted;
 };
 
 export const decrypt = (ciphertext, secret) => {
   if (!ciphertext || !secret) return '';
   try {
-    const key = deriveKey(secret);
-    const bytes = CryptoJS.AES.decrypt(ciphertext, key);
+    const parts = ciphertext.split(':');
+    if (parts.length !== 2) return '';
+    const salt = CryptoJS.enc.Hex.parse(parts[0]);
+    const key = CryptoJS.PBKDF2(secret, salt, { keySize: 256 / 32, iterations: ITERATIONS });
+    const bytes = CryptoJS.AES.decrypt(parts[1], key);
     return bytes.toString(CryptoJS.enc.Utf8);
   } catch {
     return '';

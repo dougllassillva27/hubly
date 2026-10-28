@@ -5,6 +5,10 @@ export const handler = async (event, context) => {
   const method = event.httpMethod;
   const rawToken = event.headers['x-sync-token'];
 
+  if (!rawToken || rawToken.length < 16) {
+    return { statusCode: 401, body: JSON.stringify({ error: 'Token muito curto (min 16 chars)' }) };
+  }
+
   if (!rawToken) {
     return { statusCode: 401, body: JSON.stringify({ error: 'Senha Mestra obrigatória' }) };
   }

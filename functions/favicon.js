@@ -4,8 +4,8 @@ export const handler = async (event) => {
   const method = event.httpMethod;
   const token = event.headers['x-sync-token'];
 
-  if (!token) {
-    return { statusCode: 401, body: JSON.stringify({ error: 'Senha Mestra obrigatória' }) };
+  if (!token || token.length < 16) {
+    return { statusCode: 401, body: JSON.stringify({ error: 'Token obrigatório (min 16 chars)' }) };
   }
 
   if (!process.env.DATABASE_URL) {
@@ -15,7 +15,6 @@ export const handler = async (event) => {
   try {
     const sql = neon(process.env.DATABASE_URL);
 
-    // GET: retorna todos os favicons como { domain: favicon_url }
     if (method === 'GET') {
       const rows = await sql`SELECT domain, favicon_url FROM solhub_favicons`;
       const favicons = {};
@@ -25,7 +24,6 @@ export const handler = async (event) => {
       return { statusCode: 200, body: JSON.stringify({ favicons }) };
     }
 
-    // POST: upsert de um favicon { domain, favicon_url }
     if (method === 'POST') {
       const raw = event.body || '';
       if (raw.length > 64 * 1024) {
@@ -50,7 +48,6 @@ export const handler = async (event) => {
       return { statusCode: 200, body: JSON.stringify({ success: true }) };
     }
 
-    // DELETE: remove por domain (via query string ?domain=github.com)
     if (method === 'DELETE') {
       const domain = event.queryStringParameters?.domain;
       if (!domain) {
@@ -62,7 +59,6 @@ export const handler = async (event) => {
 
     return { statusCode: 405, body: 'Método não permitido' };
   } catch (error) {
-    
     return { statusCode: 500, body: JSON.stringify({ error: 'Erro interno' }) };
   }
 };
